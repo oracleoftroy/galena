@@ -1,0 +1,10 @@
+root = true
+
+[*]
+charset = utf-8
+intent_style = tab
+indent_size = 4
+
+[*.{c,cpp,h,hpp}]
+insert_final_newline = true
+trim_trailing_whitespace = true

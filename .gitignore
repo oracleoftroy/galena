@@ -1,0 +1,8 @@
+# Used for build intermediaries and output
+build
+bin
+
+# Visual Studio files and folders
+.vs
+.vscode
+*.user
