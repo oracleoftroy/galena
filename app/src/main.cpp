@@ -7,18 +7,17 @@
 #include <ui/window.hpp>
 #include <ui/imgui_system.hpp>
 
+#include <gfx/imgui_graphics.hpp>
+#include <gfx/renderer.hpp>
+#include <gfx/gl/opengl_renderer_core.hpp>
+
 #include "frame_metrics.hpp"
+#include "imgui.hpp"
 #include "log.hpp"
 
-using namespace std::chrono_literals;
-
-// TODO: REMOVE ME and implement in renderer
-#include "glad/glad.h"
-#pragma comment(lib, "opengl32.lib")
-
 #include <imgui.h>
-#include "imgui_impl_opengl3.h"
-//////////////////
+
+using namespace std::chrono_literals;
 
 template <typename T>
 struct event_dispatch : T
@@ -81,57 +80,24 @@ struct event_handler
 	}
 };
 
-class imgui
-{
-public:
-	imgui(ui::opengl_context &context) : system(context)
-	{
-		ImGui_ImplOpenGL3_Init("#version 300 es");
-	}
-
-	~imgui()
-	{
-		ImGui_ImplOpenGL3_Shutdown();
-	}
-
-	void new_frame() noexcept
-	{
-		ImGui_ImplOpenGL3_NewFrame();
-		system.new_frame();
-	}
-
-	void render() noexcept
-	{
-		system.render();
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-	}
-
-	imgui(imgui &&other) noexcept = delete;
-	imgui &operator=(imgui &&other) noexcept = delete;
-	imgui(const imgui &other) noexcept = delete;
-	imgui &operator=(const imgui &other) noexcept = delete;
-
-private:
-	ui::imgui::imgui_system system;
-};
-
+// TODO: move histogram to frame_metrics
 std::array<float, 60 * 3> frame_hist{{0}};
 size_t frame_hist_pos = 0;
 
-static void fps_overlay(bool *show, float ft)
+static void fps_overlay(bool *show)
 {
 	const float margin = 2.0f;
 	ImGuiIO &io = ImGui::GetIO();
 
-	frame_hist[frame_hist_pos++] = ft;
+	frame_hist[frame_hist_pos++] = io.DeltaTime;
 	frame_hist_pos %= frame_hist.size();
 
 	ImGui::SetNextWindowPos(ImVec2(margin, margin), ImGuiCond_Always, ImVec2(0.0f, 0.0f));
 	ImGui::SetNextWindowBgAlpha(0.35f);
 
-	if (ImGui::Begin("FPS overlay", show, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDecoration | /*ImGuiWindowFlags_AlwaysAutoResize |*/ ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav))
+	if (ImGui::Begin("FPS overlay", show, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav))
 	{
-		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
+		ImGui::Text("Frame time average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
 		ImGui::Separator();
 		if (ImGui::IsMousePosValid())
 			ImGui::Text("Mouse Position: (%.1f,%.1f)", io.MousePos.x, io.MousePos.y);
@@ -149,35 +115,35 @@ int main(int argc, char* argv[])
 	LOG_DEBUG("args: {0}", fmt::join(argv, argv + argc, " "));
 
 	auto platform = ui::platform::create();
+	event_dispatch<event_handler> handler;
+	platform.attach_event_listener(handler);
+
 	auto window = platform.create_window("Test window", 1280, 720, ui::window_mode::windowed, ui::gfx_engine::opengl);
-	LOG_TRACE("window reports size of ({0}, {1})", window.size().x, window.size().y);
+	auto window_size = window.size();
+	LOG_TRACE("window reports size of ({0}, {1})", window_size.x, window_size.y);
 
 	ui::config_opengl config;
 	config.context_profile = ui::gl_context_profile::es;
 	config.context_major_version = 3;
 	config.context_minor_version = 2;
 
-	auto gl_context = window.opengl_create_context(config);
-	gladLoadGLES2Loader(gl_context.get_load_proc());
+	auto opengl_context = window.opengl_create_context(config);
+	auto renderer = gfx::gl::create_opengl_renderer(opengl_context);
+	app::imgui imgui(opengl_context, renderer);
 
-	LOG_INFO("OpenGL version: {0}", glGetString(GL_VERSION));
-	LOG_INFO("OpenGL vendor: {0}", glGetString(GL_VENDOR));
-	LOG_INFO("OpenGL renderer: {0}", glGetString(GL_RENDERER));
-	LOG_INFO("OpenGL shader version: {0}", glGetString(GL_SHADING_LANGUAGE_VERSION));
-//	LOG_INFO("OpenGL shader extensions: {0}", glGetString(GL_EXTENSIONS));
-
-	imgui imgui_system(gl_context);
+	// consider removing this or moving the ini file, but for now, disable completely
+	ImGui::GetIO().IniFilename = nullptr;
 
 	ui::clock::duration target_frame_rate = 1.0s / 60.0;
 	app::frame_metrics metrics(target_frame_rate);
-	ui::clock clock(target_frame_rate);
 
-	event_dispatch<event_handler> handler;
-	platform.attach_event_listener(handler);
+	renderer.set_viewport({0, 0}, window_size);
+	renderer.set_clear_color(0.384f, 0.761f, 0.984f, 1.0f);
 
 	bool show_demo = true;
 	bool show_fps_overlay = true;
 
+	ui::clock clock(target_frame_rate);
 	while (platform.dispatch_events())
 	{
 		auto frame_duration = clock.update();
@@ -186,26 +152,24 @@ int main(int argc, char* argv[])
 		// tick game at a steady interval
 		while (clock.use_time_slice())
 		{
-//			LOG_TRACE(clock.time_slice.count());
 			// game.tick(clock.time_slice);
 		}
 
 		// render
+		renderer.clear_color();
 		// game.render(renderer);
 
-		// TODO: REMOVE ME!!!!
-		glClearColor(.5f, .8f, .2f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		imgui.new_frame();
 
-		imgui_system.new_frame();
 		if (show_demo)
 			ImGui::ShowDemoWindow(&show_demo);
-		if (show_fps_overlay)
-			fps_overlay(&show_fps_overlay, (float)frame_duration.count());
-		imgui_system.render();
 
-		gl_context.present();
-		//////////////////////
+		if (show_fps_overlay)
+			fps_overlay(&show_fps_overlay);
+
+		imgui.render();
+
+		opengl_context.present();
 	}
 
 	LOG_INFO("Exiting...");

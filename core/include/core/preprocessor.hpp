@@ -1,0 +1,4 @@
+#pragma once
+
+#define CORE_PREPROSSOR_CONCAT(a, b) a##b
+#define CORE_PREPROSSOR_SYMBOL(a) CORE_PREPROSSOR_CONCAT(,a)

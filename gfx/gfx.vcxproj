@@ -12,19 +12,19 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{3350B334-57AC-4EE2-8482-8D6EFBD6C3DC}</ProjectGuid>
-    <RootNamespace>app</RootNamespace>
+    <ProjectGuid>{5B0D3CE3-462D-48EA-BF76-24DC481BE996}</ProjectGuid>
+    <RootNamespace>gfx</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -47,11 +47,11 @@
   <PropertyGroup />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../core/include;../ui/include;../gfx-opengl/include;../gfx/include;./src</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>IMGUI_IMPL_OPENGL_LOADER_GLAD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../core/include;../ui/include;include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -59,15 +59,13 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../core/include;../ui/include;../gfx-opengl/include;../gfx/include;./src</AdditionalIncludeDirectories>
-      <FloatingPointModel>Fast</FloatingPointModel>
-      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
-      <PreprocessorDefinitions>IMGUI_IMPL_OPENGL_LOADER_GLAD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../core/include;../ui/include;include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -76,29 +74,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ProjectReference Include="..\core\core.vcxproj">
-      <Project>{3773cc5c-4585-48c5-92aa-9129240a848a}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\gfx-opengl\gfx-opengl.vcxproj">
-      <Project>{d1aadccd-0a13-4c22-9491-e72e9e304f8e}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\gfx\gfx.vcxproj">
-      <Project>{5b0d3ce3-462d-48ea-bf76-24dc481be996}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\ui\ui.vcxproj">
-      <Project>{198e7d34-bca0-4f27-a70b-4c70511e87d8}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\imgui.cpp" />
-    <ClCompile Include="src\log.cpp" />
-    <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\opengl_magic.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\frame_metrics.hpp" />
-    <ClInclude Include="src\imgui.hpp" />
+    <ClInclude Include="include\gfx\imgui_graphics.hpp" />
+    <ClInclude Include="include\gfx\renderer.hpp" />
     <ClInclude Include="src\log.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\log.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

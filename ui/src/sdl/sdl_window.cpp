@@ -3,12 +3,10 @@
 #include "../platform_info.hpp"
 #if UI_PLATFORM == UI_PLATFORM_IMPL_SDL
 
+#include <type_traits>
+#include <SDL2/SDL.h>
 #include <ui/config_opengl.hpp>
 #include <ui/opengl_context.hpp>
-
-#include <type_traits>
-#include <utility>
-#include <SDL2/SDL.h>
 
 #include "../log.hpp"
 #include "sdl_util.hpp"
@@ -27,18 +25,6 @@ namespace ui
 	{
 		LOG_INFO("Destroying window");
 		SDL_DestroyWindow(WINDOW);
-	}
-
-	window::window(window &&other) noexcept
-		: handle(std::exchange(other.handle, nullptr))
-	{
-	}
-
-	window &window::operator=(window &&other) noexcept
-	{
-		SDL_DestroyWindow(WINDOW);
-		handle = std::exchange(other.handle, nullptr);
-		return *this;
 	}
 
 	glm::ivec2 window::size() const noexcept

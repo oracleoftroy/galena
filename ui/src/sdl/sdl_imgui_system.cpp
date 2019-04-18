@@ -63,7 +63,7 @@ namespace ui::imgui
 
 	imgui_system &imgui_system::operator=(imgui_system &&other) noexcept
 	{
-		imgui_destroy(context);
+		imgui_system old(std::move(*this));
 		context = std::exchange(other.context, nullptr);
 		window = std::exchange(other.window, nullptr);
 		return *this;

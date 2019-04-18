@@ -12,19 +12,19 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{3350B334-57AC-4EE2-8482-8D6EFBD6C3DC}</ProjectGuid>
-    <RootNamespace>app</RootNamespace>
+    <ProjectGuid>{D1AADCCD-0A13-4C22-9491-E72E9E304F8E}</ProjectGuid>
+    <RootNamespace>gfxopengl</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -47,10 +47,11 @@
   <PropertyGroup />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../core/include;../ui/include;../gfx-opengl/include;../gfx/include;./src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../core/include;../ui/include;../gfx/include;./vendor/glad/include;./vendor/imgui;./include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>IMGUI_IMPL_OPENGL_LOADER_GLAD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -59,14 +60,13 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../core/include;../ui/include;../gfx-opengl/include;../gfx/include;./src</AdditionalIncludeDirectories>
-      <FloatingPointModel>Fast</FloatingPointModel>
-      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <AdditionalIncludeDirectories>../core/include;../ui/include;../gfx/include;./vendor/glad/include;./vendor/imgui;./include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>IMGUI_IMPL_OPENGL_LOADER_GLAD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -76,29 +76,39 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ProjectReference Include="..\core\core.vcxproj">
-      <Project>{3773cc5c-4585-48c5-92aa-9129240a848a}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\gfx-opengl\gfx-opengl.vcxproj">
-      <Project>{d1aadccd-0a13-4c22-9491-e72e9e304f8e}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\gfx\gfx.vcxproj">
-      <Project>{5b0d3ce3-462d-48ea-bf76-24dc481be996}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\ui\ui.vcxproj">
-      <Project>{198e7d34-bca0-4f27-a70b-4c70511e87d8}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\imgui.cpp" />
+    <ClCompile Include="src\buffer.cpp" />
+    <ClCompile Include="src\framebuffer.cpp" />
+    <ClCompile Include="src\image.cpp" />
+    <ClCompile Include="src\imgui_graphics.cpp" />
     <ClCompile Include="src\log.cpp" />
-    <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\opengl_magic.cpp" />
+    <ClCompile Include="src\opengl_renderer_core.cpp" />
+    <ClCompile Include="src\program.cpp" />
+    <ClCompile Include="src\program_pipeline.cpp" />
+    <ClCompile Include="src\renderbuffer.cpp" />
+    <ClCompile Include="src\renderer.cpp" />
+    <ClCompile Include="src\sampler.cpp" />
+    <ClCompile Include="src\texture.cpp" />
+    <ClCompile Include="src\vertex_array_object.cpp" />
+    <ClCompile Include="vendor\glad\src\glad.c" />
+    <ClCompile Include="vendor\imgui\imgui_impl_opengl3.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\frame_metrics.hpp" />
-    <ClInclude Include="src\imgui.hpp" />
+    <ClInclude Include="include\gfx\gl\opengl_renderer_core.hpp" />
+    <ClInclude Include="src\buffer.hpp" />
+    <ClInclude Include="src\framebuffer.hpp" />
+    <ClInclude Include="src\image.hpp" />
+    <ClInclude Include="src\imgui_graphics.hpp" />
     <ClInclude Include="src\log.hpp" />
+    <ClInclude Include="src\program.hpp" />
+    <ClInclude Include="src\program_pipeline.hpp" />
+    <ClInclude Include="src\renderbuffer.hpp" />
+    <ClInclude Include="src\renderer.hpp" />
+    <ClInclude Include="src\sampler.hpp" />
+    <ClInclude Include="src\texture.hpp" />
+    <ClInclude Include="src\vertex_array_object.hpp" />
+    <ClInclude Include="vendor\glad\include\glad\glad.h" />
+    <ClInclude Include="vendor\glad\include\KHR\khrplatform.h" />
+    <ClInclude Include="vendor\imgui\imgui_impl_opengl3.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
