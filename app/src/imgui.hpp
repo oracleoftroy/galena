@@ -5,16 +5,15 @@
 
 namespace gfx
 {
-	template <typename core, typename deleter>
 	class renderer;
 }
+
 namespace app
 {
 	class imgui
 	{
 	public:
-		template <typename renderer>
-		imgui(ui::opengl_context &context, renderer &renderer) noexcept;
+		imgui(ui::opengl_context &context, gfx::renderer &renderer) noexcept;
 		~imgui() noexcept = default;
 
 		void new_frame() noexcept;
@@ -29,10 +28,4 @@ namespace app
 		ui::imgui::imgui_system system;
 		gfx::imgui::imgui_graphics graphics;
 	};
-
-	template <typename renderer>
-	imgui::imgui(ui::opengl_context &context, renderer &renderer) noexcept
-		: system(context), graphics(renderer.create_imgui_graphics_core())
-	{
-	}
 }

@@ -4,6 +4,11 @@
 
 namespace app
 {
+	imgui::imgui(ui::opengl_context &context, gfx::renderer &renderer) noexcept
+		: system(context), graphics(renderer.create_imgui_graphics_core())
+	{
+	}
+
 	void imgui::new_frame() noexcept
 	{
 		graphics.new_frame();

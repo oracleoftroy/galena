@@ -5,7 +5,7 @@
 #include "renderer.hpp"
 #include "imgui_graphics.hpp"
 
-namespace gfx::gl
+namespace gfx::gl::detail
 {
 	class opengl_renderer_core
 	{
@@ -17,34 +17,34 @@ namespace gfx::gl
 
 		gl::renderer renderer;
 	};
+}
 
-	void opengl_renderer_core_deleter::operator()(opengl_renderer_core *ptr) const
+namespace gfx::gl
+{
+	gfx::renderer create_opengl_renderer(ui::opengl_context &context) noexcept
 	{
-		delete ptr;
+		return gfx::renderer(detail::opengl_renderer_core(context));
 	}
+}
 
-	opengl_renderer create_opengl_renderer(ui::opengl_context &context) noexcept
-	{
-		using ptr = std::unique_ptr<opengl_renderer_core, opengl_renderer_core_deleter>;
-		return opengl_renderer(ptr(new opengl_renderer_core(context)));
-	}
-
-	void do_set_viewport(opengl_renderer_core &core, const glm::ivec2 &p, const glm::ivec2 &size) noexcept
+namespace gfx::gl::detail
+{
+	void core_set_viewport(opengl_renderer_core &core, const glm::ivec2 &p, const glm::ivec2 &size) noexcept
 	{
 		core.renderer.set_viewport(p, size);
 	}
 
-	void do_set_clear_color(opengl_renderer_core &core, float r, float g, float b, float a) noexcept
+	void core_set_clear_color(opengl_renderer_core &core, float r, float g, float b, float a) noexcept
 	{
 		core.renderer.set_clear_color(r, g, b, a);
 	}
 
-	void do_clear_color(opengl_renderer_core &core) noexcept
+	void core_clear_color(opengl_renderer_core &core) noexcept
 	{
 		core.renderer.clear_color();
 	}
 
-	std::unique_ptr<gfx::imgui::imgui_graphics_core> do_create_imgui_graphics_core([[maybe_unused]]opengl_renderer_core &core) noexcept
+	std::unique_ptr<gfx::imgui::imgui_graphics_core> core_create_imgui_graphics_core([[maybe_unused]] opengl_renderer_core &core) noexcept
 	{
 		return std::make_unique<imgui::imgui_graphics>();
 	}

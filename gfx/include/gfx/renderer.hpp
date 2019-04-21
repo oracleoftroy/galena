@@ -10,52 +10,80 @@ namespace gfx
 		class imgui_graphics_core;
 	}
 
-	template <typename renderer_core, typename renderer_core_deleter = std::default_delete<renderer_core>>
 	class renderer
 	{
-		using core_ptr = std::unique_ptr<renderer_core, renderer_core_deleter>;
-
 	public:
-		explicit renderer(core_ptr &&core) noexcept;
+		template <typename renderer_core>
+		explicit renderer(renderer_core &&core) noexcept;
 
 		void set_viewport(const glm::ivec2 &p, const glm::ivec2 &size) noexcept;
 		void set_clear_color(float r, float g, float b, float a) noexcept;
-
 		void clear_color() noexcept;
 
 		std::unique_ptr<imgui::imgui_graphics_core> create_imgui_graphics_core() noexcept;
 
 	private:
-		core_ptr core;
+		class renderer_impl_base
+		{
+		public:
+			virtual ~renderer_impl_base() noexcept {};
+			virtual void set_viewport(const glm::ivec2 &p, const glm::ivec2 &size) noexcept = 0;
+			virtual void set_clear_color(float r, float g, float b, float a) noexcept = 0;
+			virtual void clear_color() noexcept = 0;
+			virtual std::unique_ptr<imgui::imgui_graphics_core> create_imgui_graphics_core() noexcept = 0;
+		};
+
+		template <typename renderer_core>
+		class renderer_impl final : public renderer_impl_base
+		{
+		public:
+			renderer_impl(renderer_core &&core) noexcept;
+			void set_viewport(const glm::ivec2 &p, const glm::ivec2 &size) noexcept override;
+			void set_clear_color(float r, float g, float b, float a) noexcept override;
+			void clear_color() noexcept override;
+
+			std::unique_ptr<imgui::imgui_graphics_core> create_imgui_graphics_core() noexcept;
+
+		private:
+			renderer_core core;
+		};
+
+		std::unique_ptr<renderer_impl_base> base;
 	};
 
-	template <typename core, typename deleter>
-	renderer<core, deleter>::renderer(core_ptr &&core) noexcept
+	template <typename renderer_core>
+	renderer::renderer(renderer_core &&core) noexcept
+		: base(std::make_unique<renderer_impl<renderer_core>>(std::move(core)))
+	{
+	}
+
+	template <typename renderer_core>
+	renderer::renderer_impl<renderer_core>::renderer_impl(renderer_core &&core) noexcept
 		: core(std::move(core))
 	{
 	}
 
-	template <typename core, typename deleter>
-	void renderer<core, deleter>::set_viewport(const glm::ivec2 &p, const glm::ivec2 &size) noexcept
+	template <typename renderer_core>
+	void renderer::renderer_impl<renderer_core>::set_viewport(const glm::ivec2 &p, const glm::ivec2 &size) noexcept
 	{
-		do_set_viewport(*core, p, size);
+		core_set_viewport(core, p, size);
 	}
 
-	template <typename core, typename deleter>
-	void renderer<core, deleter>::set_clear_color(float r, float g, float b, float a) noexcept
+	template <typename renderer_core>
+	void renderer::renderer_impl<renderer_core>::set_clear_color(float r, float g, float b, float a) noexcept
 	{
-		do_set_clear_color(*core, r, g, b, a);
+		core_set_clear_color(core, r, g, b, a);
 	}
 
-	template <typename core, typename deleter>
-	void renderer<core, deleter>::clear_color() noexcept
+	template <typename renderer_core>
+	void renderer::renderer_impl<renderer_core>::clear_color() noexcept
 	{
-		do_clear_color(*core);
+		core_clear_color(core);
 	}
 
-	template <typename core, typename deleter>
-	std::unique_ptr<imgui::imgui_graphics_core> renderer<core, deleter>::create_imgui_graphics_core() noexcept
+	template <typename renderer_core>
+	std::unique_ptr<imgui::imgui_graphics_core> renderer::renderer_impl<renderer_core>::create_imgui_graphics_core() noexcept
 	{
-		return do_create_imgui_graphics_core(*core);
+		return core_create_imgui_graphics_core(core);
 	}
 }
