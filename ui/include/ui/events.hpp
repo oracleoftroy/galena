@@ -181,4 +181,80 @@ namespace ui
 		const controller_button button;
 		const pressed_state state;
 	};
+
+	template <typename... Handler>
+	class event_dispatcher
+	{
+	public:
+		event_dispatcher(Handler&&... handler)
+			: visitor(std::forward<Handler>(handler)...)
+		{
+		}
+
+		void operator()(const ui::event &e)
+		{
+			if (e.type == ui::event_type::keyboard)
+			{
+				const auto &event = cast<ui::keyboard_event>(e);
+				if constexpr (std::is_invocable_v<visitor_type, decltype(event)>)
+					visitor(event);
+			}
+			else if (e.type == ui::event_type::mouse_move)
+			{
+				const auto &event = cast<ui::mouse_move_event>(e);
+				if constexpr (std::is_invocable_v<visitor_type, decltype(event)>)
+					visitor(event);
+			}
+			else if (e.type == ui::event_type::mouse_button)
+			{
+				const auto &event = cast<ui::mouse_button_event>(e);
+				if constexpr (std::is_invocable_v<visitor_type, decltype(event)>)
+					visitor(event);
+			}
+			else if (e.type == ui::event_type::mouse_scroll)
+			{
+				const auto &event = cast<ui::mouse_scroll_event>(e);
+				if constexpr (std::is_invocable_v<visitor_type, decltype(event)>)
+					visitor(event);
+			}
+			else if (e.type == ui::event_type::controller_analog)
+			{
+				const auto &event = cast<ui::controller_analog_event>(e);
+				if constexpr (std::is_invocable_v<visitor_type, decltype(event)>)
+					visitor(event);
+			}
+			else if (e.type == ui::event_type::controller_button)
+			{
+				const auto &event = cast<ui::controller_button_event>(e);
+				if constexpr (std::is_invocable_v<visitor_type, decltype(event)>)
+					visitor(event);
+			}
+			else if (e.type == ui::event_type::text_input)
+			{
+				const auto &event = cast<ui::text_input_event>(e);
+				if constexpr (std::is_invocable_v<visitor_type, decltype(event)>)
+					visitor(event);
+			}
+		}
+
+	private:
+		template <typename... Handler>
+		struct event_visitor : Handler...
+		{
+			using Handler::operator()...;
+
+			event_visitor(Handler... handler) : Handler(std::move(handler))...
+			{
+			}
+		};
+
+		using visitor_type = event_visitor<Handler...>;
+		visitor_type visitor;
+
+		template <typename E>
+		constexpr const E &cast(const event &e) noexcept
+		{
+			return static_cast<const E &>(e);
+		}
+	};
 }

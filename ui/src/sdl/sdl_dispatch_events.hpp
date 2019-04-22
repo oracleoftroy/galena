@@ -44,7 +44,7 @@ namespace ui::sdl
 				? value / static_cast<float>(SDL_JOYSTICK_AXIS_MAX)
 				: -(value / static_cast<float>(SDL_JOYSTICK_AXIS_MIN));
 		};
-		handler(controller_analog_event(e.caxis.which, controller_axis(e.caxis.axis), percent(e.caxis.value)	));
+		handler(controller_analog_event(e.caxis.which, controller_axis(e.caxis.axis), percent(e.caxis.value)));
 	}
 
 	inline void dispatch_event(event_tag<event_type::controller_button>, const platform::event_listener_type &handler, const SDL_Event &e) noexcept

@@ -21,29 +21,6 @@
 
 using namespace std::chrono_literals;
 
-template <typename T>
-struct event_dispatch : T
-{
-	void operator()(const ui::event &e) noexcept
-	{
-		T &h = *this;
-		if (e.type == ui::event_type::keyboard)
-			h(static_cast<const ui::keyboard_event &>(e));
-		else if (e.type == ui::event_type::mouse_move)
-			h(static_cast<const ui::mouse_move_event &>(e));
-		else if (e.type == ui::event_type::mouse_button)
-			h(static_cast<const ui::mouse_button_event &>(e));
-		else if (e.type == ui::event_type::mouse_scroll)
-			h(static_cast<const ui::mouse_scroll_event &>(e));
-		else if (e.type == ui::event_type::controller_analog)
-			h(static_cast<const ui::controller_analog_event &>(e));
-		else if (e.type == ui::event_type::controller_button)
-			h(static_cast<const ui::controller_button_event &>(e));
-		else if (e.type == ui::event_type::text_input)
-			h(static_cast<const ui::text_input_event &>(e));
-	}
-};
-
 struct event_handler
 {
 	void operator()(const ui::keyboard_event &e) noexcept
@@ -80,6 +57,12 @@ struct event_handler
 	{
 		LOG_CRITICAL("text input {0}", e.text);
 	}
+
+	// make event_handler completely immovable and non-copyable
+	event_handler(event_handler &&) = delete;
+	event_handler &operator=(event_handler &&) = delete;
+	event_handler(const event_handler &) = delete;
+	event_handler &operator=(const event_handler &) = delete;
 };
 
 // TODO: move histogram to frame_metrics
@@ -117,8 +100,23 @@ int main(int argc, char* argv[])
 	LOG_DEBUG("args: {0}", fmt::join(argv, argv + argc, " "));
 
 	auto platform = ui::platform::create();
-	event_dispatch<event_handler> handler;
-	platform.attach_event_listener(handler);
+
+	// Creating an event dispatcher from an immovable object
+	event_handler h{};
+	ui::event_dispatcher dispatcher(std::ref(h));
+
+	// Creating an event dispatcher from lambdas
+	//ui::event_dispatcher dispatcher(
+	//	[](const ui::keyboard_event &e)
+	//	{
+	//		LOG_CRITICAL("keyboard {0} modifiers: {1}", e.key, e.mods);
+	//	},
+	//	[](const ui::mouse_move_event &e)
+	//	{
+	//		LOG_CRITICAL("mouse moved {0}, {1}", e.position.x, e.position.y);
+	//	}
+	//);
+	platform.attach_event_listener(dispatcher);
 
 	auto window = platform.create_window("Test window", 1280, 720, ui::window_mode::windowed, ui::gfx_engine::opengl);
 	auto window_size = window.size();
