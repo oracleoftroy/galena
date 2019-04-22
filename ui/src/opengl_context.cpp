@@ -12,6 +12,11 @@ namespace ui
 
 	opengl_context::~opengl_context() noexcept = default;
 
+	glm::ivec2 opengl_context::drawable_size() const noexcept
+	{
+		return data->drawable_size();
+	}
+
 	void opengl_context::make_current() noexcept
 	{
 		data->make_current();

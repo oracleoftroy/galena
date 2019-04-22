@@ -11,6 +11,8 @@
 #include <gfx/renderer.hpp>
 #include <gfx/gl/opengl_renderer_core.hpp>
 
+#include <glm/gtc/type_ptr.hpp>
+
 #include "frame_metrics.hpp"
 #include "imgui.hpp"
 #include "log.hpp"
@@ -137,11 +139,15 @@ int main(int argc, char* argv[])
 	ui::clock::duration target_frame_rate = 1.0s / 60.0;
 	app::frame_metrics metrics(target_frame_rate);
 
-	renderer.set_viewport({0, 0}, window_size);
-	renderer.set_clear_color(0.384f, 0.761f, 0.984f, 1.0f);
+	glm::vec4 clear_color(0.384f, 0.761f, 0.984f, 1.0f);
+	renderer.set_clear_color(clear_color.r, clear_color.g, clear_color.b, clear_color.a);
 
-	bool show_demo = true;
+	auto size = opengl_context.drawable_size();
+
 	bool show_fps_overlay = true;
+	bool show_opengl_settings = true;
+
+	int vsync_play = 1;
 
 	ui::clock clock(target_frame_rate);
 	while (platform.dispatch_events())
@@ -161,11 +167,22 @@ int main(int argc, char* argv[])
 
 		imgui.new_frame();
 
-		if (show_demo)
-			ImGui::ShowDemoWindow(&show_demo);
-
 		if (show_fps_overlay)
 			fps_overlay(&show_fps_overlay);
+
+		if (show_opengl_settings)
+		{
+			ImGui::SetNextWindowPos(ImVec2(size.x - 2.0f, 2.0f), ImGuiCond_Always, ImVec2(1.0f, 0.0f));
+			ImGui::Begin("OpenGL settings", &show_opengl_settings, ImGuiWindowFlags_AlwaysAutoResize);
+
+			if (ImGui::SliderInt("VSync control", &vsync_play, -4, 4))
+				LOG_INFO("Setting vsync: {}", opengl_context.set_swap_interval(vsync_play));
+
+			if (ImGui::ColorEdit3("Clear color", glm::value_ptr(clear_color)))
+				renderer.set_clear_color(clear_color.r, clear_color.g, clear_color.b, clear_color.a);
+
+			ImGui::End();
+		}
 
 		imgui.render();
 

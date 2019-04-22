@@ -274,6 +274,8 @@ namespace gfx::gl
 		int size;
 		glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &size);
 		active_texture_bindings.resize(size);
+
+		set_viewport({0, 0}, context.drawable_size());
 	}
 
 	void renderer::enable(feature feature) noexcept
