@@ -17,985 +17,1963 @@ namespace ui::sdl
 		return SDL_Keymod(key);
 	}
 
-	constexpr keys from_sdl(SDL_Keycode value) noexcept
+	constexpr keys from_sdl(SDL_Keycode key) noexcept
 	{
-		return value == SDLK_RETURN ? keys::enter
-			: value == SDLK_ESCAPE ? keys::escape
-			: value == SDLK_BACKSPACE ? keys::backspace
-			: value == SDLK_TAB ? keys::tab
-			: value == SDLK_SPACE ? keys::space
-			: value == SDLK_EXCLAIM ? keys::exclaim
-			: value == SDLK_QUOTEDBL ? keys::quotedbl
-			: value == SDLK_HASH ? keys::hash
-			: value == SDLK_PERCENT ? keys::percent
-			: value == SDLK_DOLLAR ? keys::dollar
-			: value == SDLK_AMPERSAND ? keys::ampersand
-			: value == SDLK_QUOTE ? keys::quote
-			: value == SDLK_LEFTPAREN ? keys::left_paren
-			: value == SDLK_RIGHTPAREN ? keys::right_paren
-			: value == SDLK_ASTERISK ? keys::asterisk
-			: value == SDLK_PLUS ? keys::plus
-			: value == SDLK_COMMA ? keys::comma
-			: value == SDLK_MINUS ? keys::minus
-			: value == SDLK_PERIOD ? keys::period
-			: value == SDLK_SLASH ? keys::slash
-			: value == SDLK_0 ? keys::num_0
-			: value == SDLK_1 ? keys::num_1
-			: value == SDLK_2 ? keys::num_2
-			: value == SDLK_3 ? keys::num_3
-			: value == SDLK_4 ? keys::num_4
-			: value == SDLK_5 ? keys::num_5
-			: value == SDLK_6 ? keys::num_6
-			: value == SDLK_7 ? keys::num_7
-			: value == SDLK_8 ? keys::num_8
-			: value == SDLK_9 ? keys::num_9
-			: value == SDLK_COLON ? keys::colon
-			: value == SDLK_SEMICOLON ? keys::semicolon
-			: value == SDLK_LESS ? keys::less
-			: value == SDLK_EQUALS ? keys::equals
-			: value == SDLK_GREATER ? keys::greater
-			: value == SDLK_QUESTION ? keys::question
-			: value == SDLK_AT ? keys::at
-			: value == SDLK_LEFTBRACKET ? keys::left_bracket
-			: value == SDLK_BACKSLASH ? keys::backslash
-			: value == SDLK_RIGHTBRACKET ? keys::right_bracket
-			: value == SDLK_CARET ? keys::caret
-			: value == SDLK_UNDERSCORE ? keys::underscore
-			: value == SDLK_BACKQUOTE ? keys::backquote
-			: value == SDLK_a ? keys::a
-			: value == SDLK_b ? keys::b
-			: value == SDLK_c ? keys::c
-			: value == SDLK_d ? keys::d
-			: value == SDLK_e ? keys::e
-			: value == SDLK_f ? keys::f
-			: value == SDLK_g ? keys::g
-			: value == SDLK_h ? keys::h
-			: value == SDLK_i ? keys::i
-			: value == SDLK_j ? keys::j
-			: value == SDLK_k ? keys::k
-			: value == SDLK_l ? keys::l
-			: value == SDLK_m ? keys::m
-			: value == SDLK_n ? keys::n
-			: value == SDLK_o ? keys::o
-			: value == SDLK_p ? keys::p
-			: value == SDLK_q ? keys::q
-			: value == SDLK_r ? keys::r
-			: value == SDLK_s ? keys::s
-			: value == SDLK_t ? keys::t
-			: value == SDLK_u ? keys::u
-			: value == SDLK_v ? keys::v
-			: value == SDLK_w ? keys::w
-			: value == SDLK_x ? keys::x
-			: value == SDLK_y ? keys::y
-			: value == SDLK_z ? keys::z
-			: value == SDLK_CAPSLOCK ? keys::capslock
-			: value == SDLK_F1 ? keys::f1
-			: value == SDLK_F2 ? keys::f2
-			: value == SDLK_F3 ? keys::f3
-			: value == SDLK_F4 ? keys::f4
-			: value == SDLK_F5 ? keys::f5
-			: value == SDLK_F6 ? keys::f6
-			: value == SDLK_F7 ? keys::f7
-			: value == SDLK_F8 ? keys::f8
-			: value == SDLK_F9 ? keys::f9
-			: value == SDLK_F10 ? keys::f10
-			: value == SDLK_F11 ? keys::f11
-			: value == SDLK_F12 ? keys::f12
-			: value == SDLK_PRINTSCREEN ? keys::printscreen
-			: value == SDLK_SCROLLLOCK ? keys::scroll_lock
-			: value == SDLK_PAUSE ? keys::pause
-			: value == SDLK_INSERT ? keys::insert
-			: value == SDLK_HOME ? keys::home
-			: value == SDLK_PAGEUP ? keys::page_up
-			: value == SDLK_DELETE ? keys::del
-			: value == SDLK_END ? keys::end
-			: value == SDLK_PAGEDOWN ? keys::page_down
-			: value == SDLK_RIGHT ? keys::right
-			: value == SDLK_LEFT ? keys::left
-			: value == SDLK_DOWN ? keys::down
-			: value == SDLK_UP ? keys::up
-			: value == SDLK_NUMLOCKCLEAR ? keys::numlock_clear
-			: value == SDLK_KP_DIVIDE ? keys::kp_divide
-			: value == SDLK_KP_MULTIPLY ? keys::kp_multiply
-			: value == SDLK_KP_MINUS ? keys::kp_minus
-			: value == SDLK_KP_PLUS ? keys::kp_plus
-			: value == SDLK_KP_ENTER ? keys::kp_enter
-			: value == SDLK_KP_1 ? keys::kp_1
-			: value == SDLK_KP_2 ? keys::kp_2
-			: value == SDLK_KP_3 ? keys::kp_3
-			: value == SDLK_KP_4 ? keys::kp_4
-			: value == SDLK_KP_5 ? keys::kp_5
-			: value == SDLK_KP_6 ? keys::kp_6
-			: value == SDLK_KP_7 ? keys::kp_7
-			: value == SDLK_KP_8 ? keys::kp_8
-			: value == SDLK_KP_9 ? keys::kp_9
-			: value == SDLK_KP_0 ? keys::kp_0
-			: value == SDLK_KP_PERIOD ? keys::kp_period
-			: value == SDLK_APPLICATION ? keys::application
-			: value == SDLK_POWER ? keys::power
-			: value == SDLK_KP_EQUALS ? keys::kp_equals
-			: value == SDLK_F13 ? keys::f13
-			: value == SDLK_F14 ? keys::f14
-			: value == SDLK_F15 ? keys::f15
-			: value == SDLK_F16 ? keys::f16
-			: value == SDLK_F17 ? keys::f17
-			: value == SDLK_F18 ? keys::f18
-			: value == SDLK_F19 ? keys::f19
-			: value == SDLK_F20 ? keys::f20
-			: value == SDLK_F21 ? keys::f21
-			: value == SDLK_F22 ? keys::f22
-			: value == SDLK_F23 ? keys::f23
-			: value == SDLK_F24 ? keys::f24
-			: value == SDLK_EXECUTE ? keys::execute
-			: value == SDLK_HELP ? keys::help
-			: value == SDLK_MENU ? keys::menu
-			: value == SDLK_SELECT ? keys::select
-			: value == SDLK_STOP ? keys::stop
-			: value == SDLK_AGAIN ? keys::again
-			: value == SDLK_UNDO ? keys::undo
-			: value == SDLK_CUT ? keys::cut
-			: value == SDLK_COPY ? keys::copy
-			: value == SDLK_PASTE ? keys::paste
-			: value == SDLK_FIND ? keys::find
-			: value == SDLK_MUTE ? keys::mute
-			: value == SDLK_VOLUMEUP ? keys::volume_up
-			: value == SDLK_VOLUMEDOWN ? keys::volume_down
-			: value == SDLK_KP_COMMA ? keys::kp_comma
-			: value == SDLK_KP_EQUALSAS400 ? keys::kp_equalsas400
-			: value == SDLK_ALTERASE ? keys::alterase
-			: value == SDLK_SYSREQ ? keys::sysreq
-			: value == SDLK_CANCEL ? keys::cancel
-			: value == SDLK_CLEAR ? keys::clear
-			: value == SDLK_PRIOR ? keys::prior
-			: value == SDLK_RETURN2 ? keys::return2
-			: value == SDLK_SEPARATOR ? keys::separator
-			: value == SDLK_OUT ? keys::out
-			: value == SDLK_OPER ? keys::oper
-			: value == SDLK_CLEARAGAIN ? keys::clear_again
-			: value == SDLK_CRSEL ? keys::crsel
-			: value == SDLK_EXSEL ? keys::exsel
-			: value == SDLK_KP_00 ? keys::kp_00
-			: value == SDLK_KP_000 ? keys::kp_000
-			: value == SDLK_THOUSANDSSEPARATOR ? keys::thousands_separator
-			: value == SDLK_DECIMALSEPARATOR ? keys::decimal_separator
-			: value == SDLK_CURRENCYUNIT ? keys::currency_unit
-			: value == SDLK_CURRENCYSUBUNIT ? keys::currency_subunit
-			: value == SDLK_KP_LEFTPAREN ? keys::kp_left_paren
-			: value == SDLK_KP_RIGHTPAREN ? keys::kp_right_paren
-			: value == SDLK_KP_LEFTBRACE ? keys::kp_left_brace
-			: value == SDLK_KP_RIGHTBRACE ? keys::kp_right_brace
-			: value == SDLK_KP_TAB ? keys::kp_tab
-			: value == SDLK_KP_BACKSPACE ? keys::kp_backspace
-			: value == SDLK_KP_A ? keys::kp_a
-			: value == SDLK_KP_B ? keys::kp_b
-			: value == SDLK_KP_C ? keys::kp_c
-			: value == SDLK_KP_D ? keys::kp_d
-			: value == SDLK_KP_E ? keys::kp_e
-			: value == SDLK_KP_F ? keys::kp_f
-			: value == SDLK_KP_XOR ? keys::kp_xor
-			: value == SDLK_KP_POWER ? keys::kp_power
-			: value == SDLK_KP_PERCENT ? keys::kp_percent
-			: value == SDLK_KP_LESS ? keys::kp_less
-			: value == SDLK_KP_GREATER ? keys::kp_greater
-			: value == SDLK_KP_AMPERSAND ? keys::kp_ampersand
-			: value == SDLK_KP_DBLAMPERSAND ? keys::kp_dblampersand
-			: value == SDLK_KP_VERTICALBAR ? keys::kp_verticalbar
-			: value == SDLK_KP_DBLVERTICALBAR ? keys::kp_dblverticalbar
-			: value == SDLK_KP_COLON ? keys::kp_colon
-			: value == SDLK_KP_HASH ? keys::kp_hash
-			: value == SDLK_KP_SPACE ? keys::kp_space
-			: value == SDLK_KP_AT ? keys::kp_at
-			: value == SDLK_KP_EXCLAM ? keys::kp_exclam
-			: value == SDLK_KP_MEMSTORE ? keys::kp_mem_store
-			: value == SDLK_KP_MEMRECALL ? keys::kp_mem_recall
-			: value == SDLK_KP_MEMCLEAR ? keys::kp_mem_clear
-			: value == SDLK_KP_MEMADD ? keys::kp_mem_add
-			: value == SDLK_KP_MEMSUBTRACT ? keys::kp_mem_subtract
-			: value == SDLK_KP_MEMMULTIPLY ? keys::kp_mem_multiply
-			: value == SDLK_KP_MEMDIVIDE ? keys::kp_mem_divide
-			: value == SDLK_KP_PLUSMINUS ? keys::kp_plus_minus
-			: value == SDLK_KP_CLEAR ? keys::kp_clear
-			: value == SDLK_KP_CLEARENTRY ? keys::kp_clear_entry
-			: value == SDLK_KP_BINARY ? keys::kp_binary
-			: value == SDLK_KP_OCTAL ? keys::kp_octal
-			: value == SDLK_KP_DECIMAL ? keys::kp_decimal
-			: value == SDLK_KP_HEXADECIMAL ? keys::kp_hexadecimal
-			: value == SDLK_LCTRL ? keys::left_ctrl
-			: value == SDLK_LSHIFT ? keys::left_shift
-			: value == SDLK_LALT ? keys::left_alt
-			: value == SDLK_LGUI ? keys::left_gui
-			: value == SDLK_RCTRL ? keys::right_ctrl
-			: value == SDLK_RSHIFT ? keys::right_shift
-			: value == SDLK_RALT ? keys::right_alt
-			: value == SDLK_RGUI ? keys::right_gui
-			: value == SDLK_MODE ? keys::mode
-			: value == SDLK_AUDIONEXT ? keys::audio_next
-			: value == SDLK_AUDIOPREV ? keys::audio_prev
-			: value == SDLK_AUDIOSTOP ? keys::audio_stop
-			: value == SDLK_AUDIOPLAY ? keys::audio_play
-			: value == SDLK_AUDIOMUTE ? keys::audio_mute
-			: value == SDLK_MEDIASELECT ? keys::media_select
-			: value == SDLK_WWW ? keys::www
-			: value == SDLK_MAIL ? keys::mail
-			: value == SDLK_CALCULATOR ? keys::calculator
-			: value == SDLK_COMPUTER ? keys::computer
-			: value == SDLK_AC_SEARCH ? keys::ac_search
-			: value == SDLK_AC_HOME ? keys::ac_home
-			: value == SDLK_AC_BACK ? keys::ac_back
-			: value == SDLK_AC_FORWARD ? keys::ac_forward
-			: value == SDLK_AC_STOP ? keys::ac_stop
-			: value == SDLK_AC_REFRESH ? keys::ac_refresh
-			: value == SDLK_AC_BOOKMARKS ? keys::ac_bookmarks
-			: value == SDLK_BRIGHTNESSDOWN ? keys::brightness_down
-			: value == SDLK_BRIGHTNESSUP ? keys::brightness_up
-			: value == SDLK_DISPLAYSWITCH ? keys::display_switch
-			: value == SDLK_KBDILLUMTOGGLE ? keys::kbd_illum_toggle
-			: value == SDLK_KBDILLUMDOWN ? keys::kbd_illum_down
-			: value == SDLK_KBDILLUMUP ? keys::kbd_illum_up
-			: value == SDLK_EJECT ? keys::eject
-			: value == SDLK_SLEEP ? keys::sleep
-			: value == SDLK_APP1 ? keys::app1
-			: value == SDLK_APP2 ? keys::app2
-			: value == SDLK_AUDIOREWIND ? keys::audio_rewind
-			: value == SDLK_AUDIOFASTFORWARD ? keys::audio_fast_forward
-			: keys::unknown;
+		switch (key)
+		{
+		default:
+			return keys::unknown;
+		case SDLK_RETURN:
+			return keys::enter;
+		case SDLK_ESCAPE:
+			return keys::escape;
+		case SDLK_BACKSPACE:
+			return keys::backspace;
+		case SDLK_TAB:
+			return keys::tab;
+		case SDLK_SPACE:
+			return keys::space;
+		case SDLK_EXCLAIM:
+			return keys::exclaim;
+		case SDLK_QUOTEDBL:
+			return keys::quotedbl;
+		case SDLK_HASH:
+			return keys::hash;
+		case SDLK_PERCENT:
+			return keys::percent;
+		case SDLK_DOLLAR:
+			return keys::dollar;
+		case SDLK_AMPERSAND:
+			return keys::ampersand;
+		case SDLK_QUOTE:
+			return keys::quote;
+		case SDLK_LEFTPAREN:
+			return keys::left_paren;
+		case SDLK_RIGHTPAREN:
+			return keys::right_paren;
+		case SDLK_ASTERISK:
+			return keys::asterisk;
+		case SDLK_PLUS:
+			return keys::plus;
+		case SDLK_COMMA:
+			return keys::comma;
+		case SDLK_MINUS:
+			return keys::minus;
+		case SDLK_PERIOD:
+			return keys::period;
+		case SDLK_SLASH:
+			return keys::slash;
+		case SDLK_0:
+			return keys::num_0;
+		case SDLK_1:
+			return keys::num_1;
+		case SDLK_2:
+			return keys::num_2;
+		case SDLK_3:
+			return keys::num_3;
+		case SDLK_4:
+			return keys::num_4;
+		case SDLK_5:
+			return keys::num_5;
+		case SDLK_6:
+			return keys::num_6;
+		case SDLK_7:
+			return keys::num_7;
+		case SDLK_8:
+			return keys::num_8;
+		case SDLK_9:
+			return keys::num_9;
+		case SDLK_COLON:
+			return keys::colon;
+		case SDLK_SEMICOLON:
+			return keys::semicolon;
+		case SDLK_LESS:
+			return keys::less;
+		case SDLK_EQUALS:
+			return keys::equals;
+		case SDLK_GREATER:
+			return keys::greater;
+		case SDLK_QUESTION:
+			return keys::question;
+		case SDLK_AT:
+			return keys::at;
+		case SDLK_LEFTBRACKET:
+			return keys::left_bracket;
+		case SDLK_BACKSLASH:
+			return keys::backslash;
+		case SDLK_RIGHTBRACKET:
+			return keys::right_bracket;
+		case SDLK_CARET:
+			return keys::caret;
+		case SDLK_UNDERSCORE:
+			return keys::underscore;
+		case SDLK_BACKQUOTE:
+			return keys::backquote;
+		case SDLK_a:
+			return keys::a;
+		case SDLK_b:
+			return keys::b;
+		case SDLK_c:
+			return keys::c;
+		case SDLK_d:
+			return keys::d;
+		case SDLK_e:
+			return keys::e;
+		case SDLK_f:
+			return keys::f;
+		case SDLK_g:
+			return keys::g;
+		case SDLK_h:
+			return keys::h;
+		case SDLK_i:
+			return keys::i;
+		case SDLK_j:
+			return keys::j;
+		case SDLK_k:
+			return keys::k;
+		case SDLK_l:
+			return keys::l;
+		case SDLK_m:
+			return keys::m;
+		case SDLK_n:
+			return keys::n;
+		case SDLK_o:
+			return keys::o;
+		case SDLK_p:
+			return keys::p;
+		case SDLK_q:
+			return keys::q;
+		case SDLK_r:
+			return keys::r;
+		case SDLK_s:
+			return keys::s;
+		case SDLK_t:
+			return keys::t;
+		case SDLK_u:
+			return keys::u;
+		case SDLK_v:
+			return keys::v;
+		case SDLK_w:
+			return keys::w;
+		case SDLK_x:
+			return keys::x;
+		case SDLK_y:
+			return keys::y;
+		case SDLK_z:
+			return keys::z;
+		case SDLK_CAPSLOCK:
+			return keys::capslock;
+		case SDLK_F1:
+			return keys::f1;
+		case SDLK_F2:
+			return keys::f2;
+		case SDLK_F3:
+			return keys::f3;
+		case SDLK_F4:
+			return keys::f4;
+		case SDLK_F5:
+			return keys::f5;
+		case SDLK_F6:
+			return keys::f6;
+		case SDLK_F7:
+			return keys::f7;
+		case SDLK_F8:
+			return keys::f8;
+		case SDLK_F9:
+			return keys::f9;
+		case SDLK_F10:
+			return keys::f10;
+		case SDLK_F11:
+			return keys::f11;
+		case SDLK_F12:
+			return keys::f12;
+		case SDLK_PRINTSCREEN:
+			return keys::printscreen;
+		case SDLK_SCROLLLOCK:
+			return keys::scroll_lock;
+		case SDLK_PAUSE:
+			return keys::pause;
+		case SDLK_INSERT:
+			return keys::insert;
+		case SDLK_HOME:
+			return keys::home;
+		case SDLK_PAGEUP:
+			return keys::page_up;
+		case SDLK_DELETE:
+			return keys::del;
+		case SDLK_END:
+			return keys::end;
+		case SDLK_PAGEDOWN:
+			return keys::page_down;
+		case SDLK_RIGHT:
+			return keys::right;
+		case SDLK_LEFT:
+			return keys::left;
+		case SDLK_DOWN:
+			return keys::down;
+		case SDLK_UP:
+			return keys::up;
+		case SDLK_NUMLOCKCLEAR:
+			return keys::numlock_clear;
+		case SDLK_KP_DIVIDE:
+			return keys::kp_divide;
+		case SDLK_KP_MULTIPLY:
+			return keys::kp_multiply;
+		case SDLK_KP_MINUS:
+			return keys::kp_minus;
+		case SDLK_KP_PLUS:
+			return keys::kp_plus;
+		case SDLK_KP_ENTER:
+			return keys::kp_enter;
+		case SDLK_KP_1:
+			return keys::kp_1;
+		case SDLK_KP_2:
+			return keys::kp_2;
+		case SDLK_KP_3:
+			return keys::kp_3;
+		case SDLK_KP_4:
+			return keys::kp_4;
+		case SDLK_KP_5:
+			return keys::kp_5;
+		case SDLK_KP_6:
+			return keys::kp_6;
+		case SDLK_KP_7:
+			return keys::kp_7;
+		case SDLK_KP_8:
+			return keys::kp_8;
+		case SDLK_KP_9:
+			return keys::kp_9;
+		case SDLK_KP_0:
+			return keys::kp_0;
+		case SDLK_KP_PERIOD:
+			return keys::kp_period;
+		case SDLK_APPLICATION:
+			return keys::application;
+		case SDLK_POWER:
+			return keys::power;
+		case SDLK_KP_EQUALS:
+			return keys::kp_equals;
+		case SDLK_F13:
+			return keys::f13;
+		case SDLK_F14:
+			return keys::f14;
+		case SDLK_F15:
+			return keys::f15;
+		case SDLK_F16:
+			return keys::f16;
+		case SDLK_F17:
+			return keys::f17;
+		case SDLK_F18:
+			return keys::f18;
+		case SDLK_F19:
+			return keys::f19;
+		case SDLK_F20:
+			return keys::f20;
+		case SDLK_F21:
+			return keys::f21;
+		case SDLK_F22:
+			return keys::f22;
+		case SDLK_F23:
+			return keys::f23;
+		case SDLK_F24:
+			return keys::f24;
+		case SDLK_EXECUTE:
+			return keys::execute;
+		case SDLK_HELP:
+			return keys::help;
+		case SDLK_MENU:
+			return keys::menu;
+		case SDLK_SELECT:
+			return keys::select;
+		case SDLK_STOP:
+			return keys::stop;
+		case SDLK_AGAIN:
+			return keys::again;
+		case SDLK_UNDO:
+			return keys::undo;
+		case SDLK_CUT:
+			return keys::cut;
+		case SDLK_COPY:
+			return keys::copy;
+		case SDLK_PASTE:
+			return keys::paste;
+		case SDLK_FIND:
+			return keys::find;
+		case SDLK_MUTE:
+			return keys::mute;
+		case SDLK_VOLUMEUP:
+			return keys::volume_up;
+		case SDLK_VOLUMEDOWN:
+			return keys::volume_down;
+		case SDLK_KP_COMMA:
+			return keys::kp_comma;
+		case SDLK_KP_EQUALSAS400:
+			return keys::kp_equalsas400;
+		case SDLK_ALTERASE:
+			return keys::alterase;
+		case SDLK_SYSREQ:
+			return keys::sysreq;
+		case SDLK_CANCEL:
+			return keys::cancel;
+		case SDLK_CLEAR:
+			return keys::clear;
+		case SDLK_PRIOR:
+			return keys::prior;
+		case SDLK_RETURN2:
+			return keys::return2;
+		case SDLK_SEPARATOR:
+			return keys::separator;
+		case SDLK_OUT:
+			return keys::out;
+		case SDLK_OPER:
+			return keys::oper;
+		case SDLK_CLEARAGAIN:
+			return keys::clear_again;
+		case SDLK_CRSEL:
+			return keys::crsel;
+		case SDLK_EXSEL:
+			return keys::exsel;
+		case SDLK_KP_00:
+			return keys::kp_00;
+		case SDLK_KP_000:
+			return keys::kp_000;
+		case SDLK_THOUSANDSSEPARATOR:
+			return keys::thousands_separator;
+		case SDLK_DECIMALSEPARATOR:
+			return keys::decimal_separator;
+		case SDLK_CURRENCYUNIT:
+			return keys::currency_unit;
+		case SDLK_CURRENCYSUBUNIT:
+			return keys::currency_subunit;
+		case SDLK_KP_LEFTPAREN:
+			return keys::kp_left_paren;
+		case SDLK_KP_RIGHTPAREN:
+			return keys::kp_right_paren;
+		case SDLK_KP_LEFTBRACE:
+			return keys::kp_left_brace;
+		case SDLK_KP_RIGHTBRACE:
+			return keys::kp_right_brace;
+		case SDLK_KP_TAB:
+			return keys::kp_tab;
+		case SDLK_KP_BACKSPACE:
+			return keys::kp_backspace;
+		case SDLK_KP_A:
+			return keys::kp_a;
+		case SDLK_KP_B:
+			return keys::kp_b;
+		case SDLK_KP_C:
+			return keys::kp_c;
+		case SDLK_KP_D:
+			return keys::kp_d;
+		case SDLK_KP_E:
+			return keys::kp_e;
+		case SDLK_KP_F:
+			return keys::kp_f;
+		case SDLK_KP_XOR:
+			return keys::kp_xor;
+		case SDLK_KP_POWER:
+			return keys::kp_power;
+		case SDLK_KP_PERCENT:
+			return keys::kp_percent;
+		case SDLK_KP_LESS:
+			return keys::kp_less;
+		case SDLK_KP_GREATER:
+			return keys::kp_greater;
+		case SDLK_KP_AMPERSAND:
+			return keys::kp_ampersand;
+		case SDLK_KP_DBLAMPERSAND:
+			return keys::kp_dblampersand;
+		case SDLK_KP_VERTICALBAR:
+			return keys::kp_verticalbar;
+		case SDLK_KP_DBLVERTICALBAR:
+			return keys::kp_dblverticalbar;
+		case SDLK_KP_COLON:
+			return keys::kp_colon;
+		case SDLK_KP_HASH:
+			return keys::kp_hash;
+		case SDLK_KP_SPACE:
+			return keys::kp_space;
+		case SDLK_KP_AT:
+			return keys::kp_at;
+		case SDLK_KP_EXCLAM:
+			return keys::kp_exclam;
+		case SDLK_KP_MEMSTORE:
+			return keys::kp_mem_store;
+		case SDLK_KP_MEMRECALL:
+			return keys::kp_mem_recall;
+		case SDLK_KP_MEMCLEAR:
+			return keys::kp_mem_clear;
+		case SDLK_KP_MEMADD:
+			return keys::kp_mem_add;
+		case SDLK_KP_MEMSUBTRACT:
+			return keys::kp_mem_subtract;
+		case SDLK_KP_MEMMULTIPLY:
+			return keys::kp_mem_multiply;
+		case SDLK_KP_MEMDIVIDE:
+			return keys::kp_mem_divide;
+		case SDLK_KP_PLUSMINUS:
+			return keys::kp_plus_minus;
+		case SDLK_KP_CLEAR:
+			return keys::kp_clear;
+		case SDLK_KP_CLEARENTRY:
+			return keys::kp_clear_entry;
+		case SDLK_KP_BINARY:
+			return keys::kp_binary;
+		case SDLK_KP_OCTAL:
+			return keys::kp_octal;
+		case SDLK_KP_DECIMAL:
+			return keys::kp_decimal;
+		case SDLK_KP_HEXADECIMAL:
+			return keys::kp_hexadecimal;
+		case SDLK_LCTRL:
+			return keys::left_ctrl;
+		case SDLK_LSHIFT:
+			return keys::left_shift;
+		case SDLK_LALT:
+			return keys::left_alt;
+		case SDLK_LGUI:
+			return keys::left_gui;
+		case SDLK_RCTRL:
+			return keys::right_ctrl;
+		case SDLK_RSHIFT:
+			return keys::right_shift;
+		case SDLK_RALT:
+			return keys::right_alt;
+		case SDLK_RGUI:
+			return keys::right_gui;
+		case SDLK_MODE:
+			return keys::mode;
+		case SDLK_AUDIONEXT:
+			return keys::audio_next;
+		case SDLK_AUDIOPREV:
+			return keys::audio_prev;
+		case SDLK_AUDIOSTOP:
+			return keys::audio_stop;
+		case SDLK_AUDIOPLAY:
+			return keys::audio_play;
+		case SDLK_AUDIOMUTE:
+			return keys::audio_mute;
+		case SDLK_MEDIASELECT:
+			return keys::media_select;
+		case SDLK_WWW:
+			return keys::www;
+		case SDLK_MAIL:
+			return keys::mail;
+		case SDLK_CALCULATOR:
+			return keys::calculator;
+		case SDLK_COMPUTER:
+			return keys::computer;
+		case SDLK_AC_SEARCH:
+			return keys::ac_search;
+		case SDLK_AC_HOME:
+			return keys::ac_home;
+		case SDLK_AC_BACK:
+			return keys::ac_back;
+		case SDLK_AC_FORWARD:
+			return keys::ac_forward;
+		case SDLK_AC_STOP:
+			return keys::ac_stop;
+		case SDLK_AC_REFRESH:
+			return keys::ac_refresh;
+		case SDLK_AC_BOOKMARKS:
+			return keys::ac_bookmarks;
+		case SDLK_BRIGHTNESSDOWN:
+			return keys::brightness_down;
+		case SDLK_BRIGHTNESSUP:
+			return keys::brightness_up;
+		case SDLK_DISPLAYSWITCH:
+			return keys::display_switch;
+		case SDLK_KBDILLUMTOGGLE:
+			return keys::kbd_illum_toggle;
+		case SDLK_KBDILLUMDOWN:
+			return keys::kbd_illum_down;
+		case SDLK_KBDILLUMUP:
+			return keys::kbd_illum_up;
+		case SDLK_EJECT:
+			return keys::eject;
+		case SDLK_SLEEP:
+			return keys::sleep;
+		case SDLK_APP1:
+			return keys::app1;
+		case SDLK_APP2:
+			return keys::app2;
+		case SDLK_AUDIOREWIND:
+			return keys::audio_rewind;
+		case SDLK_AUDIOFASTFORWARD:
+			return keys::audio_fast_forward;
+		}
 	}
 
-	constexpr SDL_Keycode to_sdl(keys value) noexcept
+	constexpr SDL_Keycode to_sdl(keys key) noexcept
 	{
-		return value == keys::enter ? SDLK_RETURN
-			: value == keys::escape ? SDLK_ESCAPE
-			: value == keys::backspace ? SDLK_BACKSPACE
-			: value == keys::tab ? SDLK_TAB
-			: value == keys::space ? SDLK_SPACE
-			: value == keys::exclaim ? SDLK_EXCLAIM
-			: value == keys::quotedbl ? SDLK_QUOTEDBL
-			: value == keys::hash ? SDLK_HASH
-			: value == keys::percent ? SDLK_PERCENT
-			: value == keys::dollar ? SDLK_DOLLAR
-			: value == keys::ampersand ? SDLK_AMPERSAND
-			: value == keys::quote ? SDLK_QUOTE
-			: value == keys::left_paren ? SDLK_LEFTPAREN
-			: value == keys::right_paren ? SDLK_RIGHTPAREN
-			: value == keys::asterisk ? SDLK_ASTERISK
-			: value == keys::plus ? SDLK_PLUS
-			: value == keys::comma ? SDLK_COMMA
-			: value == keys::minus ? SDLK_MINUS
-			: value == keys::period ? SDLK_PERIOD
-			: value == keys::slash ? SDLK_SLASH
-			: value == keys::num_0 ? SDLK_0
-			: value == keys::num_1 ? SDLK_1
-			: value == keys::num_2 ? SDLK_2
-			: value == keys::num_3 ? SDLK_3
-			: value == keys::num_4 ? SDLK_4
-			: value == keys::num_5 ? SDLK_5
-			: value == keys::num_6 ? SDLK_6
-			: value == keys::num_7 ? SDLK_7
-			: value == keys::num_8 ? SDLK_8
-			: value == keys::num_9 ? SDLK_9
-			: value == keys::colon ? SDLK_COLON
-			: value == keys::semicolon ? SDLK_SEMICOLON
-			: value == keys::less ? SDLK_LESS
-			: value == keys::equals ? SDLK_EQUALS
-			: value == keys::greater ? SDLK_GREATER
-			: value == keys::question ? SDLK_QUESTION
-			: value == keys::at ? SDLK_AT
-			: value == keys::left_bracket ? SDLK_LEFTBRACKET
-			: value == keys::backslash ? SDLK_BACKSLASH
-			: value == keys::right_bracket ? SDLK_RIGHTBRACKET
-			: value == keys::caret ? SDLK_CARET
-			: value == keys::underscore ? SDLK_UNDERSCORE
-			: value == keys::backquote ? SDLK_BACKQUOTE
-			: value == keys::a ? SDLK_a
-			: value == keys::b ? SDLK_b
-			: value == keys::c ? SDLK_c
-			: value == keys::d ? SDLK_d
-			: value == keys::e ? SDLK_e
-			: value == keys::f ? SDLK_f
-			: value == keys::g ? SDLK_g
-			: value == keys::h ? SDLK_h
-			: value == keys::i ? SDLK_i
-			: value == keys::j ? SDLK_j
-			: value == keys::k ? SDLK_k
-			: value == keys::l ? SDLK_l
-			: value == keys::m ? SDLK_m
-			: value == keys::n ? SDLK_n
-			: value == keys::o ? SDLK_o
-			: value == keys::p ? SDLK_p
-			: value == keys::q ? SDLK_q
-			: value == keys::r ? SDLK_r
-			: value == keys::s ? SDLK_s
-			: value == keys::t ? SDLK_t
-			: value == keys::u ? SDLK_u
-			: value == keys::v ? SDLK_v
-			: value == keys::w ? SDLK_w
-			: value == keys::x ? SDLK_x
-			: value == keys::y ? SDLK_y
-			: value == keys::z ? SDLK_z
-			: value == keys::capslock ? SDLK_CAPSLOCK
-			: value == keys::f1 ? SDLK_F1
-			: value == keys::f2 ? SDLK_F2
-			: value == keys::f3 ? SDLK_F3
-			: value == keys::f4 ? SDLK_F4
-			: value == keys::f5 ? SDLK_F5
-			: value == keys::f6 ? SDLK_F6
-			: value == keys::f7 ? SDLK_F7
-			: value == keys::f8 ? SDLK_F8
-			: value == keys::f9 ? SDLK_F9
-			: value == keys::f10 ? SDLK_F10
-			: value == keys::f11 ? SDLK_F11
-			: value == keys::f12 ? SDLK_F12
-			: value == keys::printscreen ? SDLK_PRINTSCREEN
-			: value == keys::scroll_lock ? SDLK_SCROLLLOCK
-			: value == keys::pause ? SDLK_PAUSE
-			: value == keys::insert ? SDLK_INSERT
-			: value == keys::home ? SDLK_HOME
-			: value == keys::page_up ? SDLK_PAGEUP
-			: value == keys::del ? SDLK_DELETE
-			: value == keys::end ? SDLK_END
-			: value == keys::page_down ? SDLK_PAGEDOWN
-			: value == keys::right ? SDLK_RIGHT
-			: value == keys::left ? SDLK_LEFT
-			: value == keys::down ? SDLK_DOWN
-			: value == keys::up ? SDLK_UP
-			: value == keys::numlock_clear ? SDLK_NUMLOCKCLEAR
-			: value == keys::kp_divide ? SDLK_KP_DIVIDE
-			: value == keys::kp_multiply ? SDLK_KP_MULTIPLY
-			: value == keys::kp_minus ? SDLK_KP_MINUS
-			: value == keys::kp_plus ? SDLK_KP_PLUS
-			: value == keys::kp_enter ? SDLK_KP_ENTER
-			: value == keys::kp_1 ? SDLK_KP_1
-			: value == keys::kp_2 ? SDLK_KP_2
-			: value == keys::kp_3 ? SDLK_KP_3
-			: value == keys::kp_4 ? SDLK_KP_4
-			: value == keys::kp_5 ? SDLK_KP_5
-			: value == keys::kp_6 ? SDLK_KP_6
-			: value == keys::kp_7 ? SDLK_KP_7
-			: value == keys::kp_8 ? SDLK_KP_8
-			: value == keys::kp_9 ? SDLK_KP_9
-			: value == keys::kp_0 ? SDLK_KP_0
-			: value == keys::kp_period ? SDLK_KP_PERIOD
-			: value == keys::application ? SDLK_APPLICATION
-			: value == keys::power ? SDLK_POWER
-			: value == keys::kp_equals ? SDLK_KP_EQUALS
-			: value == keys::f13 ? SDLK_F13
-			: value == keys::f14 ? SDLK_F14
-			: value == keys::f15 ? SDLK_F15
-			: value == keys::f16 ? SDLK_F16
-			: value == keys::f17 ? SDLK_F17
-			: value == keys::f18 ? SDLK_F18
-			: value == keys::f19 ? SDLK_F19
-			: value == keys::f20 ? SDLK_F20
-			: value == keys::f21 ? SDLK_F21
-			: value == keys::f22 ? SDLK_F22
-			: value == keys::f23 ? SDLK_F23
-			: value == keys::f24 ? SDLK_F24
-			: value == keys::execute ? SDLK_EXECUTE
-			: value == keys::help ? SDLK_HELP
-			: value == keys::menu ? SDLK_MENU
-			: value == keys::select ? SDLK_SELECT
-			: value == keys::stop ? SDLK_STOP
-			: value == keys::again ? SDLK_AGAIN
-			: value == keys::undo ? SDLK_UNDO
-			: value == keys::cut ? SDLK_CUT
-			: value == keys::copy ? SDLK_COPY
-			: value == keys::paste ? SDLK_PASTE
-			: value == keys::find ? SDLK_FIND
-			: value == keys::mute ? SDLK_MUTE
-			: value == keys::volume_up ? SDLK_VOLUMEUP
-			: value == keys::volume_down ? SDLK_VOLUMEDOWN
-			: value == keys::kp_comma ? SDLK_KP_COMMA
-			: value == keys::kp_equalsas400 ? SDLK_KP_EQUALSAS400
-			: value == keys::alterase ? SDLK_ALTERASE
-			: value == keys::sysreq ? SDLK_SYSREQ
-			: value == keys::cancel ? SDLK_CANCEL
-			: value == keys::clear ? SDLK_CLEAR
-			: value == keys::prior ? SDLK_PRIOR
-			: value == keys::return2 ? SDLK_RETURN2
-			: value == keys::separator ? SDLK_SEPARATOR
-			: value == keys::out ? SDLK_OUT
-			: value == keys::oper ? SDLK_OPER
-			: value == keys::clear_again ? SDLK_CLEARAGAIN
-			: value == keys::crsel ? SDLK_CRSEL
-			: value == keys::exsel ? SDLK_EXSEL
-			: value == keys::kp_00 ? SDLK_KP_00
-			: value == keys::kp_000 ? SDLK_KP_000
-			: value == keys::thousands_separator ? SDLK_THOUSANDSSEPARATOR
-			: value == keys::decimal_separator ? SDLK_DECIMALSEPARATOR
-			: value == keys::currency_unit ? SDLK_CURRENCYUNIT
-			: value == keys::currency_subunit ? SDLK_CURRENCYSUBUNIT
-			: value == keys::kp_left_paren ? SDLK_KP_LEFTPAREN
-			: value == keys::kp_right_paren ? SDLK_KP_RIGHTPAREN
-			: value == keys::kp_left_brace ? SDLK_KP_LEFTBRACE
-			: value == keys::kp_right_brace ? SDLK_KP_RIGHTBRACE
-			: value == keys::kp_tab ? SDLK_KP_TAB
-			: value == keys::kp_backspace ? SDLK_KP_BACKSPACE
-			: value == keys::kp_a ? SDLK_KP_A
-			: value == keys::kp_b ? SDLK_KP_B
-			: value == keys::kp_c ? SDLK_KP_C
-			: value == keys::kp_d ? SDLK_KP_D
-			: value == keys::kp_e ? SDLK_KP_E
-			: value == keys::kp_f ? SDLK_KP_F
-			: value == keys::kp_xor ? SDLK_KP_XOR
-			: value == keys::kp_power ? SDLK_KP_POWER
-			: value == keys::kp_percent ? SDLK_KP_PERCENT
-			: value == keys::kp_less ? SDLK_KP_LESS
-			: value == keys::kp_greater ? SDLK_KP_GREATER
-			: value == keys::kp_ampersand ? SDLK_KP_AMPERSAND
-			: value == keys::kp_dblampersand ? SDLK_KP_DBLAMPERSAND
-			: value == keys::kp_verticalbar ? SDLK_KP_VERTICALBAR
-			: value == keys::kp_dblverticalbar ? SDLK_KP_DBLVERTICALBAR
-			: value == keys::kp_colon ? SDLK_KP_COLON
-			: value == keys::kp_hash ? SDLK_KP_HASH
-			: value == keys::kp_space ? SDLK_KP_SPACE
-			: value == keys::kp_at ? SDLK_KP_AT
-			: value == keys::kp_exclam ? SDLK_KP_EXCLAM
-			: value == keys::kp_mem_store ? SDLK_KP_MEMSTORE
-			: value == keys::kp_mem_recall ? SDLK_KP_MEMRECALL
-			: value == keys::kp_mem_clear ? SDLK_KP_MEMCLEAR
-			: value == keys::kp_mem_add ? SDLK_KP_MEMADD
-			: value == keys::kp_mem_subtract ? SDLK_KP_MEMSUBTRACT
-			: value == keys::kp_mem_multiply ? SDLK_KP_MEMMULTIPLY
-			: value == keys::kp_mem_divide ? SDLK_KP_MEMDIVIDE
-			: value == keys::kp_plus_minus ? SDLK_KP_PLUSMINUS
-			: value == keys::kp_clear ? SDLK_KP_CLEAR
-			: value == keys::kp_clear_entry ? SDLK_KP_CLEARENTRY
-			: value == keys::kp_binary ? SDLK_KP_BINARY
-			: value == keys::kp_octal ? SDLK_KP_OCTAL
-			: value == keys::kp_decimal ? SDLK_KP_DECIMAL
-			: value == keys::kp_hexadecimal ? SDLK_KP_HEXADECIMAL
-			: value == keys::left_ctrl ? SDLK_LCTRL
-			: value == keys::left_shift ? SDLK_LSHIFT
-			: value == keys::left_alt ? SDLK_LALT
-			: value == keys::left_gui ? SDLK_LGUI
-			: value == keys::right_ctrl ? SDLK_RCTRL
-			: value == keys::right_shift ? SDLK_RSHIFT
-			: value == keys::right_alt ? SDLK_RALT
-			: value == keys::right_gui ? SDLK_RGUI
-			: value == keys::mode ? SDLK_MODE
-			: value == keys::audio_next ? SDLK_AUDIONEXT
-			: value == keys::audio_prev ? SDLK_AUDIOPREV
-			: value == keys::audio_stop ? SDLK_AUDIOSTOP
-			: value == keys::audio_play ? SDLK_AUDIOPLAY
-			: value == keys::audio_mute ? SDLK_AUDIOMUTE
-			: value == keys::media_select ? SDLK_MEDIASELECT
-			: value == keys::www ? SDLK_WWW
-			: value == keys::mail ? SDLK_MAIL
-			: value == keys::calculator ? SDLK_CALCULATOR
-			: value == keys::computer ? SDLK_COMPUTER
-			: value == keys::ac_search ? SDLK_AC_SEARCH
-			: value == keys::ac_home ? SDLK_AC_HOME
-			: value == keys::ac_back ? SDLK_AC_BACK
-			: value == keys::ac_forward ? SDLK_AC_FORWARD
-			: value == keys::ac_stop ? SDLK_AC_STOP
-			: value == keys::ac_refresh ? SDLK_AC_REFRESH
-			: value == keys::ac_bookmarks ? SDLK_AC_BOOKMARKS
-			: value == keys::brightness_down ? SDLK_BRIGHTNESSDOWN
-			: value == keys::brightness_up ? SDLK_BRIGHTNESSUP
-			: value == keys::display_switch ? SDLK_DISPLAYSWITCH
-			: value == keys::kbd_illum_toggle ? SDLK_KBDILLUMTOGGLE
-			: value == keys::kbd_illum_down ? SDLK_KBDILLUMDOWN
-			: value == keys::kbd_illum_up ? SDLK_KBDILLUMUP
-			: value == keys::eject ? SDLK_EJECT
-			: value == keys::sleep ? SDLK_SLEEP
-			: value == keys::app1 ? SDLK_APP1
-			: value == keys::app2 ? SDLK_APP2
-			: value == keys::audio_rewind ? SDLK_AUDIOREWIND
-			: value == keys::audio_fast_forward ? SDLK_AUDIOFASTFORWARD
-			: SDLK_UNKNOWN;
+		switch (key)
+		{
+		default:
+			return SDLK_UNKNOWN;
+		case keys::enter:
+			return SDLK_RETURN;
+		case keys::escape:
+			return SDLK_ESCAPE;
+		case keys::backspace:
+			return SDLK_BACKSPACE;
+		case keys::tab:
+			return SDLK_TAB;
+		case keys::space:
+			return SDLK_SPACE;
+		case keys::exclaim:
+			return SDLK_EXCLAIM;
+		case keys::quotedbl:
+			return SDLK_QUOTEDBL;
+		case keys::hash:
+			return SDLK_HASH;
+		case keys::percent:
+			return SDLK_PERCENT;
+		case keys::dollar:
+			return SDLK_DOLLAR;
+		case keys::ampersand:
+			return SDLK_AMPERSAND;
+		case keys::quote:
+			return SDLK_QUOTE;
+		case keys::left_paren:
+			return SDLK_LEFTPAREN;
+		case keys::right_paren:
+			return SDLK_RIGHTPAREN;
+		case keys::asterisk:
+			return SDLK_ASTERISK;
+		case keys::plus:
+			return SDLK_PLUS;
+		case keys::comma:
+			return SDLK_COMMA;
+		case keys::minus:
+			return SDLK_MINUS;
+		case keys::period:
+			return SDLK_PERIOD;
+		case keys::slash:
+			return SDLK_SLASH;
+		case keys::num_0:
+			return SDLK_0;
+		case keys::num_1:
+			return SDLK_1;
+		case keys::num_2:
+			return SDLK_2;
+		case keys::num_3:
+			return SDLK_3;
+		case keys::num_4:
+			return SDLK_4;
+		case keys::num_5:
+			return SDLK_5;
+		case keys::num_6:
+			return SDLK_6;
+		case keys::num_7:
+			return SDLK_7;
+		case keys::num_8:
+			return SDLK_8;
+		case keys::num_9:
+			return SDLK_9;
+		case keys::colon:
+			return SDLK_COLON;
+		case keys::semicolon:
+			return SDLK_SEMICOLON;
+		case keys::less:
+			return SDLK_LESS;
+		case keys::equals:
+			return SDLK_EQUALS;
+		case keys::greater:
+			return SDLK_GREATER;
+		case keys::question:
+			return SDLK_QUESTION;
+		case keys::at:
+			return SDLK_AT;
+		case keys::left_bracket:
+			return SDLK_LEFTBRACKET;
+		case keys::backslash:
+			return SDLK_BACKSLASH;
+		case keys::right_bracket:
+			return SDLK_RIGHTBRACKET;
+		case keys::caret:
+			return SDLK_CARET;
+		case keys::underscore:
+			return SDLK_UNDERSCORE;
+		case keys::backquote:
+			return SDLK_BACKQUOTE;
+		case keys::a:
+			return SDLK_a;
+		case keys::b:
+			return SDLK_b;
+		case keys::c:
+			return SDLK_c;
+		case keys::d:
+			return SDLK_d;
+		case keys::e:
+			return SDLK_e;
+		case keys::f:
+			return SDLK_f;
+		case keys::g:
+			return SDLK_g;
+		case keys::h:
+			return SDLK_h;
+		case keys::i:
+			return SDLK_i;
+		case keys::j:
+			return SDLK_j;
+		case keys::k:
+			return SDLK_k;
+		case keys::l:
+			return SDLK_l;
+		case keys::m:
+			return SDLK_m;
+		case keys::n:
+			return SDLK_n;
+		case keys::o:
+			return SDLK_o;
+		case keys::p:
+			return SDLK_p;
+		case keys::q:
+			return SDLK_q;
+		case keys::r:
+			return SDLK_r;
+		case keys::s:
+			return SDLK_s;
+		case keys::t:
+			return SDLK_t;
+		case keys::u:
+			return SDLK_u;
+		case keys::v:
+			return SDLK_v;
+		case keys::w:
+			return SDLK_w;
+		case keys::x:
+			return SDLK_x;
+		case keys::y:
+			return SDLK_y;
+		case keys::z:
+			return SDLK_z;
+		case keys::capslock:
+			return SDLK_CAPSLOCK;
+		case keys::f1:
+			return SDLK_F1;
+		case keys::f2:
+			return SDLK_F2;
+		case keys::f3:
+			return SDLK_F3;
+		case keys::f4:
+			return SDLK_F4;
+		case keys::f5:
+			return SDLK_F5;
+		case keys::f6:
+			return SDLK_F6;
+		case keys::f7:
+			return SDLK_F7;
+		case keys::f8:
+			return SDLK_F8;
+		case keys::f9:
+			return SDLK_F9;
+		case keys::f10:
+			return SDLK_F10;
+		case keys::f11:
+			return SDLK_F11;
+		case keys::f12:
+			return SDLK_F12;
+		case keys::printscreen:
+			return SDLK_PRINTSCREEN;
+		case keys::scroll_lock:
+			return SDLK_SCROLLLOCK;
+		case keys::pause:
+			return SDLK_PAUSE;
+		case keys::insert:
+			return SDLK_INSERT;
+		case keys::home:
+			return SDLK_HOME;
+		case keys::page_up:
+			return SDLK_PAGEUP;
+		case keys::del:
+			return SDLK_DELETE;
+		case keys::end:
+			return SDLK_END;
+		case keys::page_down:
+			return SDLK_PAGEDOWN;
+		case keys::right:
+			return SDLK_RIGHT;
+		case keys::left:
+			return SDLK_LEFT;
+		case keys::down:
+			return SDLK_DOWN;
+		case keys::up:
+			return SDLK_UP;
+		case keys::numlock_clear:
+			return SDLK_NUMLOCKCLEAR;
+		case keys::kp_divide:
+			return SDLK_KP_DIVIDE;
+		case keys::kp_multiply:
+			return SDLK_KP_MULTIPLY;
+		case keys::kp_minus:
+			return SDLK_KP_MINUS;
+		case keys::kp_plus:
+			return SDLK_KP_PLUS;
+		case keys::kp_enter:
+			return SDLK_KP_ENTER;
+		case keys::kp_1:
+			return SDLK_KP_1;
+		case keys::kp_2:
+			return SDLK_KP_2;
+		case keys::kp_3:
+			return SDLK_KP_3;
+		case keys::kp_4:
+			return SDLK_KP_4;
+		case keys::kp_5:
+			return SDLK_KP_5;
+		case keys::kp_6:
+			return SDLK_KP_6;
+		case keys::kp_7:
+			return SDLK_KP_7;
+		case keys::kp_8:
+			return SDLK_KP_8;
+		case keys::kp_9:
+			return SDLK_KP_9;
+		case keys::kp_0:
+			return SDLK_KP_0;
+		case keys::kp_period:
+			return SDLK_KP_PERIOD;
+		case keys::application:
+			return SDLK_APPLICATION;
+		case keys::power:
+			return SDLK_POWER;
+		case keys::kp_equals:
+			return SDLK_KP_EQUALS;
+		case keys::f13:
+			return SDLK_F13;
+		case keys::f14:
+			return SDLK_F14;
+		case keys::f15:
+			return SDLK_F15;
+		case keys::f16:
+			return SDLK_F16;
+		case keys::f17:
+			return SDLK_F17;
+		case keys::f18:
+			return SDLK_F18;
+		case keys::f19:
+			return SDLK_F19;
+		case keys::f20:
+			return SDLK_F20;
+		case keys::f21:
+			return SDLK_F21;
+		case keys::f22:
+			return SDLK_F22;
+		case keys::f23:
+			return SDLK_F23;
+		case keys::f24:
+			return SDLK_F24;
+		case keys::execute:
+			return SDLK_EXECUTE;
+		case keys::help:
+			return SDLK_HELP;
+		case keys::menu:
+			return SDLK_MENU;
+		case keys::select:
+			return SDLK_SELECT;
+		case keys::stop:
+			return SDLK_STOP;
+		case keys::again:
+			return SDLK_AGAIN;
+		case keys::undo:
+			return SDLK_UNDO;
+		case keys::cut:
+			return SDLK_CUT;
+		case keys::copy:
+			return SDLK_COPY;
+		case keys::paste:
+			return SDLK_PASTE;
+		case keys::find:
+			return SDLK_FIND;
+		case keys::mute:
+			return SDLK_MUTE;
+		case keys::volume_up:
+			return SDLK_VOLUMEUP;
+		case keys::volume_down:
+			return SDLK_VOLUMEDOWN;
+		case keys::kp_comma:
+			return SDLK_KP_COMMA;
+		case keys::kp_equalsas400:
+			return SDLK_KP_EQUALSAS400;
+		case keys::alterase:
+			return SDLK_ALTERASE;
+		case keys::sysreq:
+			return SDLK_SYSREQ;
+		case keys::cancel:
+			return SDLK_CANCEL;
+		case keys::clear:
+			return SDLK_CLEAR;
+		case keys::prior:
+			return SDLK_PRIOR;
+		case keys::return2:
+			return SDLK_RETURN2;
+		case keys::separator:
+			return SDLK_SEPARATOR;
+		case keys::out:
+			return SDLK_OUT;
+		case keys::oper:
+			return SDLK_OPER;
+		case keys::clear_again:
+			return SDLK_CLEARAGAIN;
+		case keys::crsel:
+			return SDLK_CRSEL;
+		case keys::exsel:
+			return SDLK_EXSEL;
+		case keys::kp_00:
+			return SDLK_KP_00;
+		case keys::kp_000:
+			return SDLK_KP_000;
+		case keys::thousands_separator:
+			return SDLK_THOUSANDSSEPARATOR;
+		case keys::decimal_separator:
+			return SDLK_DECIMALSEPARATOR;
+		case keys::currency_unit:
+			return SDLK_CURRENCYUNIT;
+		case keys::currency_subunit:
+			return SDLK_CURRENCYSUBUNIT;
+		case keys::kp_left_paren:
+			return SDLK_KP_LEFTPAREN;
+		case keys::kp_right_paren:
+			return SDLK_KP_RIGHTPAREN;
+		case keys::kp_left_brace:
+			return SDLK_KP_LEFTBRACE;
+		case keys::kp_right_brace:
+			return SDLK_KP_RIGHTBRACE;
+		case keys::kp_tab:
+			return SDLK_KP_TAB;
+		case keys::kp_backspace:
+			return SDLK_KP_BACKSPACE;
+		case keys::kp_a:
+			return SDLK_KP_A;
+		case keys::kp_b:
+			return SDLK_KP_B;
+		case keys::kp_c:
+			return SDLK_KP_C;
+		case keys::kp_d:
+			return SDLK_KP_D;
+		case keys::kp_e:
+			return SDLK_KP_E;
+		case keys::kp_f:
+			return SDLK_KP_F;
+		case keys::kp_xor:
+			return SDLK_KP_XOR;
+		case keys::kp_power:
+			return SDLK_KP_POWER;
+		case keys::kp_percent:
+			return SDLK_KP_PERCENT;
+		case keys::kp_less:
+			return SDLK_KP_LESS;
+		case keys::kp_greater:
+			return SDLK_KP_GREATER;
+		case keys::kp_ampersand:
+			return SDLK_KP_AMPERSAND;
+		case keys::kp_dblampersand:
+			return SDLK_KP_DBLAMPERSAND;
+		case keys::kp_verticalbar:
+			return SDLK_KP_VERTICALBAR;
+		case keys::kp_dblverticalbar:
+			return SDLK_KP_DBLVERTICALBAR;
+		case keys::kp_colon:
+			return SDLK_KP_COLON;
+		case keys::kp_hash:
+			return SDLK_KP_HASH;
+		case keys::kp_space:
+			return SDLK_KP_SPACE;
+		case keys::kp_at:
+			return SDLK_KP_AT;
+		case keys::kp_exclam:
+			return SDLK_KP_EXCLAM;
+		case keys::kp_mem_store:
+			return SDLK_KP_MEMSTORE;
+		case keys::kp_mem_recall:
+			return SDLK_KP_MEMRECALL;
+		case keys::kp_mem_clear:
+			return SDLK_KP_MEMCLEAR;
+		case keys::kp_mem_add:
+			return SDLK_KP_MEMADD;
+		case keys::kp_mem_subtract:
+			return SDLK_KP_MEMSUBTRACT;
+		case keys::kp_mem_multiply:
+			return SDLK_KP_MEMMULTIPLY;
+		case keys::kp_mem_divide:
+			return SDLK_KP_MEMDIVIDE;
+		case keys::kp_plus_minus:
+			return SDLK_KP_PLUSMINUS;
+		case keys::kp_clear:
+			return SDLK_KP_CLEAR;
+		case keys::kp_clear_entry:
+			return SDLK_KP_CLEARENTRY;
+		case keys::kp_binary:
+			return SDLK_KP_BINARY;
+		case keys::kp_octal:
+			return SDLK_KP_OCTAL;
+		case keys::kp_decimal:
+			return SDLK_KP_DECIMAL;
+		case keys::kp_hexadecimal:
+			return SDLK_KP_HEXADECIMAL;
+		case keys::left_ctrl:
+			return SDLK_LCTRL;
+		case keys::left_shift:
+			return SDLK_LSHIFT;
+		case keys::left_alt:
+			return SDLK_LALT;
+		case keys::left_gui:
+			return SDLK_LGUI;
+		case keys::right_ctrl:
+			return SDLK_RCTRL;
+		case keys::right_shift:
+			return SDLK_RSHIFT;
+		case keys::right_alt:
+			return SDLK_RALT;
+		case keys::right_gui:
+			return SDLK_RGUI;
+		case keys::mode:
+			return SDLK_MODE;
+		case keys::audio_next:
+			return SDLK_AUDIONEXT;
+		case keys::audio_prev:
+			return SDLK_AUDIOPREV;
+		case keys::audio_stop:
+			return SDLK_AUDIOSTOP;
+		case keys::audio_play:
+			return SDLK_AUDIOPLAY;
+		case keys::audio_mute:
+			return SDLK_AUDIOMUTE;
+		case keys::media_select:
+			return SDLK_MEDIASELECT;
+		case keys::www:
+			return SDLK_WWW;
+		case keys::mail:
+			return SDLK_MAIL;
+		case keys::calculator:
+			return SDLK_CALCULATOR;
+		case keys::computer:
+			return SDLK_COMPUTER;
+		case keys::ac_search:
+			return SDLK_AC_SEARCH;
+		case keys::ac_home:
+			return SDLK_AC_HOME;
+		case keys::ac_back:
+			return SDLK_AC_BACK;
+		case keys::ac_forward:
+			return SDLK_AC_FORWARD;
+		case keys::ac_stop:
+			return SDLK_AC_STOP;
+		case keys::ac_refresh:
+			return SDLK_AC_REFRESH;
+		case keys::ac_bookmarks:
+			return SDLK_AC_BOOKMARKS;
+		case keys::brightness_down:
+			return SDLK_BRIGHTNESSDOWN;
+		case keys::brightness_up:
+			return SDLK_BRIGHTNESSUP;
+		case keys::display_switch:
+			return SDLK_DISPLAYSWITCH;
+		case keys::kbd_illum_toggle:
+			return SDLK_KBDILLUMTOGGLE;
+		case keys::kbd_illum_down:
+			return SDLK_KBDILLUMDOWN;
+		case keys::kbd_illum_up:
+			return SDLK_KBDILLUMUP;
+		case keys::eject:
+			return SDLK_EJECT;
+		case keys::sleep:
+			return SDLK_SLEEP;
+		case keys::app1:
+			return SDLK_APP1;
+		case keys::app2:
+			return SDLK_APP2;
+		case keys::audio_rewind:
+			return SDLK_AUDIOREWIND;
+		case keys::audio_fast_forward:
+			return SDLK_AUDIOFASTFORWARD;
+		}
 	}
 
 	constexpr scancodes from_sdl(SDL_Scancode code) noexcept
 	{
-		return code == SDL_SCANCODE_A ? scancodes::a
-			: code == SDL_SCANCODE_B ? scancodes::b
-			: code == SDL_SCANCODE_C ? scancodes::c
-			: code == SDL_SCANCODE_D ? scancodes::d
-			: code == SDL_SCANCODE_E ? scancodes::e
-			: code == SDL_SCANCODE_F ? scancodes::f
-			: code == SDL_SCANCODE_G ? scancodes::g
-			: code == SDL_SCANCODE_H ? scancodes::h
-			: code == SDL_SCANCODE_I ? scancodes::i
-			: code == SDL_SCANCODE_J ? scancodes::j
-			: code == SDL_SCANCODE_K ? scancodes::k
-			: code == SDL_SCANCODE_L ? scancodes::l
-			: code == SDL_SCANCODE_M ? scancodes::m
-			: code == SDL_SCANCODE_N ? scancodes::n
-			: code == SDL_SCANCODE_O ? scancodes::o
-			: code == SDL_SCANCODE_P ? scancodes::p
-			: code == SDL_SCANCODE_Q ? scancodes::q
-			: code == SDL_SCANCODE_R ? scancodes::r
-			: code == SDL_SCANCODE_S ? scancodes::s
-			: code == SDL_SCANCODE_T ? scancodes::t
-			: code == SDL_SCANCODE_U ? scancodes::u
-			: code == SDL_SCANCODE_V ? scancodes::v
-			: code == SDL_SCANCODE_W ? scancodes::w
-			: code == SDL_SCANCODE_X ? scancodes::x
-			: code == SDL_SCANCODE_Y ? scancodes::y
-			: code == SDL_SCANCODE_Z ? scancodes::z
-			: code == SDL_SCANCODE_1 ? scancodes::num_1
-			: code == SDL_SCANCODE_2 ? scancodes::num_2
-			: code == SDL_SCANCODE_3 ? scancodes::num_3
-			: code == SDL_SCANCODE_4 ? scancodes::num_4
-			: code == SDL_SCANCODE_5 ? scancodes::num_5
-			: code == SDL_SCANCODE_6 ? scancodes::num_6
-			: code == SDL_SCANCODE_7 ? scancodes::num_7
-			: code == SDL_SCANCODE_8 ? scancodes::num_8
-			: code == SDL_SCANCODE_9 ? scancodes::num_9
-			: code == SDL_SCANCODE_0 ? scancodes::num_0
-			: code == SDL_SCANCODE_RETURN ? scancodes::enter
-			: code == SDL_SCANCODE_ESCAPE ? scancodes::escape
-			: code == SDL_SCANCODE_BACKSPACE ? scancodes::backspace
-			: code == SDL_SCANCODE_TAB ? scancodes::tab
-			: code == SDL_SCANCODE_SPACE ? scancodes::space
-			: code == SDL_SCANCODE_MINUS ? scancodes::minus
-			: code == SDL_SCANCODE_EQUALS ? scancodes::equals
-			: code == SDL_SCANCODE_LEFTBRACKET ? scancodes::left_bracket
-			: code == SDL_SCANCODE_RIGHTBRACKET ? scancodes::right_bracket
-			: code == SDL_SCANCODE_BACKSLASH ? scancodes::backslash
-			: code == SDL_SCANCODE_NONUSHASH ? scancodes::non_ushash
-			: code == SDL_SCANCODE_SEMICOLON ? scancodes::semicolon
-			: code == SDL_SCANCODE_APOSTROPHE ? scancodes::apostrophe
-			: code == SDL_SCANCODE_GRAVE ? scancodes::grave
-			: code == SDL_SCANCODE_COMMA ? scancodes::comma
-			: code == SDL_SCANCODE_PERIOD ? scancodes::period
-			: code == SDL_SCANCODE_SLASH ? scancodes::slash
-			: code == SDL_SCANCODE_CAPSLOCK ? scancodes::capslock
-			: code == SDL_SCANCODE_F1 ? scancodes::f1
-			: code == SDL_SCANCODE_F2 ? scancodes::f2
-			: code == SDL_SCANCODE_F3 ? scancodes::f3
-			: code == SDL_SCANCODE_F4 ? scancodes::f4
-			: code == SDL_SCANCODE_F5 ? scancodes::f5
-			: code == SDL_SCANCODE_F6 ? scancodes::f6
-			: code == SDL_SCANCODE_F7 ? scancodes::f7
-			: code == SDL_SCANCODE_F8 ? scancodes::f8
-			: code == SDL_SCANCODE_F9 ? scancodes::f9
-			: code == SDL_SCANCODE_F10 ? scancodes::f10
-			: code == SDL_SCANCODE_F11 ? scancodes::f11
-			: code == SDL_SCANCODE_F12 ? scancodes::f12
-			: code == SDL_SCANCODE_PRINTSCREEN ? scancodes::printscreen
-			: code == SDL_SCANCODE_SCROLLLOCK ? scancodes::scroll_lock
-			: code == SDL_SCANCODE_PAUSE ? scancodes::pause
-			: code == SDL_SCANCODE_INSERT ? scancodes::insert
-			: code == SDL_SCANCODE_HOME ? scancodes::home
-			: code == SDL_SCANCODE_PAGEUP ? scancodes::page_up
-			: code == SDL_SCANCODE_DELETE ? scancodes::del
-			: code == SDL_SCANCODE_END ? scancodes::end
-			: code == SDL_SCANCODE_PAGEDOWN ? scancodes::page_down
-			: code == SDL_SCANCODE_RIGHT ? scancodes::right
-			: code == SDL_SCANCODE_LEFT ? scancodes::left
-			: code == SDL_SCANCODE_DOWN ? scancodes::down
-			: code == SDL_SCANCODE_UP ? scancodes::up
-			: code == SDL_SCANCODE_NUMLOCKCLEAR ? scancodes::numlock_clear
-			: code == SDL_SCANCODE_KP_DIVIDE ? scancodes::kp_divide
-			: code == SDL_SCANCODE_KP_MULTIPLY ? scancodes::kp_multiply
-			: code == SDL_SCANCODE_KP_MINUS ? scancodes::kp_minus
-			: code == SDL_SCANCODE_KP_PLUS ? scancodes::kp_plus
-			: code == SDL_SCANCODE_KP_ENTER ? scancodes::kp_enter
-			: code == SDL_SCANCODE_KP_1 ? scancodes::kp_1
-			: code == SDL_SCANCODE_KP_2 ? scancodes::kp_2
-			: code == SDL_SCANCODE_KP_3 ? scancodes::kp_3
-			: code == SDL_SCANCODE_KP_4 ? scancodes::kp_4
-			: code == SDL_SCANCODE_KP_5 ? scancodes::kp_5
-			: code == SDL_SCANCODE_KP_6 ? scancodes::kp_6
-			: code == SDL_SCANCODE_KP_7 ? scancodes::kp_7
-			: code == SDL_SCANCODE_KP_8 ? scancodes::kp_8
-			: code == SDL_SCANCODE_KP_9 ? scancodes::kp_9
-			: code == SDL_SCANCODE_KP_0 ? scancodes::kp_0
-			: code == SDL_SCANCODE_KP_PERIOD ? scancodes::kp_period
-			: code == SDL_SCANCODE_NONUSBACKSLASH ? scancodes::non_usbackslash
-			: code == SDL_SCANCODE_APPLICATION ? scancodes::application
-			: code == SDL_SCANCODE_POWER ? scancodes::power
-			: code == SDL_SCANCODE_KP_EQUALS ? scancodes::kp_equals
-			: code == SDL_SCANCODE_F13 ? scancodes::f13
-			: code == SDL_SCANCODE_F14 ? scancodes::f14
-			: code == SDL_SCANCODE_F15 ? scancodes::f15
-			: code == SDL_SCANCODE_F16 ? scancodes::f16
-			: code == SDL_SCANCODE_F17 ? scancodes::f17
-			: code == SDL_SCANCODE_F18 ? scancodes::f18
-			: code == SDL_SCANCODE_F19 ? scancodes::f19
-			: code == SDL_SCANCODE_F20 ? scancodes::f20
-			: code == SDL_SCANCODE_F21 ? scancodes::f21
-			: code == SDL_SCANCODE_F22 ? scancodes::f22
-			: code == SDL_SCANCODE_F23 ? scancodes::f23
-			: code == SDL_SCANCODE_F24 ? scancodes::f24
-			: code == SDL_SCANCODE_EXECUTE ? scancodes::execute
-			: code == SDL_SCANCODE_HELP ? scancodes::help
-			: code == SDL_SCANCODE_MENU ? scancodes::menu
-			: code == SDL_SCANCODE_SELECT ? scancodes::select
-			: code == SDL_SCANCODE_STOP ? scancodes::stop
-			: code == SDL_SCANCODE_AGAIN ? scancodes::again
-			: code == SDL_SCANCODE_UNDO ? scancodes::undo
-			: code == SDL_SCANCODE_CUT ? scancodes::cut
-			: code == SDL_SCANCODE_COPY ? scancodes::copy
-			: code == SDL_SCANCODE_PASTE ? scancodes::paste
-			: code == SDL_SCANCODE_FIND ? scancodes::find
-			: code == SDL_SCANCODE_MUTE ? scancodes::mute
-			: code == SDL_SCANCODE_VOLUMEUP ? scancodes::volume_up
-			: code == SDL_SCANCODE_VOLUMEDOWN ? scancodes::volume_down
-			: code == SDL_SCANCODE_KP_COMMA ? scancodes::kp_comma
-			: code == SDL_SCANCODE_KP_EQUALSAS400 ? scancodes::kp_equalsas400
-			: code == SDL_SCANCODE_INTERNATIONAL1 ? scancodes::international1
-			: code == SDL_SCANCODE_INTERNATIONAL2 ? scancodes::international2
-			: code == SDL_SCANCODE_INTERNATIONAL3 ? scancodes::international3
-			: code == SDL_SCANCODE_INTERNATIONAL4 ? scancodes::international4
-			: code == SDL_SCANCODE_INTERNATIONAL5 ? scancodes::international5
-			: code == SDL_SCANCODE_INTERNATIONAL6 ? scancodes::international6
-			: code == SDL_SCANCODE_INTERNATIONAL7 ? scancodes::international7
-			: code == SDL_SCANCODE_INTERNATIONAL8 ? scancodes::international8
-			: code == SDL_SCANCODE_INTERNATIONAL9 ? scancodes::international9
-			: code == SDL_SCANCODE_LANG1 ? scancodes::lang1
-			: code == SDL_SCANCODE_LANG2 ? scancodes::lang2
-			: code == SDL_SCANCODE_LANG3 ? scancodes::lang3
-			: code == SDL_SCANCODE_LANG4 ? scancodes::lang4
-			: code == SDL_SCANCODE_LANG5 ? scancodes::lang5
-			: code == SDL_SCANCODE_LANG6 ? scancodes::lang6
-			: code == SDL_SCANCODE_LANG7 ? scancodes::lang7
-			: code == SDL_SCANCODE_LANG8 ? scancodes::lang8
-			: code == SDL_SCANCODE_LANG9 ? scancodes::lang9
-			: code == SDL_SCANCODE_ALTERASE ? scancodes::alterase
-			: code == SDL_SCANCODE_SYSREQ ? scancodes::sysreq
-			: code == SDL_SCANCODE_CANCEL ? scancodes::cancel
-			: code == SDL_SCANCODE_CLEAR ? scancodes::clear
-			: code == SDL_SCANCODE_PRIOR ? scancodes::prior
-			: code == SDL_SCANCODE_RETURN2 ? scancodes::return2
-			: code == SDL_SCANCODE_SEPARATOR ? scancodes::separator
-			: code == SDL_SCANCODE_OUT ? scancodes::out
-			: code == SDL_SCANCODE_OPER ? scancodes::oper
-			: code == SDL_SCANCODE_CLEARAGAIN ? scancodes::clear_again
-			: code == SDL_SCANCODE_CRSEL ? scancodes::crsel
-			: code == SDL_SCANCODE_EXSEL ? scancodes::exsel
-			: code == SDL_SCANCODE_KP_00 ? scancodes::kp_00
-			: code == SDL_SCANCODE_KP_000 ? scancodes::kp_000
-			: code == SDL_SCANCODE_THOUSANDSSEPARATOR ? scancodes::thousands_separator
-			: code == SDL_SCANCODE_DECIMALSEPARATOR ? scancodes::decimal_separator
-			: code == SDL_SCANCODE_CURRENCYUNIT ? scancodes::currency_unit
-			: code == SDL_SCANCODE_CURRENCYSUBUNIT ? scancodes::currency_subunit
-			: code == SDL_SCANCODE_KP_LEFTPAREN ? scancodes::kp_left_paren
-			: code == SDL_SCANCODE_KP_RIGHTPAREN ? scancodes::kp_right_paren
-			: code == SDL_SCANCODE_KP_LEFTBRACE ? scancodes::kp_left_brace
-			: code == SDL_SCANCODE_KP_RIGHTBRACE ? scancodes::kp_right_brace
-			: code == SDL_SCANCODE_KP_TAB ? scancodes::kp_tab
-			: code == SDL_SCANCODE_KP_BACKSPACE ? scancodes::kp_backspace
-			: code == SDL_SCANCODE_KP_A ? scancodes::kp_a
-			: code == SDL_SCANCODE_KP_B ? scancodes::kp_b
-			: code == SDL_SCANCODE_KP_C ? scancodes::kp_c
-			: code == SDL_SCANCODE_KP_D ? scancodes::kp_d
-			: code == SDL_SCANCODE_KP_E ? scancodes::kp_e
-			: code == SDL_SCANCODE_KP_F ? scancodes::kp_f
-			: code == SDL_SCANCODE_KP_XOR ? scancodes::kp_xor
-			: code == SDL_SCANCODE_KP_POWER ? scancodes::kp_power
-			: code == SDL_SCANCODE_KP_PERCENT ? scancodes::kp_percent
-			: code == SDL_SCANCODE_KP_LESS ? scancodes::kp_less
-			: code == SDL_SCANCODE_KP_GREATER ? scancodes::kp_greater
-			: code == SDL_SCANCODE_KP_AMPERSAND ? scancodes::kp_ampersand
-			: code == SDL_SCANCODE_KP_DBLAMPERSAND ? scancodes::kp_dblampersand
-			: code == SDL_SCANCODE_KP_VERTICALBAR ? scancodes::kp_verticalbar
-			: code == SDL_SCANCODE_KP_DBLVERTICALBAR ? scancodes::kp_dblverticalbar
-			: code == SDL_SCANCODE_KP_COLON ? scancodes::kp_colon
-			: code == SDL_SCANCODE_KP_HASH ? scancodes::kp_hash
-			: code == SDL_SCANCODE_KP_SPACE ? scancodes::kp_space
-			: code == SDL_SCANCODE_KP_AT ? scancodes::kp_at
-			: code == SDL_SCANCODE_KP_EXCLAM ? scancodes::kp_exclam
-			: code == SDL_SCANCODE_KP_MEMSTORE ? scancodes::kp_mem_store
-			: code == SDL_SCANCODE_KP_MEMRECALL ? scancodes::kp_mem_recall
-			: code == SDL_SCANCODE_KP_MEMCLEAR ? scancodes::kp_mem_clear
-			: code == SDL_SCANCODE_KP_MEMADD ? scancodes::kp_mem_add
-			: code == SDL_SCANCODE_KP_MEMSUBTRACT ? scancodes::kp_mem_subtract
-			: code == SDL_SCANCODE_KP_MEMMULTIPLY ? scancodes::kp_mem_multiply
-			: code == SDL_SCANCODE_KP_MEMDIVIDE ? scancodes::kp_mem_divide
-			: code == SDL_SCANCODE_KP_PLUSMINUS ? scancodes::kp_plus_minus
-			: code == SDL_SCANCODE_KP_CLEAR ? scancodes::kp_clear
-			: code == SDL_SCANCODE_KP_CLEARENTRY ? scancodes::kp_clear_entry
-			: code == SDL_SCANCODE_KP_BINARY ? scancodes::kp_binary
-			: code == SDL_SCANCODE_KP_OCTAL ? scancodes::kp_octal
-			: code == SDL_SCANCODE_KP_DECIMAL ? scancodes::kp_decimal
-			: code == SDL_SCANCODE_KP_HEXADECIMAL ? scancodes::kp_hexadecimal
-			: code == SDL_SCANCODE_LCTRL ? scancodes::left_ctrl
-			: code == SDL_SCANCODE_LSHIFT ? scancodes::left_shift
-			: code == SDL_SCANCODE_LALT ? scancodes::left_alt
-			: code == SDL_SCANCODE_LGUI ? scancodes::left_gui
-			: code == SDL_SCANCODE_RCTRL ? scancodes::right_ctrl
-			: code == SDL_SCANCODE_RSHIFT ? scancodes::right_shift
-			: code == SDL_SCANCODE_RALT ? scancodes::right_alt
-			: code == SDL_SCANCODE_RGUI ? scancodes::right_gui
-			: code == SDL_SCANCODE_MODE ? scancodes::mode
-			: code == SDL_SCANCODE_AUDIONEXT ? scancodes::audio_next
-			: code == SDL_SCANCODE_AUDIOPREV ? scancodes::audio_prev
-			: code == SDL_SCANCODE_AUDIOSTOP ? scancodes::audio_stop
-			: code == SDL_SCANCODE_AUDIOPLAY ? scancodes::audio_play
-			: code == SDL_SCANCODE_AUDIOMUTE ? scancodes::audio_mute
-			: code == SDL_SCANCODE_MEDIASELECT ? scancodes::media_select
-			: code == SDL_SCANCODE_WWW ? scancodes::www
-			: code == SDL_SCANCODE_MAIL ? scancodes::mail
-			: code == SDL_SCANCODE_CALCULATOR ? scancodes::calculator
-			: code == SDL_SCANCODE_COMPUTER ? scancodes::computer
-			: code == SDL_SCANCODE_AC_SEARCH ? scancodes::ac_search
-			: code == SDL_SCANCODE_AC_HOME ? scancodes::ac_home
-			: code == SDL_SCANCODE_AC_BACK ? scancodes::ac_back
-			: code == SDL_SCANCODE_AC_FORWARD ? scancodes::ac_forward
-			: code == SDL_SCANCODE_AC_STOP ? scancodes::ac_stop
-			: code == SDL_SCANCODE_AC_REFRESH ? scancodes::ac_refresh
-			: code == SDL_SCANCODE_AC_BOOKMARKS ? scancodes::ac_bookmarks
-			: code == SDL_SCANCODE_BRIGHTNESSDOWN ? scancodes::brightness_down
-			: code == SDL_SCANCODE_BRIGHTNESSUP ? scancodes::brightness_up
-			: code == SDL_SCANCODE_DISPLAYSWITCH ? scancodes::display_switch
-			: code == SDL_SCANCODE_KBDILLUMTOGGLE ? scancodes::kbd_illum_toggle
-			: code == SDL_SCANCODE_KBDILLUMDOWN ? scancodes::kbd_illum_down
-			: code == SDL_SCANCODE_KBDILLUMUP ? scancodes::kbd_illum_up
-			: code == SDL_SCANCODE_EJECT ? scancodes::eject
-			: code == SDL_SCANCODE_SLEEP ? scancodes::sleep
-			: code == SDL_SCANCODE_APP1 ? scancodes::app1
-			: code == SDL_SCANCODE_APP2 ? scancodes::app2
-			: code == SDL_SCANCODE_AUDIOREWIND ? scancodes::audio_rewind
-			: code == SDL_SCANCODE_AUDIOFASTFORWARD ? scancodes::audio_fastforward
-			: scancodes::unknown;
+		switch (code)
+		{
+		default:
+			return scancodes::unknown;
+		case SDL_SCANCODE_A:
+			return scancodes::a;
+		case SDL_SCANCODE_B:
+			return scancodes::b;
+		case SDL_SCANCODE_C:
+			return scancodes::c;
+		case SDL_SCANCODE_D:
+			return scancodes::d;
+		case SDL_SCANCODE_E:
+			return scancodes::e;
+		case SDL_SCANCODE_F:
+			return scancodes::f;
+		case SDL_SCANCODE_G:
+			return scancodes::g;
+		case SDL_SCANCODE_H:
+			return scancodes::h;
+		case SDL_SCANCODE_I:
+			return scancodes::i;
+		case SDL_SCANCODE_J:
+			return scancodes::j;
+		case SDL_SCANCODE_K:
+			return scancodes::k;
+		case SDL_SCANCODE_L:
+			return scancodes::l;
+		case SDL_SCANCODE_M:
+			return scancodes::m;
+		case SDL_SCANCODE_N:
+			return scancodes::n;
+		case SDL_SCANCODE_O:
+			return scancodes::o;
+		case SDL_SCANCODE_P:
+			return scancodes::p;
+		case SDL_SCANCODE_Q:
+			return scancodes::q;
+		case SDL_SCANCODE_R:
+			return scancodes::r;
+		case SDL_SCANCODE_S:
+			return scancodes::s;
+		case SDL_SCANCODE_T:
+			return scancodes::t;
+		case SDL_SCANCODE_U:
+			return scancodes::u;
+		case SDL_SCANCODE_V:
+			return scancodes::v;
+		case SDL_SCANCODE_W:
+			return scancodes::w;
+		case SDL_SCANCODE_X:
+			return scancodes::x;
+		case SDL_SCANCODE_Y:
+			return scancodes::y;
+		case SDL_SCANCODE_Z:
+			return scancodes::z;
+		case SDL_SCANCODE_1:
+			return scancodes::num_1;
+		case SDL_SCANCODE_2:
+			return scancodes::num_2;
+		case SDL_SCANCODE_3:
+			return scancodes::num_3;
+		case SDL_SCANCODE_4:
+			return scancodes::num_4;
+		case SDL_SCANCODE_5:
+			return scancodes::num_5;
+		case SDL_SCANCODE_6:
+			return scancodes::num_6;
+		case SDL_SCANCODE_7:
+			return scancodes::num_7;
+		case SDL_SCANCODE_8:
+			return scancodes::num_8;
+		case SDL_SCANCODE_9:
+			return scancodes::num_9;
+		case SDL_SCANCODE_0:
+			return scancodes::num_0;
+		case SDL_SCANCODE_RETURN:
+			return scancodes::enter;
+		case SDL_SCANCODE_ESCAPE:
+			return scancodes::escape;
+		case SDL_SCANCODE_BACKSPACE:
+			return scancodes::backspace;
+		case SDL_SCANCODE_TAB:
+			return scancodes::tab;
+		case SDL_SCANCODE_SPACE:
+			return scancodes::space;
+		case SDL_SCANCODE_MINUS:
+			return scancodes::minus;
+		case SDL_SCANCODE_EQUALS:
+			return scancodes::equals;
+		case SDL_SCANCODE_LEFTBRACKET:
+			return scancodes::left_bracket;
+		case SDL_SCANCODE_RIGHTBRACKET:
+			return scancodes::right_bracket;
+		case SDL_SCANCODE_BACKSLASH:
+			return scancodes::backslash;
+		case SDL_SCANCODE_NONUSHASH:
+			return scancodes::non_ushash;
+		case SDL_SCANCODE_SEMICOLON:
+			return scancodes::semicolon;
+		case SDL_SCANCODE_APOSTROPHE:
+			return scancodes::apostrophe;
+		case SDL_SCANCODE_GRAVE:
+			return scancodes::grave;
+		case SDL_SCANCODE_COMMA:
+			return scancodes::comma;
+		case SDL_SCANCODE_PERIOD:
+			return scancodes::period;
+		case SDL_SCANCODE_SLASH:
+			return scancodes::slash;
+		case SDL_SCANCODE_CAPSLOCK:
+			return scancodes::capslock;
+		case SDL_SCANCODE_F1:
+			return scancodes::f1;
+		case SDL_SCANCODE_F2:
+			return scancodes::f2;
+		case SDL_SCANCODE_F3:
+			return scancodes::f3;
+		case SDL_SCANCODE_F4:
+			return scancodes::f4;
+		case SDL_SCANCODE_F5:
+			return scancodes::f5;
+		case SDL_SCANCODE_F6:
+			return scancodes::f6;
+		case SDL_SCANCODE_F7:
+			return scancodes::f7;
+		case SDL_SCANCODE_F8:
+			return scancodes::f8;
+		case SDL_SCANCODE_F9:
+			return scancodes::f9;
+		case SDL_SCANCODE_F10:
+			return scancodes::f10;
+		case SDL_SCANCODE_F11:
+			return scancodes::f11;
+		case SDL_SCANCODE_F12:
+			return scancodes::f12;
+		case SDL_SCANCODE_PRINTSCREEN:
+			return scancodes::printscreen;
+		case SDL_SCANCODE_SCROLLLOCK:
+			return scancodes::scroll_lock;
+		case SDL_SCANCODE_PAUSE:
+			return scancodes::pause;
+		case SDL_SCANCODE_INSERT:
+			return scancodes::insert;
+		case SDL_SCANCODE_HOME:
+			return scancodes::home;
+		case SDL_SCANCODE_PAGEUP:
+			return scancodes::page_up;
+		case SDL_SCANCODE_DELETE:
+			return scancodes::del;
+		case SDL_SCANCODE_END:
+			return scancodes::end;
+		case SDL_SCANCODE_PAGEDOWN:
+			return scancodes::page_down;
+		case SDL_SCANCODE_RIGHT:
+			return scancodes::right;
+		case SDL_SCANCODE_LEFT:
+			return scancodes::left;
+		case SDL_SCANCODE_DOWN:
+			return scancodes::down;
+		case SDL_SCANCODE_UP:
+			return scancodes::up;
+		case SDL_SCANCODE_NUMLOCKCLEAR:
+			return scancodes::numlock_clear;
+		case SDL_SCANCODE_KP_DIVIDE:
+			return scancodes::kp_divide;
+		case SDL_SCANCODE_KP_MULTIPLY:
+			return scancodes::kp_multiply;
+		case SDL_SCANCODE_KP_MINUS:
+			return scancodes::kp_minus;
+		case SDL_SCANCODE_KP_PLUS:
+			return scancodes::kp_plus;
+		case SDL_SCANCODE_KP_ENTER:
+			return scancodes::kp_enter;
+		case SDL_SCANCODE_KP_1:
+			return scancodes::kp_1;
+		case SDL_SCANCODE_KP_2:
+			return scancodes::kp_2;
+		case SDL_SCANCODE_KP_3:
+			return scancodes::kp_3;
+		case SDL_SCANCODE_KP_4:
+			return scancodes::kp_4;
+		case SDL_SCANCODE_KP_5:
+			return scancodes::kp_5;
+		case SDL_SCANCODE_KP_6:
+			return scancodes::kp_6;
+		case SDL_SCANCODE_KP_7:
+			return scancodes::kp_7;
+		case SDL_SCANCODE_KP_8:
+			return scancodes::kp_8;
+		case SDL_SCANCODE_KP_9:
+			return scancodes::kp_9;
+		case SDL_SCANCODE_KP_0:
+			return scancodes::kp_0;
+		case SDL_SCANCODE_KP_PERIOD:
+			return scancodes::kp_period;
+		case SDL_SCANCODE_NONUSBACKSLASH:
+			return scancodes::non_usbackslash;
+		case SDL_SCANCODE_APPLICATION:
+			return scancodes::application;
+		case SDL_SCANCODE_POWER:
+			return scancodes::power;
+		case SDL_SCANCODE_KP_EQUALS:
+			return scancodes::kp_equals;
+		case SDL_SCANCODE_F13:
+			return scancodes::f13;
+		case SDL_SCANCODE_F14:
+			return scancodes::f14;
+		case SDL_SCANCODE_F15:
+			return scancodes::f15;
+		case SDL_SCANCODE_F16:
+			return scancodes::f16;
+		case SDL_SCANCODE_F17:
+			return scancodes::f17;
+		case SDL_SCANCODE_F18:
+			return scancodes::f18;
+		case SDL_SCANCODE_F19:
+			return scancodes::f19;
+		case SDL_SCANCODE_F20:
+			return scancodes::f20;
+		case SDL_SCANCODE_F21:
+			return scancodes::f21;
+		case SDL_SCANCODE_F22:
+			return scancodes::f22;
+		case SDL_SCANCODE_F23:
+			return scancodes::f23;
+		case SDL_SCANCODE_F24:
+			return scancodes::f24;
+		case SDL_SCANCODE_EXECUTE:
+			return scancodes::execute;
+		case SDL_SCANCODE_HELP:
+			return scancodes::help;
+		case SDL_SCANCODE_MENU:
+			return scancodes::menu;
+		case SDL_SCANCODE_SELECT:
+			return scancodes::select;
+		case SDL_SCANCODE_STOP:
+			return scancodes::stop;
+		case SDL_SCANCODE_AGAIN:
+			return scancodes::again;
+		case SDL_SCANCODE_UNDO:
+			return scancodes::undo;
+		case SDL_SCANCODE_CUT:
+			return scancodes::cut;
+		case SDL_SCANCODE_COPY:
+			return scancodes::copy;
+		case SDL_SCANCODE_PASTE:
+			return scancodes::paste;
+		case SDL_SCANCODE_FIND:
+			return scancodes::find;
+		case SDL_SCANCODE_MUTE:
+			return scancodes::mute;
+		case SDL_SCANCODE_VOLUMEUP:
+			return scancodes::volume_up;
+		case SDL_SCANCODE_VOLUMEDOWN:
+			return scancodes::volume_down;
+		case SDL_SCANCODE_KP_COMMA:
+			return scancodes::kp_comma;
+		case SDL_SCANCODE_KP_EQUALSAS400:
+			return scancodes::kp_equalsas400;
+		case SDL_SCANCODE_INTERNATIONAL1:
+			return scancodes::international1;
+		case SDL_SCANCODE_INTERNATIONAL2:
+			return scancodes::international2;
+		case SDL_SCANCODE_INTERNATIONAL3:
+			return scancodes::international3;
+		case SDL_SCANCODE_INTERNATIONAL4:
+			return scancodes::international4;
+		case SDL_SCANCODE_INTERNATIONAL5:
+			return scancodes::international5;
+		case SDL_SCANCODE_INTERNATIONAL6:
+			return scancodes::international6;
+		case SDL_SCANCODE_INTERNATIONAL7:
+			return scancodes::international7;
+		case SDL_SCANCODE_INTERNATIONAL8:
+			return scancodes::international8;
+		case SDL_SCANCODE_INTERNATIONAL9:
+			return scancodes::international9;
+		case SDL_SCANCODE_LANG1:
+			return scancodes::lang1;
+		case SDL_SCANCODE_LANG2:
+			return scancodes::lang2;
+		case SDL_SCANCODE_LANG3:
+			return scancodes::lang3;
+		case SDL_SCANCODE_LANG4:
+			return scancodes::lang4;
+		case SDL_SCANCODE_LANG5:
+			return scancodes::lang5;
+		case SDL_SCANCODE_LANG6:
+			return scancodes::lang6;
+		case SDL_SCANCODE_LANG7:
+			return scancodes::lang7;
+		case SDL_SCANCODE_LANG8:
+			return scancodes::lang8;
+		case SDL_SCANCODE_LANG9:
+			return scancodes::lang9;
+		case SDL_SCANCODE_ALTERASE:
+			return scancodes::alterase;
+		case SDL_SCANCODE_SYSREQ:
+			return scancodes::sysreq;
+		case SDL_SCANCODE_CANCEL:
+			return scancodes::cancel;
+		case SDL_SCANCODE_CLEAR:
+			return scancodes::clear;
+		case SDL_SCANCODE_PRIOR:
+			return scancodes::prior;
+		case SDL_SCANCODE_RETURN2:
+			return scancodes::return2;
+		case SDL_SCANCODE_SEPARATOR:
+			return scancodes::separator;
+		case SDL_SCANCODE_OUT:
+			return scancodes::out;
+		case SDL_SCANCODE_OPER:
+			return scancodes::oper;
+		case SDL_SCANCODE_CLEARAGAIN:
+			return scancodes::clear_again;
+		case SDL_SCANCODE_CRSEL:
+			return scancodes::crsel;
+		case SDL_SCANCODE_EXSEL:
+			return scancodes::exsel;
+		case SDL_SCANCODE_KP_00:
+			return scancodes::kp_00;
+		case SDL_SCANCODE_KP_000:
+			return scancodes::kp_000;
+		case SDL_SCANCODE_THOUSANDSSEPARATOR:
+			return scancodes::thousands_separator;
+		case SDL_SCANCODE_DECIMALSEPARATOR:
+			return scancodes::decimal_separator;
+		case SDL_SCANCODE_CURRENCYUNIT:
+			return scancodes::currency_unit;
+		case SDL_SCANCODE_CURRENCYSUBUNIT:
+			return scancodes::currency_subunit;
+		case SDL_SCANCODE_KP_LEFTPAREN:
+			return scancodes::kp_left_paren;
+		case SDL_SCANCODE_KP_RIGHTPAREN:
+			return scancodes::kp_right_paren;
+		case SDL_SCANCODE_KP_LEFTBRACE:
+			return scancodes::kp_left_brace;
+		case SDL_SCANCODE_KP_RIGHTBRACE:
+			return scancodes::kp_right_brace;
+		case SDL_SCANCODE_KP_TAB:
+			return scancodes::kp_tab;
+		case SDL_SCANCODE_KP_BACKSPACE:
+			return scancodes::kp_backspace;
+		case SDL_SCANCODE_KP_A:
+			return scancodes::kp_a;
+		case SDL_SCANCODE_KP_B:
+			return scancodes::kp_b;
+		case SDL_SCANCODE_KP_C:
+			return scancodes::kp_c;
+		case SDL_SCANCODE_KP_D:
+			return scancodes::kp_d;
+		case SDL_SCANCODE_KP_E:
+			return scancodes::kp_e;
+		case SDL_SCANCODE_KP_F:
+			return scancodes::kp_f;
+		case SDL_SCANCODE_KP_XOR:
+			return scancodes::kp_xor;
+		case SDL_SCANCODE_KP_POWER:
+			return scancodes::kp_power;
+		case SDL_SCANCODE_KP_PERCENT:
+			return scancodes::kp_percent;
+		case SDL_SCANCODE_KP_LESS:
+			return scancodes::kp_less;
+		case SDL_SCANCODE_KP_GREATER:
+			return scancodes::kp_greater;
+		case SDL_SCANCODE_KP_AMPERSAND:
+			return scancodes::kp_ampersand;
+		case SDL_SCANCODE_KP_DBLAMPERSAND:
+			return scancodes::kp_dblampersand;
+		case SDL_SCANCODE_KP_VERTICALBAR:
+			return scancodes::kp_verticalbar;
+		case SDL_SCANCODE_KP_DBLVERTICALBAR:
+			return scancodes::kp_dblverticalbar;
+		case SDL_SCANCODE_KP_COLON:
+			return scancodes::kp_colon;
+		case SDL_SCANCODE_KP_HASH:
+			return scancodes::kp_hash;
+		case SDL_SCANCODE_KP_SPACE:
+			return scancodes::kp_space;
+		case SDL_SCANCODE_KP_AT:
+			return scancodes::kp_at;
+		case SDL_SCANCODE_KP_EXCLAM:
+			return scancodes::kp_exclam;
+		case SDL_SCANCODE_KP_MEMSTORE:
+			return scancodes::kp_mem_store;
+		case SDL_SCANCODE_KP_MEMRECALL:
+			return scancodes::kp_mem_recall;
+		case SDL_SCANCODE_KP_MEMCLEAR:
+			return scancodes::kp_mem_clear;
+		case SDL_SCANCODE_KP_MEMADD:
+			return scancodes::kp_mem_add;
+		case SDL_SCANCODE_KP_MEMSUBTRACT:
+			return scancodes::kp_mem_subtract;
+		case SDL_SCANCODE_KP_MEMMULTIPLY:
+			return scancodes::kp_mem_multiply;
+		case SDL_SCANCODE_KP_MEMDIVIDE:
+			return scancodes::kp_mem_divide;
+		case SDL_SCANCODE_KP_PLUSMINUS:
+			return scancodes::kp_plus_minus;
+		case SDL_SCANCODE_KP_CLEAR:
+			return scancodes::kp_clear;
+		case SDL_SCANCODE_KP_CLEARENTRY:
+			return scancodes::kp_clear_entry;
+		case SDL_SCANCODE_KP_BINARY:
+			return scancodes::kp_binary;
+		case SDL_SCANCODE_KP_OCTAL:
+			return scancodes::kp_octal;
+		case SDL_SCANCODE_KP_DECIMAL:
+			return scancodes::kp_decimal;
+		case SDL_SCANCODE_KP_HEXADECIMAL:
+			return scancodes::kp_hexadecimal;
+		case SDL_SCANCODE_LCTRL:
+			return scancodes::left_ctrl;
+		case SDL_SCANCODE_LSHIFT:
+			return scancodes::left_shift;
+		case SDL_SCANCODE_LALT:
+			return scancodes::left_alt;
+		case SDL_SCANCODE_LGUI:
+			return scancodes::left_gui;
+		case SDL_SCANCODE_RCTRL:
+			return scancodes::right_ctrl;
+		case SDL_SCANCODE_RSHIFT:
+			return scancodes::right_shift;
+		case SDL_SCANCODE_RALT:
+			return scancodes::right_alt;
+		case SDL_SCANCODE_RGUI:
+			return scancodes::right_gui;
+		case SDL_SCANCODE_MODE:
+			return scancodes::mode;
+		case SDL_SCANCODE_AUDIONEXT:
+			return scancodes::audio_next;
+		case SDL_SCANCODE_AUDIOPREV:
+			return scancodes::audio_prev;
+		case SDL_SCANCODE_AUDIOSTOP:
+			return scancodes::audio_stop;
+		case SDL_SCANCODE_AUDIOPLAY:
+			return scancodes::audio_play;
+		case SDL_SCANCODE_AUDIOMUTE:
+			return scancodes::audio_mute;
+		case SDL_SCANCODE_MEDIASELECT:
+			return scancodes::media_select;
+		case SDL_SCANCODE_WWW:
+			return scancodes::www;
+		case SDL_SCANCODE_MAIL:
+			return scancodes::mail;
+		case SDL_SCANCODE_CALCULATOR:
+			return scancodes::calculator;
+		case SDL_SCANCODE_COMPUTER:
+			return scancodes::computer;
+		case SDL_SCANCODE_AC_SEARCH:
+			return scancodes::ac_search;
+		case SDL_SCANCODE_AC_HOME:
+			return scancodes::ac_home;
+		case SDL_SCANCODE_AC_BACK:
+			return scancodes::ac_back;
+		case SDL_SCANCODE_AC_FORWARD:
+			return scancodes::ac_forward;
+		case SDL_SCANCODE_AC_STOP:
+			return scancodes::ac_stop;
+		case SDL_SCANCODE_AC_REFRESH:
+			return scancodes::ac_refresh;
+		case SDL_SCANCODE_AC_BOOKMARKS:
+			return scancodes::ac_bookmarks;
+		case SDL_SCANCODE_BRIGHTNESSDOWN:
+			return scancodes::brightness_down;
+		case SDL_SCANCODE_BRIGHTNESSUP:
+			return scancodes::brightness_up;
+		case SDL_SCANCODE_DISPLAYSWITCH:
+			return scancodes::display_switch;
+		case SDL_SCANCODE_KBDILLUMTOGGLE:
+			return scancodes::kbd_illum_toggle;
+		case SDL_SCANCODE_KBDILLUMDOWN:
+			return scancodes::kbd_illum_down;
+		case SDL_SCANCODE_KBDILLUMUP:
+			return scancodes::kbd_illum_up;
+		case SDL_SCANCODE_EJECT:
+			return scancodes::eject;
+		case SDL_SCANCODE_SLEEP:
+			return scancodes::sleep;
+		case SDL_SCANCODE_APP1:
+			return scancodes::app1;
+		case SDL_SCANCODE_APP2:
+			return scancodes::app2;
+		case SDL_SCANCODE_AUDIOREWIND:
+			return scancodes::audio_rewind;
+		case SDL_SCANCODE_AUDIOFASTFORWARD:
+			return scancodes::audio_fastforward;
+		}
 	}
 
 	constexpr SDL_Scancode to_sdl(scancodes code) noexcept
 	{
-		return code == scancodes::a ? SDL_SCANCODE_A
-			: code == scancodes::b ? SDL_SCANCODE_B
-			: code == scancodes::c ? SDL_SCANCODE_C
-			: code == scancodes::d ? SDL_SCANCODE_D
-			: code == scancodes::e ? SDL_SCANCODE_E
-			: code == scancodes::f ? SDL_SCANCODE_F
-			: code == scancodes::g ? SDL_SCANCODE_G
-			: code == scancodes::h ? SDL_SCANCODE_H
-			: code == scancodes::i ? SDL_SCANCODE_I
-			: code == scancodes::j ? SDL_SCANCODE_J
-			: code == scancodes::k ? SDL_SCANCODE_K
-			: code == scancodes::l ? SDL_SCANCODE_L
-			: code == scancodes::m ? SDL_SCANCODE_M
-			: code == scancodes::n ? SDL_SCANCODE_N
-			: code == scancodes::o ? SDL_SCANCODE_O
-			: code == scancodes::p ? SDL_SCANCODE_P
-			: code == scancodes::q ? SDL_SCANCODE_Q
-			: code == scancodes::r ? SDL_SCANCODE_R
-			: code == scancodes::s ? SDL_SCANCODE_S
-			: code == scancodes::t ? SDL_SCANCODE_T
-			: code == scancodes::u ? SDL_SCANCODE_U
-			: code == scancodes::v ? SDL_SCANCODE_V
-			: code == scancodes::w ? SDL_SCANCODE_W
-			: code == scancodes::x ? SDL_SCANCODE_X
-			: code == scancodes::y ? SDL_SCANCODE_Y
-			: code == scancodes::z ? SDL_SCANCODE_Z
-			: code == scancodes::num_1 ? SDL_SCANCODE_1
-			: code == scancodes::num_2 ? SDL_SCANCODE_2
-			: code == scancodes::num_3 ? SDL_SCANCODE_3
-			: code == scancodes::num_4 ? SDL_SCANCODE_4
-			: code == scancodes::num_5 ? SDL_SCANCODE_5
-			: code == scancodes::num_6 ? SDL_SCANCODE_6
-			: code == scancodes::num_7 ? SDL_SCANCODE_7
-			: code == scancodes::num_8 ? SDL_SCANCODE_8
-			: code == scancodes::num_9 ? SDL_SCANCODE_9
-			: code == scancodes::num_0 ? SDL_SCANCODE_0
-			: code == scancodes::enter ? SDL_SCANCODE_RETURN
-			: code == scancodes::escape ? SDL_SCANCODE_ESCAPE
-			: code == scancodes::backspace ? SDL_SCANCODE_BACKSPACE
-			: code == scancodes::tab ? SDL_SCANCODE_TAB
-			: code == scancodes::space ? SDL_SCANCODE_SPACE
-			: code == scancodes::minus ? SDL_SCANCODE_MINUS
-			: code == scancodes::equals ? SDL_SCANCODE_EQUALS
-			: code == scancodes::left_bracket ? SDL_SCANCODE_LEFTBRACKET
-			: code == scancodes::right_bracket ? SDL_SCANCODE_RIGHTBRACKET
-			: code == scancodes::backslash ? SDL_SCANCODE_BACKSLASH
-			: code == scancodes::non_ushash ? SDL_SCANCODE_NONUSHASH
-			: code == scancodes::semicolon ? SDL_SCANCODE_SEMICOLON
-			: code == scancodes::apostrophe ? SDL_SCANCODE_APOSTROPHE
-			: code == scancodes::grave ? SDL_SCANCODE_GRAVE
-			: code == scancodes::comma ? SDL_SCANCODE_COMMA
-			: code == scancodes::period ? SDL_SCANCODE_PERIOD
-			: code == scancodes::slash ? SDL_SCANCODE_SLASH
-			: code == scancodes::capslock ? SDL_SCANCODE_CAPSLOCK
-			: code == scancodes::f1 ? SDL_SCANCODE_F1
-			: code == scancodes::f2 ? SDL_SCANCODE_F2
-			: code == scancodes::f3 ? SDL_SCANCODE_F3
-			: code == scancodes::f4 ? SDL_SCANCODE_F4
-			: code == scancodes::f5 ? SDL_SCANCODE_F5
-			: code == scancodes::f6 ? SDL_SCANCODE_F6
-			: code == scancodes::f7 ? SDL_SCANCODE_F7
-			: code == scancodes::f8 ? SDL_SCANCODE_F8
-			: code == scancodes::f9 ? SDL_SCANCODE_F9
-			: code == scancodes::f10 ? SDL_SCANCODE_F10
-			: code == scancodes::f11 ? SDL_SCANCODE_F11
-			: code == scancodes::f12 ? SDL_SCANCODE_F12
-			: code == scancodes::printscreen ? SDL_SCANCODE_PRINTSCREEN
-			: code == scancodes::scroll_lock ? SDL_SCANCODE_SCROLLLOCK
-			: code == scancodes::pause ? SDL_SCANCODE_PAUSE
-			: code == scancodes::insert ? SDL_SCANCODE_INSERT
-			: code == scancodes::home ? SDL_SCANCODE_HOME
-			: code == scancodes::page_up ? SDL_SCANCODE_PAGEUP
-			: code == scancodes::del ? SDL_SCANCODE_DELETE
-			: code == scancodes::end ? SDL_SCANCODE_END
-			: code == scancodes::page_down ? SDL_SCANCODE_PAGEDOWN
-			: code == scancodes::right ? SDL_SCANCODE_RIGHT
-			: code == scancodes::left ? SDL_SCANCODE_LEFT
-			: code == scancodes::down ? SDL_SCANCODE_DOWN
-			: code == scancodes::up ? SDL_SCANCODE_UP
-			: code == scancodes::numlock_clear ? SDL_SCANCODE_NUMLOCKCLEAR
-			: code == scancodes::kp_divide ? SDL_SCANCODE_KP_DIVIDE
-			: code == scancodes::kp_multiply ? SDL_SCANCODE_KP_MULTIPLY
-			: code == scancodes::kp_minus ? SDL_SCANCODE_KP_MINUS
-			: code == scancodes::kp_plus ? SDL_SCANCODE_KP_PLUS
-			: code == scancodes::kp_enter ? SDL_SCANCODE_KP_ENTER
-			: code == scancodes::kp_1 ? SDL_SCANCODE_KP_1
-			: code == scancodes::kp_2 ? SDL_SCANCODE_KP_2
-			: code == scancodes::kp_3 ? SDL_SCANCODE_KP_3
-			: code == scancodes::kp_4 ? SDL_SCANCODE_KP_4
-			: code == scancodes::kp_5 ? SDL_SCANCODE_KP_5
-			: code == scancodes::kp_6 ? SDL_SCANCODE_KP_6
-			: code == scancodes::kp_7 ? SDL_SCANCODE_KP_7
-			: code == scancodes::kp_8 ? SDL_SCANCODE_KP_8
-			: code == scancodes::kp_9 ? SDL_SCANCODE_KP_9
-			: code == scancodes::kp_0 ? SDL_SCANCODE_KP_0
-			: code == scancodes::kp_period ? SDL_SCANCODE_KP_PERIOD
-			: code == scancodes::non_usbackslash ? SDL_SCANCODE_NONUSBACKSLASH
-			: code == scancodes::application ? SDL_SCANCODE_APPLICATION
-			: code == scancodes::power ? SDL_SCANCODE_POWER
-			: code == scancodes::kp_equals ? SDL_SCANCODE_KP_EQUALS
-			: code == scancodes::f13 ? SDL_SCANCODE_F13
-			: code == scancodes::f14 ? SDL_SCANCODE_F14
-			: code == scancodes::f15 ? SDL_SCANCODE_F15
-			: code == scancodes::f16 ? SDL_SCANCODE_F16
-			: code == scancodes::f17 ? SDL_SCANCODE_F17
-			: code == scancodes::f18 ? SDL_SCANCODE_F18
-			: code == scancodes::f19 ? SDL_SCANCODE_F19
-			: code == scancodes::f20 ? SDL_SCANCODE_F20
-			: code == scancodes::f21 ? SDL_SCANCODE_F21
-			: code == scancodes::f22 ? SDL_SCANCODE_F22
-			: code == scancodes::f23 ? SDL_SCANCODE_F23
-			: code == scancodes::f24 ? SDL_SCANCODE_F24
-			: code == scancodes::execute ? SDL_SCANCODE_EXECUTE
-			: code == scancodes::help ? SDL_SCANCODE_HELP
-			: code == scancodes::menu ? SDL_SCANCODE_MENU
-			: code == scancodes::select ? SDL_SCANCODE_SELECT
-			: code == scancodes::stop ? SDL_SCANCODE_STOP
-			: code == scancodes::again ? SDL_SCANCODE_AGAIN
-			: code == scancodes::undo ? SDL_SCANCODE_UNDO
-			: code == scancodes::cut ? SDL_SCANCODE_CUT
-			: code == scancodes::copy ? SDL_SCANCODE_COPY
-			: code == scancodes::paste ? SDL_SCANCODE_PASTE
-			: code == scancodes::find ? SDL_SCANCODE_FIND
-			: code == scancodes::mute ? SDL_SCANCODE_MUTE
-			: code == scancodes::volume_up ? SDL_SCANCODE_VOLUMEUP
-			: code == scancodes::volume_down ? SDL_SCANCODE_VOLUMEDOWN
-			: code == scancodes::kp_comma ? SDL_SCANCODE_KP_COMMA
-			: code == scancodes::kp_equalsas400 ? SDL_SCANCODE_KP_EQUALSAS400
-			: code == scancodes::international1 ? SDL_SCANCODE_INTERNATIONAL1
-			: code == scancodes::international2 ? SDL_SCANCODE_INTERNATIONAL2
-			: code == scancodes::international3 ? SDL_SCANCODE_INTERNATIONAL3
-			: code == scancodes::international4 ? SDL_SCANCODE_INTERNATIONAL4
-			: code == scancodes::international5 ? SDL_SCANCODE_INTERNATIONAL5
-			: code == scancodes::international6 ? SDL_SCANCODE_INTERNATIONAL6
-			: code == scancodes::international7 ? SDL_SCANCODE_INTERNATIONAL7
-			: code == scancodes::international8 ? SDL_SCANCODE_INTERNATIONAL8
-			: code == scancodes::international9 ? SDL_SCANCODE_INTERNATIONAL9
-			: code == scancodes::lang1 ? SDL_SCANCODE_LANG1
-			: code == scancodes::lang2 ? SDL_SCANCODE_LANG2
-			: code == scancodes::lang3 ? SDL_SCANCODE_LANG3
-			: code == scancodes::lang4 ? SDL_SCANCODE_LANG4
-			: code == scancodes::lang5 ? SDL_SCANCODE_LANG5
-			: code == scancodes::lang6 ? SDL_SCANCODE_LANG6
-			: code == scancodes::lang7 ? SDL_SCANCODE_LANG7
-			: code == scancodes::lang8 ? SDL_SCANCODE_LANG8
-			: code == scancodes::lang9 ? SDL_SCANCODE_LANG9
-			: code == scancodes::alterase ? SDL_SCANCODE_ALTERASE
-			: code == scancodes::sysreq ? SDL_SCANCODE_SYSREQ
-			: code == scancodes::cancel ? SDL_SCANCODE_CANCEL
-			: code == scancodes::clear ? SDL_SCANCODE_CLEAR
-			: code == scancodes::prior ? SDL_SCANCODE_PRIOR
-			: code == scancodes::return2 ? SDL_SCANCODE_RETURN2
-			: code == scancodes::separator ? SDL_SCANCODE_SEPARATOR
-			: code == scancodes::out ? SDL_SCANCODE_OUT
-			: code == scancodes::oper ? SDL_SCANCODE_OPER
-			: code == scancodes::clear_again ? SDL_SCANCODE_CLEARAGAIN
-			: code == scancodes::crsel ? SDL_SCANCODE_CRSEL
-			: code == scancodes::exsel ? SDL_SCANCODE_EXSEL
-			: code == scancodes::kp_00 ? SDL_SCANCODE_KP_00
-			: code == scancodes::kp_000 ? SDL_SCANCODE_KP_000
-			: code == scancodes::thousands_separator ? SDL_SCANCODE_THOUSANDSSEPARATOR
-			: code == scancodes::decimal_separator ? SDL_SCANCODE_DECIMALSEPARATOR
-			: code == scancodes::currency_unit ? SDL_SCANCODE_CURRENCYUNIT
-			: code == scancodes::currency_subunit ? SDL_SCANCODE_CURRENCYSUBUNIT
-			: code == scancodes::kp_left_paren ? SDL_SCANCODE_KP_LEFTPAREN
-			: code == scancodes::kp_right_paren ? SDL_SCANCODE_KP_RIGHTPAREN
-			: code == scancodes::kp_left_brace ? SDL_SCANCODE_KP_LEFTBRACE
-			: code == scancodes::kp_right_brace ? SDL_SCANCODE_KP_RIGHTBRACE
-			: code == scancodes::kp_tab ? SDL_SCANCODE_KP_TAB
-			: code == scancodes::kp_backspace ? SDL_SCANCODE_KP_BACKSPACE
-			: code == scancodes::kp_a ? SDL_SCANCODE_KP_A
-			: code == scancodes::kp_b ? SDL_SCANCODE_KP_B
-			: code == scancodes::kp_c ? SDL_SCANCODE_KP_C
-			: code == scancodes::kp_d ? SDL_SCANCODE_KP_D
-			: code == scancodes::kp_e ? SDL_SCANCODE_KP_E
-			: code == scancodes::kp_f ? SDL_SCANCODE_KP_F
-			: code == scancodes::kp_xor ? SDL_SCANCODE_KP_XOR
-			: code == scancodes::kp_power ? SDL_SCANCODE_KP_POWER
-			: code == scancodes::kp_percent ? SDL_SCANCODE_KP_PERCENT
-			: code == scancodes::kp_less ? SDL_SCANCODE_KP_LESS
-			: code == scancodes::kp_greater ? SDL_SCANCODE_KP_GREATER
-			: code == scancodes::kp_ampersand ? SDL_SCANCODE_KP_AMPERSAND
-			: code == scancodes::kp_dblampersand ? SDL_SCANCODE_KP_DBLAMPERSAND
-			: code == scancodes::kp_verticalbar ? SDL_SCANCODE_KP_VERTICALBAR
-			: code == scancodes::kp_dblverticalbar ? SDL_SCANCODE_KP_DBLVERTICALBAR
-			: code == scancodes::kp_colon ? SDL_SCANCODE_KP_COLON
-			: code == scancodes::kp_hash ? SDL_SCANCODE_KP_HASH
-			: code == scancodes::kp_space ? SDL_SCANCODE_KP_SPACE
-			: code == scancodes::kp_at ? SDL_SCANCODE_KP_AT
-			: code == scancodes::kp_exclam ? SDL_SCANCODE_KP_EXCLAM
-			: code == scancodes::kp_mem_store ? SDL_SCANCODE_KP_MEMSTORE
-			: code == scancodes::kp_mem_recall ? SDL_SCANCODE_KP_MEMRECALL
-			: code == scancodes::kp_mem_clear ? SDL_SCANCODE_KP_MEMCLEAR
-			: code == scancodes::kp_mem_add ? SDL_SCANCODE_KP_MEMADD
-			: code == scancodes::kp_mem_subtract ? SDL_SCANCODE_KP_MEMSUBTRACT
-			: code == scancodes::kp_mem_multiply ? SDL_SCANCODE_KP_MEMMULTIPLY
-			: code == scancodes::kp_mem_divide ? SDL_SCANCODE_KP_MEMDIVIDE
-			: code == scancodes::kp_plus_minus ? SDL_SCANCODE_KP_PLUSMINUS
-			: code == scancodes::kp_clear ? SDL_SCANCODE_KP_CLEAR
-			: code == scancodes::kp_clear_entry ? SDL_SCANCODE_KP_CLEARENTRY
-			: code == scancodes::kp_binary ? SDL_SCANCODE_KP_BINARY
-			: code == scancodes::kp_octal ? SDL_SCANCODE_KP_OCTAL
-			: code == scancodes::kp_decimal ? SDL_SCANCODE_KP_DECIMAL
-			: code == scancodes::kp_hexadecimal ? SDL_SCANCODE_KP_HEXADECIMAL
-			: code == scancodes::left_ctrl ? SDL_SCANCODE_LCTRL
-			: code == scancodes::left_shift ? SDL_SCANCODE_LSHIFT
-			: code == scancodes::left_alt ? SDL_SCANCODE_LALT
-			: code == scancodes::left_gui ? SDL_SCANCODE_LGUI
-			: code == scancodes::right_ctrl ? SDL_SCANCODE_RCTRL
-			: code == scancodes::right_shift ? SDL_SCANCODE_RSHIFT
-			: code == scancodes::right_alt ? SDL_SCANCODE_RALT
-			: code == scancodes::right_gui ? SDL_SCANCODE_RGUI
-			: code == scancodes::mode ? SDL_SCANCODE_MODE
-			: code == scancodes::audio_next ? SDL_SCANCODE_AUDIONEXT
-			: code == scancodes::audio_prev ? SDL_SCANCODE_AUDIOPREV
-			: code == scancodes::audio_stop ? SDL_SCANCODE_AUDIOSTOP
-			: code == scancodes::audio_play ? SDL_SCANCODE_AUDIOPLAY
-			: code == scancodes::audio_mute ? SDL_SCANCODE_AUDIOMUTE
-			: code == scancodes::media_select ? SDL_SCANCODE_MEDIASELECT
-			: code == scancodes::www ? SDL_SCANCODE_WWW
-			: code == scancodes::mail ? SDL_SCANCODE_MAIL
-			: code == scancodes::calculator ? SDL_SCANCODE_CALCULATOR
-			: code == scancodes::computer ? SDL_SCANCODE_COMPUTER
-			: code == scancodes::ac_search ? SDL_SCANCODE_AC_SEARCH
-			: code == scancodes::ac_home ? SDL_SCANCODE_AC_HOME
-			: code == scancodes::ac_back ? SDL_SCANCODE_AC_BACK
-			: code == scancodes::ac_forward ? SDL_SCANCODE_AC_FORWARD
-			: code == scancodes::ac_stop ? SDL_SCANCODE_AC_STOP
-			: code == scancodes::ac_refresh ? SDL_SCANCODE_AC_REFRESH
-			: code == scancodes::ac_bookmarks ? SDL_SCANCODE_AC_BOOKMARKS
-			: code == scancodes::brightness_down ? SDL_SCANCODE_BRIGHTNESSDOWN
-			: code == scancodes::brightness_up ? SDL_SCANCODE_BRIGHTNESSUP
-			: code == scancodes::display_switch ? SDL_SCANCODE_DISPLAYSWITCH
-			: code == scancodes::kbd_illum_toggle ? SDL_SCANCODE_KBDILLUMTOGGLE
-			: code == scancodes::kbd_illum_down ? SDL_SCANCODE_KBDILLUMDOWN
-			: code == scancodes::kbd_illum_up ? SDL_SCANCODE_KBDILLUMUP
-			: code == scancodes::eject ? SDL_SCANCODE_EJECT
-			: code == scancodes::sleep ? SDL_SCANCODE_SLEEP
-			: code == scancodes::app1 ? SDL_SCANCODE_APP1
-			: code == scancodes::app2 ? SDL_SCANCODE_APP2
-			: code == scancodes::audio_rewind ? SDL_SCANCODE_AUDIOREWIND
-			: code == scancodes::audio_fastforward ? SDL_SCANCODE_AUDIOFASTFORWARD
-			: SDL_SCANCODE_UNKNOWN;
+		switch (code)
+		{
+		default:
+			return SDL_SCANCODE_UNKNOWN;
+		case scancodes::a:
+			return SDL_SCANCODE_A;
+		case scancodes::b:
+			return SDL_SCANCODE_B;
+		case scancodes::c:
+			return SDL_SCANCODE_C;
+		case scancodes::d:
+			return SDL_SCANCODE_D;
+		case scancodes::e:
+			return SDL_SCANCODE_E;
+		case scancodes::f:
+			return SDL_SCANCODE_F;
+		case scancodes::g:
+			return SDL_SCANCODE_G;
+		case scancodes::h:
+			return SDL_SCANCODE_H;
+		case scancodes::i:
+			return SDL_SCANCODE_I;
+		case scancodes::j:
+			return SDL_SCANCODE_J;
+		case scancodes::k:
+			return SDL_SCANCODE_K;
+		case scancodes::l:
+			return SDL_SCANCODE_L;
+		case scancodes::m:
+			return SDL_SCANCODE_M;
+		case scancodes::n:
+			return SDL_SCANCODE_N;
+		case scancodes::o:
+			return SDL_SCANCODE_O;
+		case scancodes::p:
+			return SDL_SCANCODE_P;
+		case scancodes::q:
+			return SDL_SCANCODE_Q;
+		case scancodes::r:
+			return SDL_SCANCODE_R;
+		case scancodes::s:
+			return SDL_SCANCODE_S;
+		case scancodes::t:
+			return SDL_SCANCODE_T;
+		case scancodes::u:
+			return SDL_SCANCODE_U;
+		case scancodes::v:
+			return SDL_SCANCODE_V;
+		case scancodes::w:
+			return SDL_SCANCODE_W;
+		case scancodes::x:
+			return SDL_SCANCODE_X;
+		case scancodes::y:
+			return SDL_SCANCODE_Y;
+		case scancodes::z:
+			return SDL_SCANCODE_Z;
+		case scancodes::num_1:
+			return SDL_SCANCODE_1;
+		case scancodes::num_2:
+			return SDL_SCANCODE_2;
+		case scancodes::num_3:
+			return SDL_SCANCODE_3;
+		case scancodes::num_4:
+			return SDL_SCANCODE_4;
+		case scancodes::num_5:
+			return SDL_SCANCODE_5;
+		case scancodes::num_6:
+			return SDL_SCANCODE_6;
+		case scancodes::num_7:
+			return SDL_SCANCODE_7;
+		case scancodes::num_8:
+			return SDL_SCANCODE_8;
+		case scancodes::num_9:
+			return SDL_SCANCODE_9;
+		case scancodes::num_0:
+			return SDL_SCANCODE_0;
+		case scancodes::enter:
+			return SDL_SCANCODE_RETURN;
+		case scancodes::escape:
+			return SDL_SCANCODE_ESCAPE;
+		case scancodes::backspace:
+			return SDL_SCANCODE_BACKSPACE;
+		case scancodes::tab:
+			return SDL_SCANCODE_TAB;
+		case scancodes::space:
+			return SDL_SCANCODE_SPACE;
+		case scancodes::minus:
+			return SDL_SCANCODE_MINUS;
+		case scancodes::equals:
+			return SDL_SCANCODE_EQUALS;
+		case scancodes::left_bracket:
+			return SDL_SCANCODE_LEFTBRACKET;
+		case scancodes::right_bracket:
+			return SDL_SCANCODE_RIGHTBRACKET;
+		case scancodes::backslash:
+			return SDL_SCANCODE_BACKSLASH;
+		case scancodes::non_ushash:
+			return SDL_SCANCODE_NONUSHASH;
+		case scancodes::semicolon:
+			return SDL_SCANCODE_SEMICOLON;
+		case scancodes::apostrophe:
+			return SDL_SCANCODE_APOSTROPHE;
+		case scancodes::grave:
+			return SDL_SCANCODE_GRAVE;
+		case scancodes::comma:
+			return SDL_SCANCODE_COMMA;
+		case scancodes::period:
+			return SDL_SCANCODE_PERIOD;
+		case scancodes::slash:
+			return SDL_SCANCODE_SLASH;
+		case scancodes::capslock:
+			return SDL_SCANCODE_CAPSLOCK;
+		case scancodes::f1:
+			return SDL_SCANCODE_F1;
+		case scancodes::f2:
+			return SDL_SCANCODE_F2;
+		case scancodes::f3:
+			return SDL_SCANCODE_F3;
+		case scancodes::f4:
+			return SDL_SCANCODE_F4;
+		case scancodes::f5:
+			return SDL_SCANCODE_F5;
+		case scancodes::f6:
+			return SDL_SCANCODE_F6;
+		case scancodes::f7:
+			return SDL_SCANCODE_F7;
+		case scancodes::f8:
+			return SDL_SCANCODE_F8;
+		case scancodes::f9:
+			return SDL_SCANCODE_F9;
+		case scancodes::f10:
+			return SDL_SCANCODE_F10;
+		case scancodes::f11:
+			return SDL_SCANCODE_F11;
+		case scancodes::f12:
+			return SDL_SCANCODE_F12;
+		case scancodes::printscreen:
+			return SDL_SCANCODE_PRINTSCREEN;
+		case scancodes::scroll_lock:
+			return SDL_SCANCODE_SCROLLLOCK;
+		case scancodes::pause:
+			return SDL_SCANCODE_PAUSE;
+		case scancodes::insert:
+			return SDL_SCANCODE_INSERT;
+		case scancodes::home:
+			return SDL_SCANCODE_HOME;
+		case scancodes::page_up:
+			return SDL_SCANCODE_PAGEUP;
+		case scancodes::del:
+			return SDL_SCANCODE_DELETE;
+		case scancodes::end:
+			return SDL_SCANCODE_END;
+		case scancodes::page_down:
+			return SDL_SCANCODE_PAGEDOWN;
+		case scancodes::right:
+			return SDL_SCANCODE_RIGHT;
+		case scancodes::left:
+			return SDL_SCANCODE_LEFT;
+		case scancodes::down:
+			return SDL_SCANCODE_DOWN;
+		case scancodes::up:
+			return SDL_SCANCODE_UP;
+		case scancodes::numlock_clear:
+			return SDL_SCANCODE_NUMLOCKCLEAR;
+		case scancodes::kp_divide:
+			return SDL_SCANCODE_KP_DIVIDE;
+		case scancodes::kp_multiply:
+			return SDL_SCANCODE_KP_MULTIPLY;
+		case scancodes::kp_minus:
+			return SDL_SCANCODE_KP_MINUS;
+		case scancodes::kp_plus:
+			return SDL_SCANCODE_KP_PLUS;
+		case scancodes::kp_enter:
+			return SDL_SCANCODE_KP_ENTER;
+		case scancodes::kp_1:
+			return SDL_SCANCODE_KP_1;
+		case scancodes::kp_2:
+			return SDL_SCANCODE_KP_2;
+		case scancodes::kp_3:
+			return SDL_SCANCODE_KP_3;
+		case scancodes::kp_4:
+			return SDL_SCANCODE_KP_4;
+		case scancodes::kp_5:
+			return SDL_SCANCODE_KP_5;
+		case scancodes::kp_6:
+			return SDL_SCANCODE_KP_6;
+		case scancodes::kp_7:
+			return SDL_SCANCODE_KP_7;
+		case scancodes::kp_8:
+			return SDL_SCANCODE_KP_8;
+		case scancodes::kp_9:
+			return SDL_SCANCODE_KP_9;
+		case scancodes::kp_0:
+			return SDL_SCANCODE_KP_0;
+		case scancodes::kp_period:
+			return SDL_SCANCODE_KP_PERIOD;
+		case scancodes::non_usbackslash:
+			return SDL_SCANCODE_NONUSBACKSLASH;
+		case scancodes::application:
+			return SDL_SCANCODE_APPLICATION;
+		case scancodes::power:
+			return SDL_SCANCODE_POWER;
+		case scancodes::kp_equals:
+			return SDL_SCANCODE_KP_EQUALS;
+		case scancodes::f13:
+			return SDL_SCANCODE_F13;
+		case scancodes::f14:
+			return SDL_SCANCODE_F14;
+		case scancodes::f15:
+			return SDL_SCANCODE_F15;
+		case scancodes::f16:
+			return SDL_SCANCODE_F16;
+		case scancodes::f17:
+			return SDL_SCANCODE_F17;
+		case scancodes::f18:
+			return SDL_SCANCODE_F18;
+		case scancodes::f19:
+			return SDL_SCANCODE_F19;
+		case scancodes::f20:
+			return SDL_SCANCODE_F20;
+		case scancodes::f21:
+			return SDL_SCANCODE_F21;
+		case scancodes::f22:
+			return SDL_SCANCODE_F22;
+		case scancodes::f23:
+			return SDL_SCANCODE_F23;
+		case scancodes::f24:
+			return SDL_SCANCODE_F24;
+		case scancodes::execute:
+			return SDL_SCANCODE_EXECUTE;
+		case scancodes::help:
+			return SDL_SCANCODE_HELP;
+		case scancodes::menu:
+			return SDL_SCANCODE_MENU;
+		case scancodes::select:
+			return SDL_SCANCODE_SELECT;
+		case scancodes::stop:
+			return SDL_SCANCODE_STOP;
+		case scancodes::again:
+			return SDL_SCANCODE_AGAIN;
+		case scancodes::undo:
+			return SDL_SCANCODE_UNDO;
+		case scancodes::cut:
+			return SDL_SCANCODE_CUT;
+		case scancodes::copy:
+			return SDL_SCANCODE_COPY;
+		case scancodes::paste:
+			return SDL_SCANCODE_PASTE;
+		case scancodes::find:
+			return SDL_SCANCODE_FIND;
+		case scancodes::mute:
+			return SDL_SCANCODE_MUTE;
+		case scancodes::volume_up:
+			return SDL_SCANCODE_VOLUMEUP;
+		case scancodes::volume_down:
+			return SDL_SCANCODE_VOLUMEDOWN;
+		case scancodes::kp_comma:
+			return SDL_SCANCODE_KP_COMMA;
+		case scancodes::kp_equalsas400:
+			return SDL_SCANCODE_KP_EQUALSAS400;
+		case scancodes::international1:
+			return SDL_SCANCODE_INTERNATIONAL1;
+		case scancodes::international2:
+			return SDL_SCANCODE_INTERNATIONAL2;
+		case scancodes::international3:
+			return SDL_SCANCODE_INTERNATIONAL3;
+		case scancodes::international4:
+			return SDL_SCANCODE_INTERNATIONAL4;
+		case scancodes::international5:
+			return SDL_SCANCODE_INTERNATIONAL5;
+		case scancodes::international6:
+			return SDL_SCANCODE_INTERNATIONAL6;
+		case scancodes::international7:
+			return SDL_SCANCODE_INTERNATIONAL7;
+		case scancodes::international8:
+			return SDL_SCANCODE_INTERNATIONAL8;
+		case scancodes::international9:
+			return SDL_SCANCODE_INTERNATIONAL9;
+		case scancodes::lang1:
+			return SDL_SCANCODE_LANG1;
+		case scancodes::lang2:
+			return SDL_SCANCODE_LANG2;
+		case scancodes::lang3:
+			return SDL_SCANCODE_LANG3;
+		case scancodes::lang4:
+			return SDL_SCANCODE_LANG4;
+		case scancodes::lang5:
+			return SDL_SCANCODE_LANG5;
+		case scancodes::lang6:
+			return SDL_SCANCODE_LANG6;
+		case scancodes::lang7:
+			return SDL_SCANCODE_LANG7;
+		case scancodes::lang8:
+			return SDL_SCANCODE_LANG8;
+		case scancodes::lang9:
+			return SDL_SCANCODE_LANG9;
+		case scancodes::alterase:
+			return SDL_SCANCODE_ALTERASE;
+		case scancodes::sysreq:
+			return SDL_SCANCODE_SYSREQ;
+		case scancodes::cancel:
+			return SDL_SCANCODE_CANCEL;
+		case scancodes::clear:
+			return SDL_SCANCODE_CLEAR;
+		case scancodes::prior:
+			return SDL_SCANCODE_PRIOR;
+		case scancodes::return2:
+			return SDL_SCANCODE_RETURN2;
+		case scancodes::separator:
+			return SDL_SCANCODE_SEPARATOR;
+		case scancodes::out:
+			return SDL_SCANCODE_OUT;
+		case scancodes::oper:
+			return SDL_SCANCODE_OPER;
+		case scancodes::clear_again:
+			return SDL_SCANCODE_CLEARAGAIN;
+		case scancodes::crsel:
+			return SDL_SCANCODE_CRSEL;
+		case scancodes::exsel:
+			return SDL_SCANCODE_EXSEL;
+		case scancodes::kp_00:
+			return SDL_SCANCODE_KP_00;
+		case scancodes::kp_000:
+			return SDL_SCANCODE_KP_000;
+		case scancodes::thousands_separator:
+			return SDL_SCANCODE_THOUSANDSSEPARATOR;
+		case scancodes::decimal_separator:
+			return SDL_SCANCODE_DECIMALSEPARATOR;
+		case scancodes::currency_unit:
+			return SDL_SCANCODE_CURRENCYUNIT;
+		case scancodes::currency_subunit:
+			return SDL_SCANCODE_CURRENCYSUBUNIT;
+		case scancodes::kp_left_paren:
+			return SDL_SCANCODE_KP_LEFTPAREN;
+		case scancodes::kp_right_paren:
+			return SDL_SCANCODE_KP_RIGHTPAREN;
+		case scancodes::kp_left_brace:
+			return SDL_SCANCODE_KP_LEFTBRACE;
+		case scancodes::kp_right_brace:
+			return SDL_SCANCODE_KP_RIGHTBRACE;
+		case scancodes::kp_tab:
+			return SDL_SCANCODE_KP_TAB;
+		case scancodes::kp_backspace:
+			return SDL_SCANCODE_KP_BACKSPACE;
+		case scancodes::kp_a:
+			return SDL_SCANCODE_KP_A;
+		case scancodes::kp_b:
+			return SDL_SCANCODE_KP_B;
+		case scancodes::kp_c:
+			return SDL_SCANCODE_KP_C;
+		case scancodes::kp_d:
+			return SDL_SCANCODE_KP_D;
+		case scancodes::kp_e:
+			return SDL_SCANCODE_KP_E;
+		case scancodes::kp_f:
+			return SDL_SCANCODE_KP_F;
+		case scancodes::kp_xor:
+			return SDL_SCANCODE_KP_XOR;
+		case scancodes::kp_power:
+			return SDL_SCANCODE_KP_POWER;
+		case scancodes::kp_percent:
+			return SDL_SCANCODE_KP_PERCENT;
+		case scancodes::kp_less:
+			return SDL_SCANCODE_KP_LESS;
+		case scancodes::kp_greater:
+			return SDL_SCANCODE_KP_GREATER;
+		case scancodes::kp_ampersand:
+			return SDL_SCANCODE_KP_AMPERSAND;
+		case scancodes::kp_dblampersand:
+			return SDL_SCANCODE_KP_DBLAMPERSAND;
+		case scancodes::kp_verticalbar:
+			return SDL_SCANCODE_KP_VERTICALBAR;
+		case scancodes::kp_dblverticalbar:
+			return SDL_SCANCODE_KP_DBLVERTICALBAR;
+		case scancodes::kp_colon:
+			return SDL_SCANCODE_KP_COLON;
+		case scancodes::kp_hash:
+			return SDL_SCANCODE_KP_HASH;
+		case scancodes::kp_space:
+			return SDL_SCANCODE_KP_SPACE;
+		case scancodes::kp_at:
+			return SDL_SCANCODE_KP_AT;
+		case scancodes::kp_exclam:
+			return SDL_SCANCODE_KP_EXCLAM;
+		case scancodes::kp_mem_store:
+			return SDL_SCANCODE_KP_MEMSTORE;
+		case scancodes::kp_mem_recall:
+			return SDL_SCANCODE_KP_MEMRECALL;
+		case scancodes::kp_mem_clear:
+			return SDL_SCANCODE_KP_MEMCLEAR;
+		case scancodes::kp_mem_add:
+			return SDL_SCANCODE_KP_MEMADD;
+		case scancodes::kp_mem_subtract:
+			return SDL_SCANCODE_KP_MEMSUBTRACT;
+		case scancodes::kp_mem_multiply:
+			return SDL_SCANCODE_KP_MEMMULTIPLY;
+		case scancodes::kp_mem_divide:
+			return SDL_SCANCODE_KP_MEMDIVIDE;
+		case scancodes::kp_plus_minus:
+			return SDL_SCANCODE_KP_PLUSMINUS;
+		case scancodes::kp_clear:
+			return SDL_SCANCODE_KP_CLEAR;
+		case scancodes::kp_clear_entry:
+			return SDL_SCANCODE_KP_CLEARENTRY;
+		case scancodes::kp_binary:
+			return SDL_SCANCODE_KP_BINARY;
+		case scancodes::kp_octal:
+			return SDL_SCANCODE_KP_OCTAL;
+		case scancodes::kp_decimal:
+			return SDL_SCANCODE_KP_DECIMAL;
+		case scancodes::kp_hexadecimal:
+			return SDL_SCANCODE_KP_HEXADECIMAL;
+		case scancodes::left_ctrl:
+			return SDL_SCANCODE_LCTRL;
+		case scancodes::left_shift:
+			return SDL_SCANCODE_LSHIFT;
+		case scancodes::left_alt:
+			return SDL_SCANCODE_LALT;
+		case scancodes::left_gui:
+			return SDL_SCANCODE_LGUI;
+		case scancodes::right_ctrl:
+			return SDL_SCANCODE_RCTRL;
+		case scancodes::right_shift:
+			return SDL_SCANCODE_RSHIFT;
+		case scancodes::right_alt:
+			return SDL_SCANCODE_RALT;
+		case scancodes::right_gui:
+			return SDL_SCANCODE_RGUI;
+		case scancodes::mode:
+			return SDL_SCANCODE_MODE;
+		case scancodes::audio_next:
+			return SDL_SCANCODE_AUDIONEXT;
+		case scancodes::audio_prev:
+			return SDL_SCANCODE_AUDIOPREV;
+		case scancodes::audio_stop:
+			return SDL_SCANCODE_AUDIOSTOP;
+		case scancodes::audio_play:
+			return SDL_SCANCODE_AUDIOPLAY;
+		case scancodes::audio_mute:
+			return SDL_SCANCODE_AUDIOMUTE;
+		case scancodes::media_select:
+			return SDL_SCANCODE_MEDIASELECT;
+		case scancodes::www:
+			return SDL_SCANCODE_WWW;
+		case scancodes::mail:
+			return SDL_SCANCODE_MAIL;
+		case scancodes::calculator:
+			return SDL_SCANCODE_CALCULATOR;
+		case scancodes::computer:
+			return SDL_SCANCODE_COMPUTER;
+		case scancodes::ac_search:
+			return SDL_SCANCODE_AC_SEARCH;
+		case scancodes::ac_home:
+			return SDL_SCANCODE_AC_HOME;
+		case scancodes::ac_back:
+			return SDL_SCANCODE_AC_BACK;
+		case scancodes::ac_forward:
+			return SDL_SCANCODE_AC_FORWARD;
+		case scancodes::ac_stop:
+			return SDL_SCANCODE_AC_STOP;
+		case scancodes::ac_refresh:
+			return SDL_SCANCODE_AC_REFRESH;
+		case scancodes::ac_bookmarks:
+			return SDL_SCANCODE_AC_BOOKMARKS;
+		case scancodes::brightness_down:
+			return SDL_SCANCODE_BRIGHTNESSDOWN;
+		case scancodes::brightness_up:
+			return SDL_SCANCODE_BRIGHTNESSUP;
+		case scancodes::display_switch:
+			return SDL_SCANCODE_DISPLAYSWITCH;
+		case scancodes::kbd_illum_toggle:
+			return SDL_SCANCODE_KBDILLUMTOGGLE;
+		case scancodes::kbd_illum_down:
+			return SDL_SCANCODE_KBDILLUMDOWN;
+		case scancodes::kbd_illum_up:
+			return SDL_SCANCODE_KBDILLUMUP;
+		case scancodes::eject:
+			return SDL_SCANCODE_EJECT;
+		case scancodes::sleep:
+			return SDL_SCANCODE_SLEEP;
+		case scancodes::app1:
+			return SDL_SCANCODE_APP1;
+		case scancodes::app2:
+			return SDL_SCANCODE_APP2;
+		case scancodes::audio_rewind:
+			return SDL_SCANCODE_AUDIOREWIND;
+		case scancodes::audio_fastforward:
+			return SDL_SCANCODE_AUDIOFASTFORWARD;
+		}
 	}
 }
