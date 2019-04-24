@@ -50,10 +50,9 @@ namespace gfx::gl
 		}
 	}
 
-	buffer buffer::create(renderer &renderer, buffer_target target, buffer_usage usage, const void *data, size_t size) noexcept
+	buffer buffer::create(buffer_target target, buffer_usage usage, const void *data, size_t size) noexcept
 	{
-		auto resource = buffer_resource::create(renderer);
-		// actually fully create the buffer
+		auto resource = buffer_resource::create();
 
 		glBindBuffer(to_gl(target), resource);
 		glBufferData(to_gl(target), size, data, to_gl(usage));
@@ -66,21 +65,11 @@ namespace gfx::gl
 	{
 	}
 
-	void buffer::bind_unsafe(buffer_target target) noexcept
-	{
-		glBindBuffer(to_gl(target), buf);
-	}
-	
-	void buffer::unbind_unsafe(buffer_target target) noexcept
-	{
-		glBindBuffer(to_gl(target), 0);
-	}
-
-	uint32_t buffer::create_buffer(renderer &) noexcept
+	uint32_t buffer::create_buffer() noexcept
 	{
 		GLuint buffer;
 		glGenBuffers(1, &buffer);
-		return buffer;
+		return 0;
 	}
 
 	void buffer::destroy_buffer(uint32_t buffer) noexcept

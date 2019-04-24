@@ -7,15 +7,12 @@
 
 namespace gfx::gl
 {
-	class renderer;
 	class program;
 
 	class program_pipeline final
 	{
 	public:
-		friend class renderer;
-
-		static program_pipeline create(renderer &renderer) noexcept;
+		static program_pipeline create() noexcept;
 		program_pipeline() = default;
 
 		void use_program(const program &program) noexcept;
@@ -24,7 +21,7 @@ namespace gfx::gl
 		void use_programs(const Programs &...program) noexcept;
 
 	private:
-		static uint32_t create_program_pipeline(renderer &renderer) noexcept;
+		static uint32_t create_program_pipeline() noexcept;
 		static void destroy_program_pipeline(uint32_t program_pipeline) noexcept;
 		CORE_GENERATE_RESOURCE(program_pipeline_resource, uint32_t, create_program_pipeline, destroy_program_pipeline, core::resource::opts::implicit_conversion<true>);
 
@@ -33,6 +30,7 @@ namespace gfx::gl
 		static void unsafe_unbind() noexcept;
 
 	private:
+		friend class renderer;
 		program_pipeline_resource pipeline;
 	};
 

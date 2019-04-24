@@ -7,9 +7,9 @@
 
 namespace gfx::gl
 {
-	program_pipeline program_pipeline::create(renderer &renderer) noexcept
+	program_pipeline program_pipeline::create() noexcept
 	{
-		auto pipeline = program_pipeline_resource::create(renderer);
+		auto pipeline = program_pipeline_resource::create();
 		return program_pipeline(std::move(pipeline));
 	}
 
@@ -33,7 +33,7 @@ namespace gfx::gl
 		glBindProgramPipeline(0);
 	}
 
-	uint32_t program_pipeline::create_program_pipeline(renderer &) noexcept
+	uint32_t program_pipeline::create_program_pipeline() noexcept
 	{
 		GLuint pipeline;
 		glGenProgramPipelines(1, &pipeline);

@@ -95,6 +95,7 @@ namespace gfx::gl
 			return texture_pixel_formats[static_cast<size_t>(target)];
 		}
 
+		// TODO: see if we can more aggressibly request RGBA8 or GL_SRGB8_ALPHA8 formats always for rgb* types
 		static GLenum internal_format(texture_format format, pixel_layout layout)
 		{
 			if (format == texture_format::rgb && layout == pixel_layout::uint8)
@@ -124,7 +125,7 @@ namespace gfx::gl
 		}
 	}
 
-	texture texture::create_from_image(renderer &renderer, const image &img, int level)
+	texture texture::create_from_image(const image &img, int level)
 	{
 		texture_format format;
 		int bpp = img.channels();
@@ -148,12 +149,12 @@ namespace gfx::gl
 			break;
 		}
 
-		return create2d(renderer, texture2d_target::texture_2d, img.size(), format, pixel_layout::uint8, img.data(), row_alignment::uint32, level);
+		return create2d(texture2d_target::texture_2d, img.size(), format, pixel_layout::uint8, img.data(), row_alignment::uint32, level);
 	}
 
-	texture texture::create2d(renderer &renderer, texture2d_target target, const glm::ivec2 &size, texture_format format, pixel_layout layout, const void *data, row_alignment alignment, int level, int stride)
+	texture texture::create2d(texture2d_target target, const glm::ivec2 &size, texture_format format, pixel_layout layout, const void *data, row_alignment alignment, int level, int stride)
 	{
-		auto resource = texture_resource::create(renderer);
+		auto resource = texture_resource::create();
 		GLenum type = to_gl(target);
 		glBindTexture(type, resource);
 		glPixelStorei(GL_UNPACK_ALIGNMENT, static_cast<GLint>(alignment));
@@ -164,9 +165,9 @@ namespace gfx::gl
 		return texture(type, std::move(resource));
 	}
 
-	texture texture::create3d(renderer &renderer, texture3d_target target, const glm::ivec3 &size, texture_format format, pixel_layout layout, const void *data, row_alignment alignment, int level, int stride)
+	texture texture::create3d(texture3d_target target, const glm::ivec3 &size, texture_format format, pixel_layout layout, const void *data, row_alignment alignment, int level, int stride)
 	{
-		auto resource = texture_resource::create(renderer);
+		auto resource = texture_resource::create();
 		GLenum type = to_gl(target);
 		glBindTexture(type, resource);
 		glPixelStorei(GL_UNPACK_ALIGNMENT, static_cast<GLint>(alignment));
@@ -188,7 +189,7 @@ namespace gfx::gl
 		return type;
 	}
 
-	uint32_t texture::create_texture(renderer &) noexcept
+	uint32_t texture::create_texture() noexcept
 	{
 		GLuint texture;
 		glGenTextures(1, &texture);

@@ -27,26 +27,27 @@ namespace gfx::gl
 
 	struct vertex_attribute
 	{
-		vertex_attribute(component_type component_type, int num_components, int stride, size_t offset, int divisor = 0, bool normalized = false) noexcept;
+		vertex_attribute(component_type component_type, int num_components, uint32_t binding_index, size_t offset, int divisor = 0, bool normalized = false) noexcept;
 
 		component_type type;
 		int num_components;
-		int stride;
+		uint32_t  binding_index;
 		size_t offset;
 		int divisor;
 		bool normalized;
 	};
-
-	class renderer;
 
 	class vertex_array_object final
 	{
 	public:
 		vertex_array_object() = default;
 
+		void use_vertex_buffer(uint32_t index, const buffer &buffer, size_t offset, size_t stride) noexcept;
+		void use_index_buffer(const buffer &buffer) noexcept;
+
 	private:
 		friend class renderer;
-		static uint32_t create_vao(renderer &renderer) noexcept;
+		static uint32_t create_vao() noexcept;
 		static void destroy_vao(uint32_t vao) noexcept;
 		CORE_GENERATE_RESOURCE(vao_resource, uint32_t, create_vao, destroy_vao, core::resource::opts::implicit_conversion<true>);
 
@@ -58,16 +59,16 @@ namespace gfx::gl
 		class builder final
 		{
 		public:
-			builder(renderer &renderer) noexcept;
+			builder() noexcept;
 			~builder();
 
-			void bind_buffer(buffer_target target, buffer &buffer);
+			void bind_index_buffer(const buffer &buffer) noexcept;
+			void bind_vertex_buffer(uint32_t index, const buffer &buffer, size_t offset, size_t stride) noexcept;
 			void bind_attribute(int index, const vertex_attribute &attribute) noexcept;
 			vertex_array_object create() noexcept;
 
 		private:
 			vao_resource vao;
-			std::vector<buffer_target> bindings;
 		};
 
 	private:

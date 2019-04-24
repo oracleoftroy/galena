@@ -5,8 +5,6 @@
 
 namespace gfx::gl
 {
-	class renderer;
-
 	enum class renderbuffer_format
 	{
 		rgb8,
@@ -24,11 +22,11 @@ namespace gfx::gl
 	class renderbuffer final
 	{
 	public:
-		static renderbuffer create(renderer &renderer, int width, int height, renderbuffer_format format) noexcept;
+		static renderbuffer create(int width, int height, renderbuffer_format format) noexcept;
 		renderbuffer() = default;
 
 	private:
-		static uint32_t create_renderbuffer(renderer &renderer) noexcept;
+		static uint32_t create_renderbuffer() noexcept;
 		static void destroy_renderbuffer(uint32_t buffer) noexcept;
 		CORE_GENERATE_RESOURCE(renderbuffer_resource, uint32_t, create_renderbuffer, destroy_renderbuffer, core::resource::opts::implicit_conversion<true>);
 		explicit renderbuffer(renderbuffer_resource resource) noexcept;

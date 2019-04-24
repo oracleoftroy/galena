@@ -27,9 +27,9 @@ namespace gfx::gl
 		}
 	}
 
-	renderbuffer renderbuffer::create(renderer &renderer, int width, int height, renderbuffer_format format) noexcept
+	renderbuffer renderbuffer::create(int width, int height, renderbuffer_format format) noexcept
 	{
-		auto buf = renderbuffer_resource::create(renderer);
+		auto buf = renderbuffer_resource::create();
 		glBindRenderbuffer(GL_RENDERBUFFER, buf);
 		glRenderbufferStorage(GL_RENDERBUFFER, to_gl(format), width, height);
 		glBindRenderbuffer(GL_RENDERBUFFER, 0);
@@ -37,7 +37,7 @@ namespace gfx::gl
 		return renderbuffer(std::move(buf));
 	}
 
-	uint32_t renderbuffer::create_renderbuffer(renderer &) noexcept
+	uint32_t renderbuffer::create_renderbuffer() noexcept
 	{
 		GLuint renderbuffer;
 		glGenRenderbuffers(1, &renderbuffer);

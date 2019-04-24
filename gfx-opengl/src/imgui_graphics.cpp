@@ -7,6 +7,7 @@ namespace gfx::gl::imgui
 {
 	imgui_graphics::imgui_graphics() noexcept
 	{
+		// TODO: make this 320 es to match requested gles version
 		ImGui_ImplOpenGL3_Init("#version 300 es");
 	}
 

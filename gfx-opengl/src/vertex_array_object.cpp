@@ -3,7 +3,6 @@
 #include <utility>
 
 #include <glad/glad.h>
-//#include "renderer.hpp"
 #include "log.hpp"
 
 namespace gfx::gl
@@ -31,14 +30,30 @@ namespace gfx::gl
 		}
 	}
 
-	vertex_attribute::vertex_attribute(component_type type, int num_components, int stride, size_t offset, int divisor, bool normalized) noexcept
-		: type(type), num_components(num_components), stride(stride), offset(offset), divisor(divisor), normalized(normalized)
+	vertex_attribute::vertex_attribute(component_type type, int num_components, uint32_t binding_index, size_t offset, int divisor, bool normalized) noexcept
+		: type(type), num_components(num_components), binding_index(binding_index), offset(offset), divisor(divisor), normalized(normalized)
 	{
 	}
 
-	vertex_array_object::vertex_array_object(vao_resource &&vao) noexcept : vao(std::move(vao))
+	vertex_array_object::vertex_array_object(vao_resource &&vao) noexcept
+		: vao(std::move(vao))
 	{
 	}
+
+	void vertex_array_object::use_index_buffer(const buffer &buffer) noexcept
+	{
+		// "Bindless" version, should use glVertexArrayElementBuffer once available
+		bind_unsafe();
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer.buf);
+	}
+
+	void vertex_array_object::use_vertex_buffer(uint32_t index, const buffer &buffer, size_t offset, size_t stride) noexcept
+	{
+		// "Bindless" version, should use glVertexArrayVertexBuffer once available
+		bind_unsafe();
+		glBindVertexBuffer(index, buffer.buf, offset, static_cast<GLsizei>(stride));
+	}
+
 
 	void vertex_array_object::bind_unsafe() noexcept
 	{
@@ -50,7 +65,7 @@ namespace gfx::gl
 		glBindVertexArray(0);
 	}
 
-	uint32_t vertex_array_object::create_vao(renderer &) noexcept
+	uint32_t vertex_array_object::create_vao() noexcept
 	{
 		uint32_t vao;
 		glGenVertexArrays(1, &vao);
@@ -62,7 +77,7 @@ namespace gfx::gl
 		glDeleteVertexArrays(1, &vao);
 	}
 
-	vertex_array_object::builder::builder(renderer &renderer) noexcept : vao(vao_resource::create(renderer))
+	vertex_array_object::builder::builder() noexcept : vao(vao_resource::create())
 	{
 		glBindVertexArray(vao);
 	}
@@ -76,31 +91,29 @@ namespace gfx::gl
 		}
 	}
 
-	void vertex_array_object::builder::bind_buffer(buffer_target target, buffer &buffer)
+	void vertex_array_object::builder::bind_index_buffer(const buffer &buffer) noexcept
 	{
-		buffer.bind_unsafe(target);
-		bindings.emplace_back(target);
+		// glVertexArrayElementBuffer would probably be better once gles gets it
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer.buf);
+	}
+
+	void vertex_array_object::builder::bind_vertex_buffer(uint32_t index, const buffer &buffer, size_t offset, size_t stride) noexcept
+	{
+		// glVertexArrayVertexBuffer would probably be better once gles gets it
+		glBindVertexBuffer(index, buffer.buf, offset, static_cast<GLsizei>(stride));
 	}
 
 	void vertex_array_object::builder::bind_attribute(int index, const vertex_attribute &attribute) noexcept
 	{
 		glEnableVertexAttribArray(index);
-		glVertexAttribPointer(index,
-			attribute.num_components,
-			to_gl(attribute.type),
-			attribute.normalized,
-			attribute.stride,
-			reinterpret_cast<void*>(attribute.offset));
+		glVertexAttribFormat(index, attribute.num_components, to_gl(attribute.type), attribute.normalized, static_cast<GLuint>(attribute.offset));
 		glVertexAttribDivisor(index, attribute.divisor);
+		glVertexAttribBinding(index, attribute.binding_index);
 	}
 
 	vertex_array_object vertex_array_object::builder::create() noexcept
 	{
 		glBindVertexArray(0);
-
-		for (auto &&target : bindings)
-			buffer::unbind_unsafe(target);
-
 		return vertex_array_object(std::move(vao));
 	}
 }

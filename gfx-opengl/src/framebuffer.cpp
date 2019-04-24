@@ -33,7 +33,7 @@ namespace gfx::gl
 		}
 	}
 
-	uint32_t framebuffer::create_framebuffer(renderer &) noexcept
+	uint32_t framebuffer::create_framebuffer() noexcept
 	{
 		GLuint buffer;
 		glGenFramebuffers(1, &buffer);
@@ -45,9 +45,9 @@ namespace gfx::gl
 		glDeleteFramebuffers(1, &buffer);
 	}
 
-	framebuffer framebuffer::create(renderer &renderer) noexcept
+	framebuffer framebuffer::create() noexcept
 	{
-		return framebuffer(framebuffer_resource::create(renderer));
+		return framebuffer(framebuffer_resource::create());
 	}
 
 	framebuffer::framebuffer(framebuffer_resource &&buf) noexcept

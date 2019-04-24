@@ -73,27 +73,26 @@ namespace gfx::gl
 	};
 
 	class image;
-	class renderer;
 
 	class texture final
 	{
 	public:
-		static texture create_from_image(renderer &renderer, const image &img, int level = 0);
-		static texture create2d(renderer &renderer, texture2d_target target, const glm::ivec2 &size, texture_format format, pixel_layout layout, const void *data, row_alignment alignment, int level = 0, int stride = 0);
-		static texture create3d(renderer &renderer, texture3d_target target, const glm::ivec3 &size, texture_format format, pixel_layout layout, const void *data, row_alignment alignment, int level = 0, int stride = 0);
+		static texture create_from_image(const image &img, int level = 0);
+		static texture create2d(texture2d_target target, const glm::ivec2 &size, texture_format format, pixel_layout layout, const void *data, row_alignment alignment, int level = 0, int stride = 0);
+		static texture create3d(texture3d_target target, const glm::ivec3 &size, texture_format format, pixel_layout layout, const void *data, row_alignment alignment, int level = 0, int stride = 0);
 		texture() = default;
 
 	private:
-		static uint32_t create_texture(renderer &renderer) noexcept;
+		static uint32_t create_texture() noexcept;
 		static void destroy_texture(uint32_t texture)noexcept;
 		CORE_GENERATE_RESOURCE(texture_resource, uint32_t, create_texture, destroy_texture, core::resource::opts::implicit_conversion<true>);
 
 		texture(uint32_t type, texture_resource &&tex) noexcept;
 
-		friend class renderer;
 		uint32_t unsafe_bind() noexcept;
 
 	private:
+		friend class renderer;
 		uint32_t type;
 		texture_resource tex;
 	};

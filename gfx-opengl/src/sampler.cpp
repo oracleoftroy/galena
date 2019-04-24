@@ -87,9 +87,9 @@ namespace gfx::gl
 		}
 	}
 
-	sampler sampler::create(renderer &renderer) noexcept
+	sampler sampler::create() noexcept
 	{
-		return sampler(sampler_resource::create(renderer));
+		return sampler(sampler_resource::create());
 	}
 	
 	sampler::sampler(sampler_resource &&resource) : resource(std::move(resource))
@@ -143,7 +143,7 @@ namespace gfx::gl
 		glBindSampler(texture_unit, resource);
 	}
 
-	uint32_t sampler::create_sampler(renderer &) noexcept
+	uint32_t sampler::create_sampler() noexcept
 	{
 		GLuint sampler;
 		glGenSamplers(1, &sampler);

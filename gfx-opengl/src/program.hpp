@@ -18,12 +18,10 @@ namespace gfx::gl
 		fragment
 	};
 
-	class renderer;
-
 	class program
 	{
 	public:
-		static program create(renderer &renderer, program_type type, const std::string &source);
+		static program create(program_type type, const std::string &source);
 		program() = default;
 
 		program_type get_type() noexcept { return type; }
@@ -37,7 +35,7 @@ namespace gfx::gl
 		int32_t uniform_location(const char *name) noexcept;
 
 	private:
-		static uint32_t create_program(renderer &renderer, program_type type, const std::string &source) noexcept;
+		static uint32_t create_program(program_type type, const std::string &source) noexcept;
 		static void destroy_program(uint32_t program) noexcept;
 		CORE_GENERATE_RESOURCE(program_resource, uint32_t, create_program, destroy_program, core::resource::opts::implicit_conversion<true>);
 

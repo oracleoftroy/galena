@@ -66,11 +66,11 @@ namespace gfx::gl
 		}
 	};
 
-	program program::create(renderer &renderer, program_type type, const std::string &source)
+	program program::create(program_type type, const std::string &source)
 	{
 		LOG_INFO("Creating %s program", c_str(type));
 
-		auto resource = program_resource::create(renderer, type, source);
+		auto resource = program_resource::create(type, source);
 
 		GLint success = 0;
 		glGetProgramiv(resource, GL_LINK_STATUS, &success);
@@ -132,7 +132,7 @@ namespace gfx::gl
 		glUseProgramStages(pipeline, to_gl_bits(type), resource);
 	}
 
-	uint32_t program::create_program(renderer &, program_type type, const std::string &source) noexcept
+	uint32_t program::create_program(program_type type, const std::string &source) noexcept
 	{
 		const char *s = source.c_str();
 		return glCreateShaderProgramv(to_gl(type), 1, &s);

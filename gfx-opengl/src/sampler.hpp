@@ -7,8 +7,6 @@
 
 namespace gfx::gl
 {
-	class renderer;
-
 	enum class minify_filter
 	{
 		nearest,
@@ -62,7 +60,7 @@ namespace gfx::gl
 	class sampler final
 	{
 	public:
-		static sampler create(renderer &renderer) noexcept;
+		static sampler create() noexcept;
 		sampler() = default;
 
 		void use_filter(minify_filter filter) noexcept;
@@ -79,7 +77,7 @@ namespace gfx::gl
 		void border_color(glm::vec4 color) noexcept;
 
 	private:
-		static uint32_t create_sampler(renderer &renderer) noexcept;
+		static uint32_t create_sampler() noexcept;
 		static void destroy_sampler(uint32_t sampler) noexcept;
 		CORE_GENERATE_RESOURCE(sampler_resource, uint32_t, create_sampler, destroy_sampler, core::resource::opts::implicit_conversion<true>);
 

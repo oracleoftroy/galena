@@ -216,10 +216,10 @@ namespace gfx::gl
 			return result;
 		}
 
-		static void APIENTRY on_gl_debug_message(GLenum source, GLenum type, [[maybe_unused]] GLuint id, GLenum severity, [[maybe_unused]] GLsizei length, const GLchar *message, const void *user_data)
+		static void APIENTRY on_gl_debug_message(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message, const void *user_data)
 		{
 			auto *logger = static_cast<core::logger *>(const_cast<void*>(user_data));
-			(*logger)->log(from_severity(severity), "({0} {1}): {2}", from_source(source), from_type(type), message);
+			(*logger)->log(from_severity(severity), "({0} {1}): {2} - {3}", from_source(source), from_type(type), id, std::string_view(message, length));
 		}
 
 		static void load_opengl(GLADloadproc load_proc) noexcept
