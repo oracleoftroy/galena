@@ -18,6 +18,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gfx", "gfx\gfx.vcxproj", "{
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gfx-opengl", "gfx-opengl\gfx-opengl.vcxproj", "{D1AADCCD-0A13-4C22-9491-E72E9E304F8E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "benchmarks-opengl", "benchmarks-opengl\benchmarks-opengl.vcxproj", "{7DB396B1-47E1-4EF6-9ABD-9C4B2DBCE72B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -44,6 +46,10 @@ Global
 		{D1AADCCD-0A13-4C22-9491-E72E9E304F8E}.Debug|x64.Build.0 = Debug|x64
 		{D1AADCCD-0A13-4C22-9491-E72E9E304F8E}.Release|x64.ActiveCfg = Release|x64
 		{D1AADCCD-0A13-4C22-9491-E72E9E304F8E}.Release|x64.Build.0 = Release|x64
+		{7DB396B1-47E1-4EF6-9ABD-9C4B2DBCE72B}.Debug|x64.ActiveCfg = Debug|x64
+		{7DB396B1-47E1-4EF6-9ABD-9C4B2DBCE72B}.Debug|x64.Build.0 = Debug|x64
+		{7DB396B1-47E1-4EF6-9ABD-9C4B2DBCE72B}.Release|x64.ActiveCfg = Release|x64
+		{7DB396B1-47E1-4EF6-9ABD-9C4B2DBCE72B}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

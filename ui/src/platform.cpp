@@ -7,10 +7,9 @@
 
 namespace ui
 {
-	platform platform::create()
+	platform::platform() noexcept
+		: data(std::make_unique<platform::platform_data>())
 	{
-		LOG_INFO("Creating platform");
-		return platform(std::make_unique<platform::platform_data>());
 	}
 
 	platform::platform(std::unique_ptr<platform_data> &&data) noexcept

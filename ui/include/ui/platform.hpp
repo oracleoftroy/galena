@@ -21,8 +21,7 @@ namespace ui
 	class platform final
 	{
 	public:
-		[[nodiscard]] static platform create();
-
+		platform() noexcept;
 		~platform() noexcept;
 
 		using event_listener_type = std::function<void(const event &)>;

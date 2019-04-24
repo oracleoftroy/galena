@@ -23,6 +23,7 @@ namespace ui
 	class window final
 	{
 	public:
+		window() noexcept = default;
 		~window() noexcept;
 
 		[[nodiscard]] glm::ivec2 size() const noexcept;
@@ -45,6 +46,6 @@ namespace ui
 		window(void *handle) noexcept;
 
 	private:
-		void *handle;
+		void *handle = nullptr;
 	};
 }

@@ -22,7 +22,11 @@ namespace core
 
 	logger register_logger(const std::string& name)
 	{
-		auto logger = spdlog::stdout_color_mt(name);
+		auto logger = spdlog::get(name);
+		if (logger)
+			return logger;
+
+		logger = spdlog::stdout_color_mt(name);
 		logger->sinks().emplace_back(std::make_shared<spdlog::sinks::msvc_sink_mt>());
 		return logger;
 	}

@@ -9,9 +9,10 @@ namespace ui
 	class window;
 	namespace imgui { class imgui_system; }
 
-	class opengl_context
+	class opengl_context final
 	{
 	public:
+		opengl_context() noexcept;
 		~opengl_context() noexcept;
 
 		opengl_load_proc get_load_proc() const noexcept;
@@ -31,19 +32,20 @@ namespace ui
 		void present() noexcept;
 
 	public:
-		opengl_context(opengl_context &&other) noexcept = default;
-		opengl_context &operator=(opengl_context &&other) = default;
+		opengl_context(opengl_context &&other) noexcept;
+		opengl_context &operator=(opengl_context &&other) noexcept;
 
 		opengl_context(const opengl_context &) noexcept = delete;
-		opengl_context &operator=(const opengl_context &) = delete;
+		opengl_context &operator=(const opengl_context &) noexcept = delete;
 
 	private:
-		class opengl_context_data;
 		friend class window;
 		friend class imgui::imgui_system;
+
+		class opengl_context_data;
 		std::unique_ptr<opengl_context_data> data;
 
 	private:
-		opengl_context(std::unique_ptr<opengl_context_data> &&data);
+		opengl_context(std::unique_ptr<opengl_context_data> &&data) noexcept;
 	};
 }

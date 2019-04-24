@@ -81,14 +81,13 @@ namespace ui
 
 		read_opengl_config(cfg);
 
-		std::unique_ptr<opengl_context::opengl_context_data> result;
 		if (context)
 		{
 			LOG_INFO("created opengl context for {0} {1}.{2}", profile(cfg.context_profile), cfg.context_major_version, cfg.context_minor_version);
-			result = std::make_unique<opengl_context::opengl_context_data>(WINDOW, context);
+			return {std::make_unique<opengl_context::opengl_context_data>(WINDOW, context)};
 		}
 
-		return opengl_context(std::move(result));
+		return {};
 	}
 
 	namespace
