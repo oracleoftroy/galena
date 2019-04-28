@@ -31,7 +31,7 @@ namespace gfx::gl
 		if (!result)
 		{
 			auto msg = stbi_failure_reason();
-			LOG_ERROR("Error loading image %s: %s", filename.c_str(), msg);
+			LOG_ERROR("Error loading image {0}: {1}", filename.c_str(), msg);
 			throw image_error(msg);
 		}
 

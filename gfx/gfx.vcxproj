@@ -74,12 +74,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\gfx\buffer.hpp" />
     <ClInclude Include="include\gfx\imgui_graphics.hpp" />
+    <ClInclude Include="include\gfx\mesh.hpp" />
+    <ClInclude Include="include\gfx\pipeline.hpp" />
+    <ClInclude Include="include\gfx\program.hpp" />
     <ClInclude Include="include\gfx\renderer.hpp" />
     <ClInclude Include="src\log.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\buffer.cpp" />
     <ClCompile Include="src\log.cpp" />
+    <ClCompile Include="src\mesh.cpp" />
+    <ClCompile Include="src\pipeline.cpp" />
+    <ClCompile Include="src\program.cpp" />
     <ClCompile Include="src\renderer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -27,5 +27,11 @@
     <ClCompile Include="..\app\src\opengl_magic.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="read_file.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="indirection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

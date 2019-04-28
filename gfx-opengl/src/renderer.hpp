@@ -108,7 +108,7 @@ namespace gfx::gl
 		void clear_depth() noexcept;
 		void clear_stencil() noexcept;
 
-		void use_vertex_array_object(vertex_array_object &vao) noexcept;
+		void use_vertex_array_object(const vertex_array_object &vao) noexcept;
 		void clear_vertex_array_object() noexcept;
 
 		void use_program_pipeline(program_pipeline &pipeline) noexcept;

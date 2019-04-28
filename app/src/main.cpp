@@ -19,6 +19,8 @@
 
 #include <imgui.h>
 
+#include "test_app.hpp"
+
 using namespace std::chrono_literals;
 
 struct event_handler
@@ -122,10 +124,7 @@ int main(int argc, char* argv[])
 	auto window_size = window.size();
 	LOG_TRACE("window reports size of ({0}, {1})", window_size.x, window_size.y);
 
-	ui::config_opengl config;
-	config.context_profile = ui::gl_context_profile::es;
-	config.context_major_version = 3;
-	config.context_minor_version = 2;
+	ui::config_opengl config{ui::opengl_profile::es, 3, 2};
 
 	auto opengl_context = window.opengl_create_context(config);
 	auto renderer = gfx::gl::create_opengl_renderer(opengl_context);
@@ -145,7 +144,9 @@ int main(int argc, char* argv[])
 	bool show_fps_overlay = true;
 	bool show_opengl_settings = true;
 
-	int vsync_play = 1;
+	int vsync_play = -1;
+
+	auto app = app::test_app::create(renderer, size);
 
 	ui::clock clock(target_frame_rate);
 	while (platform.dispatch_events())
@@ -157,11 +158,12 @@ int main(int argc, char* argv[])
 		while (clock.use_time_slice())
 		{
 			// game.tick(clock.time_slice);
+			app.tick(clock.time_slice.count());
 		}
 
 		// render
 		renderer.clear_color();
-		// game.render(renderer);
+		app.render(renderer);
 
 		imgui.new_frame();
 

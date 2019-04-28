@@ -120,7 +120,7 @@ namespace gfx::gl
 				return GL_ALPHA;
 
 			// TODO: support the full table of internal formats and remove this crap
-			LOG_CRITICAL("Unsupported texture format (%d) with pixel layout (%d)", (int)format, (int)layout);
+			LOG_CRITICAL("Unsupported texture format ({0}) with pixel layout ({0})", (int)format, (int)layout);
 			throw texture_error("Unsupported texture format");
 		}
 	}
@@ -133,7 +133,7 @@ namespace gfx::gl
 		switch (bpp)
 		{
 		default:
-			LOG_CRITICAL("Expecting image to have 1-4 components, it has %d", bpp);
+			LOG_CRITICAL("Expecting image to have 1-4 components, it has {0}", bpp);
 			throw texture_error("Expecting image to have 1-4 components");
 		case 1:
 			format = texture_format::luminance;

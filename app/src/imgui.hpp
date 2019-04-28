@@ -14,7 +14,6 @@ namespace app
 	{
 	public:
 		imgui(ui::opengl_context &context, gfx::renderer &renderer) noexcept;
-		~imgui() noexcept = default;
 
 		void new_frame() noexcept;
 		void render() noexcept;

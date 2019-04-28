@@ -15,7 +15,7 @@ namespace ui
 	{
 	public:
 		opengl_context_data(SDL_Window *window, SDL_GLContext context) noexcept;
-		~opengl_context_data() noexcept;
+		~opengl_context_data();
 
 		glm::ivec2 drawable_size() const noexcept;
 		void make_current();

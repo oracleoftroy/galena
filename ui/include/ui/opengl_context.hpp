@@ -13,7 +13,7 @@ namespace ui
 	{
 	public:
 		opengl_context() noexcept;
-		~opengl_context() noexcept;
+		~opengl_context();
 
 		opengl_load_proc get_load_proc() const noexcept;
 		bool supports_extension(const char *name) const noexcept;

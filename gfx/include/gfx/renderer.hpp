@@ -1,7 +1,13 @@
 #pragma once
 
+#include <filesystem>
 #include <memory>
 #include <glm/glm.hpp>
+
+#include <gfx/buffer.hpp>
+#include <gfx/mesh.hpp>
+#include <gfx/program.hpp>
+#include <gfx/pipeline.hpp>
 
 namespace gfx
 {
@@ -10,80 +16,51 @@ namespace gfx
 		class imgui_graphics_core;
 	}
 
+	class renderer_core
+	{
+	public:
+		virtual ~renderer_core() = default;
+
+		virtual buffer create_buffer(buffer_type type, usage_hint hint, const void *data, size_t size) = 0;
+		virtual program create_program(program_type type, const std::filesystem::path &file_path) = 0;
+		virtual pipeline create_pipeline() = 0;
+		virtual mesh create_mesh(const std::initializer_list<buffer_description> &descriptions) = 0;
+		virtual std::unique_ptr<imgui::imgui_graphics_core> create_imgui_graphics_core() = 0;
+
+		virtual void set_viewport(const glm::ivec2 &p, const glm::ivec2 &size) noexcept = 0;
+		virtual void set_clear_color(float r, float g, float b, float a) noexcept = 0;
+
+		virtual void clear_depth() noexcept = 0;
+		virtual void clear_color() noexcept = 0;
+		virtual void use_pipeline(pipeline &pipeline) = 0;
+		virtual void draw_indexed_mesh(const mesh &m, draw_mode mode, index_type type, int start, int count) = 0;
+	};
+
 	class renderer
 	{
 	public:
-		template <typename renderer_core>
-		explicit renderer(renderer_core &&core) noexcept;
+		renderer() noexcept = default;
+		explicit renderer(std::unique_ptr<renderer_core> &&core) noexcept;
 
+		// creation functions
+		buffer create_buffer(buffer_type type, usage_hint hint, const void *data, size_t size);
+		program create_program(program_type type, const std::filesystem::path &file_path);
+		pipeline create_pipeline();
+		mesh create_mesh(const std::initializer_list<buffer_description> &descriptions);
+
+		std::unique_ptr<imgui::imgui_graphics_core> create_imgui_graphics_core();
+
+		// state functions
 		void set_viewport(const glm::ivec2 &p, const glm::ivec2 &size) noexcept;
 		void set_clear_color(float r, float g, float b, float a) noexcept;
-		void clear_color() noexcept;
 
-		std::unique_ptr<imgui::imgui_graphics_core> create_imgui_graphics_core() noexcept;
+		// rendering functions
+		void clear_color() noexcept;
+		void clear_depth() noexcept;
+		void use_pipeline(pipeline &pipeline);
+		void draw_indexed_mesh(const mesh &m, draw_mode mode, index_type type, int start, int count);
 
 	private:
-		class renderer_impl_base
-		{
-		public:
-			virtual ~renderer_impl_base() noexcept {};
-			virtual void set_viewport(const glm::ivec2 &p, const glm::ivec2 &size) noexcept = 0;
-			virtual void set_clear_color(float r, float g, float b, float a) noexcept = 0;
-			virtual void clear_color() noexcept = 0;
-			virtual std::unique_ptr<imgui::imgui_graphics_core> create_imgui_graphics_core() noexcept = 0;
-		};
-
-		template <typename renderer_core>
-		class renderer_impl final : public renderer_impl_base
-		{
-		public:
-			renderer_impl(renderer_core &&core) noexcept;
-			void set_viewport(const glm::ivec2 &p, const glm::ivec2 &size) noexcept override;
-			void set_clear_color(float r, float g, float b, float a) noexcept override;
-			void clear_color() noexcept override;
-
-			std::unique_ptr<imgui::imgui_graphics_core> create_imgui_graphics_core() noexcept;
-
-		private:
-			renderer_core core;
-		};
-
-		std::unique_ptr<renderer_impl_base> base;
+		std::unique_ptr<renderer_core> core;
 	};
-
-	template <typename renderer_core>
-	renderer::renderer(renderer_core &&core) noexcept
-		: base(std::make_unique<renderer_impl<renderer_core>>(std::move(core)))
-	{
-	}
-
-	template <typename renderer_core>
-	renderer::renderer_impl<renderer_core>::renderer_impl(renderer_core &&core) noexcept
-		: core(std::move(core))
-	{
-	}
-
-	template <typename renderer_core>
-	void renderer::renderer_impl<renderer_core>::set_viewport(const glm::ivec2 &p, const glm::ivec2 &size) noexcept
-	{
-		core_set_viewport(core, p, size);
-	}
-
-	template <typename renderer_core>
-	void renderer::renderer_impl<renderer_core>::set_clear_color(float r, float g, float b, float a) noexcept
-	{
-		core_set_clear_color(core, r, g, b, a);
-	}
-
-	template <typename renderer_core>
-	void renderer::renderer_impl<renderer_core>::clear_color() noexcept
-	{
-		core_clear_color(core);
-	}
-
-	template <typename renderer_core>
-	std::unique_ptr<imgui::imgui_graphics_core> renderer::renderer_impl<renderer_core>::create_imgui_graphics_core() noexcept
-	{
-		return core_create_imgui_graphics_core(core);
-	}
 }

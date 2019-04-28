@@ -21,7 +21,7 @@ namespace ui
 		static void read_opengl_config(config_opengl &cfg) noexcept;
 	}
 
-	window::~window() noexcept
+	window::~window()
 	{
 		LOG_INFO("Destroying window");
 		SDL_DestroyWindow(WINDOW);
@@ -39,19 +39,19 @@ namespace ui
 		auto profile = [](auto p)
 		{
 			using namespace std::string_view_literals;
-			return p == gl_context_profile::core ? "GL Core"sv
-				: p == gl_context_profile::compatibility ? "GL Compatibility"sv
-				: p == gl_context_profile::es ? "GLES"sv
+			return p == opengl_profile::core ? "GL Core"sv
+				: p == opengl_profile::compatibility ? "GL Compatibility"sv
+				: p == opengl_profile::es ? "GLES"sv
 				: "<unknown>"sv;
 		};
 
-		LOG_INFO("requesting opengl context for {0} {1}.{2}", profile(cfg.context_profile), cfg.context_major_version, cfg.context_minor_version);
+		LOG_INFO("requesting opengl context for {0} {1}.{2}", profile(cfg.context_profile), cfg.major_version, cfg.minor_version);
 
 		SDL_REPORT(!SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, static_cast<int>(cfg.context_profile)));
-		SDL_REPORT(!SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, cfg.context_major_version));
-		SDL_REPORT(!SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, cfg.context_minor_version));
+		SDL_REPORT(!SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, cfg.major_version));
+		SDL_REPORT(!SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, cfg.minor_version));
 		SDL_REPORT(!SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, static_cast<int>(cfg.context_flags)));
-		SDL_REPORT(!SDL_GL_SetAttribute(SDL_GL_CONTEXT_RELEASE_BEHAVIOR, static_cast<int>(cfg.context_release_behavior)));
+		SDL_REPORT(!SDL_GL_SetAttribute(SDL_GL_CONTEXT_RELEASE_BEHAVIOR, static_cast<int>(cfg.release_behavior)));
 
 		SDL_REPORT(!SDL_GL_SetAttribute(SDL_GL_RED_SIZE, cfg.red_size));
 		SDL_REPORT(!SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, cfg.green_size));
@@ -83,7 +83,7 @@ namespace ui
 
 		if (context)
 		{
-			LOG_INFO("created opengl context for {0} {1}.{2}", profile(cfg.context_profile), cfg.context_major_version, cfg.context_minor_version);
+			LOG_INFO("created opengl context for {0} {1}.{2}", profile(cfg.context_profile), cfg.major_version, cfg.minor_version);
 			return {std::make_unique<opengl_context::opengl_context_data>(WINDOW, context)};
 		}
 
@@ -113,10 +113,10 @@ namespace ui
 			};
 
 			SDL_REPORT(!SDL_GL_GetAttributeE(SDL_GL_CONTEXT_PROFILE_MASK, &cfg.context_profile));
-			SDL_REPORT(!SDL_GL_GetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, &cfg.context_major_version));
-			SDL_REPORT(!SDL_GL_GetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, &cfg.context_minor_version));
+			SDL_REPORT(!SDL_GL_GetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, &cfg.major_version));
+			SDL_REPORT(!SDL_GL_GetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, &cfg.minor_version));
 			SDL_REPORT(!SDL_GL_GetAttributeE(SDL_GL_CONTEXT_FLAGS, &cfg.context_flags));
-			SDL_REPORT(!SDL_GL_GetAttributeE(SDL_GL_CONTEXT_RELEASE_BEHAVIOR, &cfg.context_release_behavior));
+			SDL_REPORT(!SDL_GL_GetAttributeE(SDL_GL_CONTEXT_RELEASE_BEHAVIOR, &cfg.release_behavior));
 
 			SDL_REPORT(!SDL_GL_GetAttribute(SDL_GL_RED_SIZE, &cfg.red_size));
 			SDL_REPORT(!SDL_GL_GetAttribute(SDL_GL_GREEN_SIZE, &cfg.green_size));

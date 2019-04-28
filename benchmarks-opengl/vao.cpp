@@ -41,9 +41,9 @@ struct setup
 		window = platform.create_window("benchmark", 1280, 720, ui::window_mode::windowed, ui::gfx_engine::opengl);
 
 		ui::config_opengl config;
-		config.context_profile = ui::gl_context_profile::es;
-		config.context_major_version = 3;
-		config.context_minor_version = 2;
+		config.context_profile = ui::opengl_profile::es;
+		config.major_version = 3;
+		config.minor_version = 2;
 		context = window.opengl_create_context(config);
 
 		// disable vsync for benchmark
@@ -118,37 +118,37 @@ GLuint compile_shader(GLenum type, const char *src)
 vertex cube_v[]
 {
 	{{-0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, 0.0f}},
-{{0.5f, -0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}},
-{{-0.5f, 0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}},
-{{-0.5f, -0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}},
-{{0.5f, 0.5f, -0.5f}, {1.0f, 1.0f, 0.0f}},
-{{0.5f, -0.5f, 0.5f}, {1.0f, 0.0f, 1.0f}},
-{{-0.5f, 0.5f, 0.5f}, {0.0f, 1.0f, 1.0f}},
-{{0.5f, 0.5f, 0.5f}, {1.0f, 1.0f, 1.0f}},
+	{{0.5f, -0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}},
+	{{-0.5f, 0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}},
+	{{-0.5f, -0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}},
+	{{0.5f, 0.5f, -0.5f}, {1.0f, 1.0f, 0.0f}},
+	{{0.5f, -0.5f, 0.5f}, {1.0f, 0.0f, 1.0f}},
+	{{-0.5f, 0.5f, 0.5f}, {0.0f, 1.0f, 1.0f}},
+	{{0.5f, 0.5f, 0.5f}, {1.0f, 1.0f, 1.0f}},
 };
 
 glm::vec3 cube_poss[]
 {
 	{-0.5f, -0.5f, -0.5f},
-{0.5f, -0.5f, -0.5f},
-{-0.5f, 0.5f, -0.5f},
-{-0.5f, -0.5f, 0.5f},
-{0.5f, 0.5f, -0.5f},
-{0.5f, -0.5f, 0.5f},
-{-0.5f, 0.5f, 0.5f},
-{0.5f, 0.5f, 0.5f},
+	{0.5f, -0.5f, -0.5f},
+	{-0.5f, 0.5f, -0.5f},
+	{-0.5f, -0.5f, 0.5f},
+	{0.5f, 0.5f, -0.5f},
+	{0.5f, -0.5f, 0.5f},
+	{-0.5f, 0.5f, 0.5f},
+	{0.5f, 0.5f, 0.5f},
 };
 
 glm::vec3 cube_colors[]
 {
 	{0.0f, 0.0f, 0.0f},
-{1.0f, 0.0f, 0.0f},
-{0.0f, 1.0f, 0.0f},
-{0.0f, 0.0f, 1.0f},
-{1.0f, 1.0f, 0.0f},
-{1.0f, 0.0f, 1.0f},
-{0.0f, 1.0f, 1.0f},
-{1.0f, 1.0f, 1.0f},
+	{1.0f, 0.0f, 0.0f},
+	{0.0f, 1.0f, 0.0f},
+	{0.0f, 0.0f, 1.0f},
+	{1.0f, 1.0f, 0.0f},
+	{1.0f, 0.0f, 1.0f},
+	{0.0f, 1.0f, 1.0f},
+	{1.0f, 1.0f, 1.0f},
 };
 
 short cube_idx[]

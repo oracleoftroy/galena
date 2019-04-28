@@ -1,5 +1,7 @@
 #include "program.hpp"
 
+#include <fstream>
+#include <optional>
 #include <stdexcept>
 #include <utility>
 #include <vector>
@@ -66,9 +68,51 @@ namespace gfx::gl
 		}
 	};
 
+	static std::optional<std::string> read_file(const std::filesystem::path &file_path)
+	{
+		std::ifstream file(file_path, std::ios::binary);
+
+		if (!file)
+			return {};
+
+		std::string source;
+
+		file.seekg(0, std::ios::end);
+		source.resize(file.tellg());
+		file.seekg(0, std::ios::beg);
+
+		file.read(source.data(), source.size());
+
+		return source;
+	}
+
+	program program::create(program_type type, const std::filesystem::path &file_path)
+	{
+		LOG_INFO("loading {0} program from {1}", c_str(type), file_path.u8string());
+
+		auto source = read_file(file_path);
+
+		if (!source)
+		{
+			if (!std::filesystem::exists(file_path))
+			{
+				LOG_ERROR("Error opening file {0} - File does not exist", file_path.u8string());
+				throw program_error(fmt::format("Error opening file {0} - File does not exist", file_path.u8string()));
+			}
+			else
+			{
+				// see if there are other reasons we can report
+				LOG_ERROR("Error opening file {0}", file_path.u8string());
+				throw program_error(fmt::format("Error opening file {0}", file_path.u8string()));
+			}
+		}
+
+		return create(type, *source);
+	}
+
 	program program::create(program_type type, const std::string &source)
 	{
-		LOG_INFO("Creating %s program", c_str(type));
+		LOG_INFO("Creating {0} program", c_str(type));
 
 		auto resource = program_resource::create(type, source);
 
@@ -83,8 +127,8 @@ namespace gfx::gl
 			std::vector<GLchar> log(log_length);
 			glGetProgramInfoLog(resource, log_length, &log_length, log.data());
 
-			LOG_ERROR("Error creating program: %s", log.data());
-			LOG_TRACE("Program source:\n---\n%s\n---", source.c_str());
+			LOG_ERROR("Error creating program: {0}", log.data());
+			LOG_TRACE("Program source:\n---\n{0}\n---", source.c_str());
 
 			throw program_error(std::string(begin(log), end(log)));
 		}

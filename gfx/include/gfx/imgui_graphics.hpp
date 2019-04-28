@@ -8,7 +8,7 @@ namespace gfx::imgui
 	{
 	public:
 		imgui_graphics_core() noexcept = default;
-		virtual ~imgui_graphics_core() noexcept = default;
+		virtual ~imgui_graphics_core() = default;
 
 		virtual void new_frame() noexcept = 0;
 		virtual void render() noexcept = 0;
@@ -22,7 +22,7 @@ namespace gfx::imgui
 	class imgui_graphics final
 	{
 	public:
-		imgui_graphics(std::unique_ptr<imgui_graphics_core> &&data) noexcept
+		explicit imgui_graphics(std::unique_ptr<imgui_graphics_core> &&data) noexcept
 			: data(std::move(data))
 		{
 		}

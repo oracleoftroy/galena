@@ -3,13 +3,13 @@
 #include "../platform_info.hpp"
 #if UI_PLATFORM == UI_PLATFORM_IMPL_SDL
 
-#include "../log.hpp"
-#include "sdl_opengl_context.hpp"
-
+#include <utility>
 #include <imgui.h>
 #include "imgui_impl_sdl.h"
-
 #include <SDL2/SDL_events.h>
+
+#include "../log.hpp"
+#include "sdl_opengl_context.hpp"
 
 namespace ui::imgui
 {
@@ -51,7 +51,7 @@ namespace ui::imgui
 		++imgui_wants_events;
 	}
 
-	imgui_system::~imgui_system() noexcept
+	imgui_system::~imgui_system()
 	{
 		imgui_destroy(context);
 	}

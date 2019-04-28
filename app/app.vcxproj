@@ -93,11 +93,17 @@
     <ClCompile Include="src\log.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\opengl_magic.cpp" />
+    <ClCompile Include="src\test_app.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\frame_metrics.hpp" />
     <ClInclude Include="src\imgui.hpp" />
     <ClInclude Include="src\log.hpp" />
+    <ClInclude Include="src\test_app.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\fragment.frag" />
+    <None Include="shaders\vertex.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

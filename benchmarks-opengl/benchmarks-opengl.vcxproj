@@ -54,6 +54,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>../core/include;../ui/include;../gfx-opengl/vendor/glad/include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -69,6 +70,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>../core/include;../ui/include;../gfx-opengl/vendor/glad/include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -78,7 +80,9 @@
   <ItemGroup>
     <ClCompile Include="..\app\src\opengl_magic.cpp" />
     <ClCompile Include="..\gfx-opengl\vendor\glad\src\glad.c" />
+    <ClCompile Include="indirection.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="read_file.cpp" />
     <ClCompile Include="vao.cpp" />
   </ItemGroup>
   <ItemGroup>

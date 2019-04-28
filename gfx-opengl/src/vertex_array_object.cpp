@@ -45,6 +45,7 @@ namespace gfx::gl
 		// "Bindless" version, should use glVertexArrayElementBuffer once available
 		bind_unsafe();
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer.buf);
+		unbind_unsafe();
 	}
 
 	void vertex_array_object::use_vertex_buffer(uint32_t index, const buffer &buffer, size_t offset, size_t stride) noexcept
@@ -52,10 +53,10 @@ namespace gfx::gl
 		// "Bindless" version, should use glVertexArrayVertexBuffer once available
 		bind_unsafe();
 		glBindVertexBuffer(index, buffer.buf, offset, static_cast<GLsizei>(stride));
+		unbind_unsafe();
 	}
 
-
-	void vertex_array_object::bind_unsafe() noexcept
+	void vertex_array_object::bind_unsafe() const noexcept
 	{
 		glBindVertexArray(vao);
 	}

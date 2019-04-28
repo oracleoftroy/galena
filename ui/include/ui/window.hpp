@@ -24,7 +24,7 @@ namespace ui
 	{
 	public:
 		window() noexcept = default;
-		~window() noexcept;
+		~window();
 
 		[[nodiscard]] glm::ivec2 size() const noexcept;
 
@@ -43,7 +43,7 @@ namespace ui
 
 	private:
 		friend class ::ui::platform;
-		window(void *handle) noexcept;
+		explicit window(void *handle) noexcept;
 
 	private:
 		void *handle = nullptr;

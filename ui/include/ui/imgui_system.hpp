@@ -14,8 +14,8 @@ namespace ui::imgui
 	class imgui_system
 	{
 	public:
-		imgui_system(const opengl_context &context) noexcept;
-		~imgui_system() noexcept;
+		explicit imgui_system(const opengl_context &context) noexcept;
+		~imgui_system();
 
 		void new_frame() noexcept;
 		void render() noexcept;

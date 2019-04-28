@@ -4,14 +4,14 @@
 
 namespace ui
 {
-	enum class gl_context_profile : int
+	enum class opengl_profile : int
 	{
 		core = 0x01,
 		compatibility = 0x02,
 		es = 0x04
 	};
 
-	enum class gl_context_flags : int
+	enum class opengl_context_flags : int
 	{
 		none = 0,
 		debug = 0x01,
@@ -20,9 +20,9 @@ namespace ui
 		reset_isolation = 0x08
 	};
 
-	CORE_MAKE_FLAG_ENUM(gl_context_flags);
+	CORE_MAKE_FLAG_ENUM(opengl_context_flags);
 
-	enum class gl_context_release_behavior : int
+	enum class opengl_release_behavior : int
 	{
 		none,
 		flush
@@ -30,11 +30,14 @@ namespace ui
 
 	struct config_opengl
 	{
-		gl_context_profile context_profile = gl_context_profile::core;
-		int context_major_version = 3;
-		int context_minor_version = 2;
-		gl_context_flags context_flags = gl_context_flags::none;
-		gl_context_release_behavior context_release_behavior = gl_context_release_behavior::none;
+		config_opengl() noexcept = default;
+		config_opengl(opengl_profile profile, int major, int minor, opengl_context_flags flags = opengl_context_flags::none) noexcept;
+
+		opengl_profile context_profile = opengl_profile::core;
+		int major_version = 3;
+		int minor_version = 2;
+		opengl_context_flags context_flags = opengl_context_flags::none;
+		opengl_release_behavior release_behavior = opengl_release_behavior::none;
 
 		int red_size = 8;
 		int green_size = 8;
@@ -61,4 +64,29 @@ namespace ui
 		//context_reset_notification;
 		//context_no_error
 	};
+
+	inline config_opengl::config_opengl(opengl_profile profile, int major, int minor, opengl_context_flags flags) noexcept
+		: context_profile(profile), major_version(major), minor_version(minor), context_flags(flags)
+	{
+	}
+
+#include <type_traits>
+
+	static_assert(!std::is_trivial_v<config_opengl>);
+	static_assert(std::is_trivially_copyable_v<config_opengl>);
+	static_assert(std::is_standard_layout_v<config_opengl>);
+	static_assert(!std::is_trivially_constructible_v<config_opengl>);
+	static_assert(std::is_nothrow_constructible_v<config_opengl>);
+	static_assert(!std::is_trivially_default_constructible_v<config_opengl>);
+	static_assert(std::is_nothrow_default_constructible_v<config_opengl>);
+	static_assert(std::is_trivially_copy_constructible_v<config_opengl>);
+	static_assert(std::is_nothrow_copy_constructible_v<config_opengl>);
+	static_assert(std::is_trivially_move_constructible_v<config_opengl>);
+	static_assert(std::is_nothrow_move_constructible_v<config_opengl>);
+	static_assert(std::is_trivially_copy_assignable_v<config_opengl>);
+	static_assert(std::is_nothrow_copy_assignable_v<config_opengl>);
+	static_assert(std::is_trivially_move_assignable_v<config_opengl>);
+	static_assert(std::is_nothrow_move_assignable_v<config_opengl>);
+	static_assert(std::is_trivially_destructible_v<config_opengl>);
+	static_assert(std::is_nothrow_destructible_v<config_opengl>);
 }

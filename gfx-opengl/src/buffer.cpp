@@ -69,7 +69,7 @@ namespace gfx::gl
 	{
 		GLuint buffer;
 		glGenBuffers(1, &buffer);
-		return 0;
+		return buffer;
 	}
 
 	void buffer::destroy_buffer(uint32_t buffer) noexcept

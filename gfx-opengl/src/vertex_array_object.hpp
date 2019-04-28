@@ -52,7 +52,7 @@ namespace gfx::gl
 		CORE_GENERATE_RESOURCE(vao_resource, uint32_t, create_vao, destroy_vao, core::resource::opts::implicit_conversion<true>);
 
 		explicit vertex_array_object(vao_resource &&vao) noexcept;
-		void bind_unsafe() noexcept;
+		void bind_unsafe() const noexcept;
 		static void unbind_unsafe() noexcept;
 
 	public:

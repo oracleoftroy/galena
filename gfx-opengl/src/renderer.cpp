@@ -263,6 +263,7 @@ namespace gfx::gl
 		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_LOW, 0, nullptr, GL_TRUE);
 		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_MEDIUM, 0, nullptr, GL_TRUE);
 		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_HIGH, 0, nullptr, GL_TRUE);
+		// TODO: Disable in release builds?
 		glEnable(GL_DEBUG_OUTPUT);
 		glDisable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 
@@ -276,6 +277,14 @@ namespace gfx::gl
 		active_texture_bindings.resize(size);
 
 		set_viewport({0, 0}, context.drawable_size());
+
+		enable(feature::depth_test);
+		set_clear_depth(1.0);
+		glDepthFunc(GL_LEQUAL);
+
+		enable(feature::face_culling);
+		glFrontFace(GL_CCW);
+
 	}
 
 	void renderer::enable(feature feature) noexcept
@@ -348,7 +357,7 @@ namespace gfx::gl
 		glClear(GL_STENCIL_BUFFER_BIT);
 	}
 
-	void renderer::use_vertex_array_object(vertex_array_object &vao) noexcept
+	void renderer::use_vertex_array_object(const vertex_array_object &vao) noexcept
 	{
 		vao.bind_unsafe();
 	}

@@ -13,7 +13,7 @@ namespace ui
 	{
 	}
 
-	opengl_context::opengl_context_data::~opengl_context_data() noexcept
+	opengl_context::opengl_context_data::~opengl_context_data()
 	{
 		SDL_GL_DeleteContext(context);
 	}

@@ -3,6 +3,7 @@
 #include <glm/glm.hpp>
 
 #include <cstdint>
+#include <filesystem>
 #include <string>
 #include <core/resource.hpp>
 
@@ -21,6 +22,7 @@ namespace gfx::gl
 	class program
 	{
 	public:
+		static program create(program_type type, const std::filesystem::path &file_path);
 		static program create(program_type type, const std::string &source);
 		program() = default;
 

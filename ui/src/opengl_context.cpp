@@ -3,6 +3,8 @@
 #include "platform_info.hpp"
 #include UI_OPENGL_CONTEXT_H
 
+#include <utility>
+
 namespace ui
 {
 	// TODO: Shouldn't we be able to default this in the header?
@@ -10,7 +12,7 @@ namespace ui
 	// only the destructor and move assignment operator need a complete type for unique_ptr based
 	// pimpl, but msvc is complaining if I default the default constructor in the header.
 	opengl_context::opengl_context() noexcept = default;
-	opengl_context::~opengl_context() noexcept = default;
+	opengl_context::~opengl_context() = default;
 
 	opengl_context::opengl_context(std::unique_ptr<opengl_context_data> &&data) noexcept
 		: data(std::move(data))

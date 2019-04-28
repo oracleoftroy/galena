@@ -51,7 +51,7 @@ namespace core
 		{
 		}
 
-		~resource_type() noexcept(std::is_nothrow_destructible_v<T> && noexcept(Aquire::release(value)))
+		~resource_type()
 		{
 			Aquire::release(value);
 		}

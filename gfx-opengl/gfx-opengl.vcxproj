@@ -76,12 +76,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\adapters\opengl_buffer_core.cpp" />
+    <ClCompile Include="src\adapters\opengl_mesh_core.cpp" />
+    <ClCompile Include="src\adapters\opengl_pipeline_core.cpp" />
+    <ClCompile Include="src\adapters\opengl_program_core.cpp" />
     <ClCompile Include="src\buffer.cpp" />
     <ClCompile Include="src\framebuffer.cpp" />
     <ClCompile Include="src\image.cpp" />
-    <ClCompile Include="src\imgui_graphics.cpp" />
+    <ClCompile Include="src\adapters\opengl_imgui_graphics.cpp" />
     <ClCompile Include="src\log.cpp" />
-    <ClCompile Include="src\opengl_renderer_core.cpp" />
+    <ClCompile Include="src\adapters\opengl_renderer_core.cpp" />
     <ClCompile Include="src\program.cpp" />
     <ClCompile Include="src\program_pipeline.cpp" />
     <ClCompile Include="src\renderbuffer.cpp" />
@@ -94,10 +98,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\gfx\gl\opengl_renderer_core.hpp" />
+    <ClInclude Include="src\adapters\opengl_buffer_core.hpp" />
+    <ClInclude Include="src\adapters\opengl_mesh_core.hpp" />
+    <ClInclude Include="src\adapters\opengl_pipeline_core.hpp" />
+    <ClInclude Include="src\adapters\opengl_program_core.hpp" />
     <ClInclude Include="src\buffer.hpp" />
     <ClInclude Include="src\framebuffer.hpp" />
     <ClInclude Include="src\image.hpp" />
-    <ClInclude Include="src\imgui_graphics.hpp" />
+    <ClInclude Include="src\adapters\opengl_imgui_graphics.hpp" />
     <ClInclude Include="src\log.hpp" />
     <ClInclude Include="src\program.hpp" />
     <ClInclude Include="src\program_pipeline.hpp" />
