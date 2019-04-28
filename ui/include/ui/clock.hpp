@@ -2,6 +2,7 @@
 
 #include <chrono>
 #include <type_traits>
+#include <utility>
 
 namespace ui
 {
@@ -16,7 +17,7 @@ namespace ui
 	public:
 		using duration = std::chrono::duration<double>;
 
-		clock(duration time_slice) noexcept
+		explicit clock(duration time_slice) noexcept
 			: time_slice(time_slice), time_slice_impl(std::chrono::duration_cast<steady_clock::duration>(time_slice))
 		{
 		}

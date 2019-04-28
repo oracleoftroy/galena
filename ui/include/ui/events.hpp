@@ -2,6 +2,7 @@
 
 #include <glm/glm.hpp>
 #include <string_view>
+#include <utility>
 
 namespace ui
 {
@@ -24,7 +25,7 @@ namespace ui
 	class event
 	{
 	public:
-		event(event_type type) : type(type) {}
+		explicit event(event_type type) : type(type) {}
 
 		const event_type type;
 
@@ -35,7 +36,7 @@ namespace ui
 		event &operator=(const event &other) noexcept = delete;
 
 	protected:
-		~event() noexcept = default;
+		~event() = default;
 	};
 
 	enum class keys;
@@ -68,7 +69,7 @@ namespace ui
 	class text_input_event : public event
 	{
 	public:
-		text_input_event(std::string_view text)
+		explicit text_input_event(std::string_view text)
 			: event(event_type::text_input), text(text)
 		{
 		}

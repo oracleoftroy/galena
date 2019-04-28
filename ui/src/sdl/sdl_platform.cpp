@@ -4,6 +4,7 @@
 #if UI_PLATFORM == UI_PLATFORM_IMPL_SDL
 
 #include <string_view>
+#include <utility>
 #include <SDL2/SDL.h>
 
 #include <ui/events.hpp>

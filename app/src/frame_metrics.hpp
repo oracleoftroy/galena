@@ -8,7 +8,7 @@ namespace app
 	class frame_metrics
 	{
 	public:
-		frame_metrics(ui::clock::duration target_frame_rate) noexcept : target_frame_rate(target_frame_rate + target_frame_rate / 2) {}
+		explicit frame_metrics(ui::clock::duration target_frame_rate) noexcept : target_frame_rate(target_frame_rate + target_frame_rate / 2) {}
 
 		void update(ui::clock::duration frame_time) noexcept
 		{

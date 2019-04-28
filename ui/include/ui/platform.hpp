@@ -22,7 +22,7 @@ namespace ui
 	{
 	public:
 		platform() noexcept;
-		~platform() noexcept;
+		~platform();
 
 		using event_listener_type = std::function<void(const event &)>;
 		void attach_event_listener(event_listener_type event_listener);
@@ -37,7 +37,7 @@ namespace ui
 
 	private:
 		class platform_data;
-		platform(std::unique_ptr<platform_data> &&data) noexcept;
+		explicit platform(std::unique_ptr<platform_data> &&data) noexcept;
 
 		std::unique_ptr<platform_data> data;
 	};

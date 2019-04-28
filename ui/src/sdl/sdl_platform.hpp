@@ -11,7 +11,7 @@ namespace ui
 	{
 	public:
 		sdl_init();
-		~sdl_init() noexcept;
+		~sdl_init();
 
 	private:
 		core::logger sdl_logger;

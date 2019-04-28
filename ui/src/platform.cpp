@@ -5,6 +5,8 @@
 #include "platform_info.hpp"
 #include UI_PLATFORM_H
 
+#include <utility>
+
 namespace ui
 {
 	platform::platform() noexcept
@@ -17,7 +19,7 @@ namespace ui
 	{
 	}
 
-	platform::~platform() noexcept = default;
+	platform::~platform() = default;
 
 	void platform::attach_event_listener(event_listener_type event_listener)
 	{
