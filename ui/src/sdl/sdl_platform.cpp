@@ -46,7 +46,7 @@ namespace ui
 		SDL_Quit();
 	}
 
-	window platform::create_window(const std::string &title, int width, int height, window_mode flags, gfx_engine engine)
+	window platform::platform_data::create_window(const std::string &title, int width, int height, window_mode flags, gfx_engine engine)
 	{
 		LOG_INFO("Creating main window");
 		auto *handle = SDL_CreateWindow(title.data(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, sdl::to_sdl(flags, engine));

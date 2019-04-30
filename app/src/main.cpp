@@ -101,7 +101,7 @@ int main(int argc, char* argv[])
 	LOG_INFO("Initializing...");
 	LOG_DEBUG("args: {0}", fmt::join(argv, argv + argc, " "));
 
-	ui::platform platform;
+	auto platform = ui::platform::create();
 
 	// Creating an event dispatcher from an immovable object
 	event_handler h{};

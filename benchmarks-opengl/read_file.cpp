@@ -213,23 +213,3 @@ static void stringstream(benchmark::State &state)
 	}
 }
 BENCHMARK(stringstream);
-
-#include <iostream>
-
-struct ensure
-{
-	ensure()
-	{
-		std::clog << "fopen_seek size: " << fopen_seek(__FILE__).length() << "\n";
-		std::clog << "fstream_seek size: " << fstream_seek(__FILE__).length() << "\n";
-		std::clog << "fstream_seek_ate size: " << fstream_seek_ate(__FILE__).length() << "\n";
-		std::clog << "istream_iterator size: " << istream_iterator(__FILE__).length() << "\n";
-		std::clog << "istream_iterator_reserve_assign size: " << istream_iterator_reserve_assign(__FILE__).length() << "\n";
-		std::clog << "istream_iterator_reserve_insert size: " << istream_iterator_reserve_insert(__FILE__).length() << "\n";
-		std::clog << "istream_iterator_reserve_copy size: " << istream_iterator_reserve_copy(__FILE__).length() << "\n";
-		std::clog << "istream_iterator_resize_copy size: " << istream_iterator_resize_copy(__FILE__).length() << "\n";
-		std::clog << "stringstream size: " << stringstream(__FILE__).length() << "\n";
-	}
-};
-
-static ensure ensure_all_read_same_content;

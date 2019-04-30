@@ -20,8 +20,13 @@ namespace ui
 
 	window::~window()
 	{
-		LOG_INFO("Destroying window");
-		SDL_DestroyWindow(WINDOW);
+		// not strictly needed, but SDL asserts in debug builds if null,
+		// and this way we don't log moved from windows
+		if (WINDOW)
+		{
+			LOG_INFO("Destroying window");
+			SDL_DestroyWindow(WINDOW);
+		}
 	}
 
 	glm::ivec2 window::size() const noexcept
@@ -91,7 +96,7 @@ namespace ui
 	{
 		static void read_opengl_config(config_opengl &cfg) noexcept
 		{
-			// savely read boolean values
+			// safely read boolean values
 			auto SDL_GL_GetAttributeB = [](SDL_GLattr field, bool *value)
 			{
 				int b;

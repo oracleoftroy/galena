@@ -21,6 +21,7 @@ namespace ui
 	class platform final
 	{
 	public:
+		static platform create();
 		platform() noexcept;
 		~platform();
 
@@ -30,15 +31,15 @@ namespace ui
 		[[nodiscard]] bool dispatch_events() noexcept;
 
 	public:
-		platform(platform &&other) noexcept = default;
-		platform &operator=(platform &&other) noexcept = default;
+		platform(platform &&other) noexcept;
+		platform &operator=(platform &&other) noexcept;
 		platform(const platform &other) noexcept = delete;
 		platform &operator=(const platform &other) noexcept = delete;
 
 	private:
 		class platform_data;
-		explicit platform(std::unique_ptr<platform_data> &&data) noexcept;
-
 		std::unique_ptr<platform_data> data;
+
+		explicit platform(std::unique_ptr<platform_data> &&data) noexcept;
 	};
 }

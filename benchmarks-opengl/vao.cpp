@@ -39,7 +39,8 @@ struct setup
 {
 	setup()
 	{
-		core::default_log_level(core::log_level::critical);
+		core::default_log_level(core::log_level::error);
+		platform = ui::platform::create();
 		platform.attach_event_listener([](const auto &) {});
 		window = platform.create_window("benchmark", 1280, 720, ui::window_mode::windowed, ui::gfx_engine::opengl);
 
@@ -55,13 +56,12 @@ struct setup
 		gladLoadGLES2Loader(context.get_load_proc());
 
 		glDebugMessageCallback(on_gl_debug_message, nullptr);
-		//glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_NOTIFICATION, 0, nullptr, GL_FALSE);
-		//glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_LOW, 0, nullptr, GL_TRUE);
-		//glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_MEDIUM, 0, nullptr, GL_TRUE);
-		//glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_HIGH, 0, nullptr, GL_TRUE);
-		//glEnable(GL_DEBUG_OUTPUT);
-		//glDisable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-
+		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_NOTIFICATION, 0, nullptr, GL_FALSE);
+		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_LOW, 0, nullptr, GL_FALSE);
+		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_MEDIUM, 0, nullptr, GL_TRUE);
+		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_HIGH, 0, nullptr, GL_TRUE);
+		glEnable(GL_DEBUG_OUTPUT);
+		glDisable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 	}
 
 	ui::platform platform;

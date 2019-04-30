@@ -23,6 +23,8 @@ namespace ui
 		void attach_event_listener(event_listener_type &&listener);
 		bool dispatch_events() noexcept;
 
+		window create_window(const std::string &title, int width, int height, window_mode flags, gfx_engine engine);
+
 	private:
 		sdl_init sdl;
 		event_listener_type event_listener;
