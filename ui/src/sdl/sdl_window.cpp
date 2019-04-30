@@ -1,8 +1,5 @@
 #include <ui/window.hpp>
 
-#include "../platform_info.hpp"
-#if UI_PLATFORM == UI_PLATFORM_IMPL_SDL
-
 #include <type_traits>
 #include <SDL2/SDL.h>
 #include <ui/config_opengl.hpp>
@@ -143,5 +140,3 @@ namespace ui
 		}
 	}
 }
-
-#endif // UI_PLATFORM == UI_PLATFORM_IMPL_SDL

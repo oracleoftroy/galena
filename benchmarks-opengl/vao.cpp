@@ -10,9 +10,12 @@
 #include <glad/glad.h>
 #include <ui/opengl_context.hpp>
 
+#pragma warning (push)
+#pragma warning (disable: 4127)
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#pragma warning (pop)
 
 core::logger the_logger = core::register_logger("vao benchmark");
 
@@ -37,7 +40,7 @@ struct setup
 	setup()
 	{
 		core::default_log_level(core::log_level::critical);
-		platform.attach_event_listener([](const auto & e) {});
+		platform.attach_event_listener([](const auto &) {});
 		window = platform.create_window("benchmark", 1280, 720, ui::window_mode::windowed, ui::gfx_engine::opengl);
 
 		ui::config_opengl config;
@@ -51,7 +54,7 @@ struct setup
 
 		gladLoadGLES2Loader(context.get_load_proc());
 
-		//glDebugMessageCallback(on_gl_debug_message, nullptr);
+		glDebugMessageCallback(on_gl_debug_message, nullptr);
 		//glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_NOTIFICATION, 0, nullptr, GL_FALSE);
 		//glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_LOW, 0, nullptr, GL_TRUE);
 		//glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_MEDIUM, 0, nullptr, GL_TRUE);
@@ -285,7 +288,7 @@ static void proper_vao(benchmark::State &state)
 	for (auto _ : state)
 	{
 		auto d = clock.update();
-		bool _ = data.platform.dispatch_events();
+		[[maybe_unused]] auto b = data.platform.dispatch_events();
 
 		while (clock.use_time_slice())
 		{
@@ -403,7 +406,7 @@ static void single_vao(benchmark::State &state)
 	for (auto _ : state)
 	{
 		auto d = clock.update();
-		bool _ = data.platform.dispatch_events();
+		[[maybe_unused]] bool b = data.platform.dispatch_events();
 
 		while (clock.use_time_slice())
 		{

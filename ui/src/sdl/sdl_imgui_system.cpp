@@ -1,8 +1,5 @@
 #include <ui/imgui_system.hpp>
 
-#include "../platform_info.hpp"
-#if UI_PLATFORM == UI_PLATFORM_IMPL_SDL
-
 #include <utility>
 #include <imgui.h>
 #include "imgui_impl_sdl.h"
@@ -108,5 +105,3 @@ namespace ui::imgui
 		return false;
 	}
 }
-
-#endif // UI_PLATFORM == UI_PLATFORM_IMPL_SDL

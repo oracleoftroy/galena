@@ -1,8 +1,5 @@
 #include <ui/platform.hpp>
 
-#include "../platform_info.hpp"
-#if UI_PLATFORM == UI_PLATFORM_IMPL_SDL
-
 #include <string_view>
 #include <utility>
 #include <SDL2/SDL.h>
@@ -114,5 +111,3 @@ namespace ui
 		}
 	}
 }
-
-#endif // UI_PLATFORM == UI_PLATFORM_IMPL_SDL

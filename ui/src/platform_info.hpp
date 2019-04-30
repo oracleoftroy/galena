@@ -2,7 +2,7 @@
 
 #define UI_PLATFORM_IMPL_SDL 1
 
-#if !defined(PLATFORM_IMPL)
+#if !defined(UI_PLATFORM)
 #define UI_PLATFORM UI_PLATFORM_IMPL_SDL
 #endif
 

@@ -1,8 +1,5 @@
 #include "sdl_opengl_context.hpp"
 
-#include "../platform_info.hpp"
-#if UI_PLATFORM == UI_PLATFORM_IMPL_SDL
-
 #include "../log.hpp"
 #include "sdl_util.hpp"
 
@@ -56,5 +53,3 @@ namespace ui
 		SDL_GL_SwapWindow(window);
 	}
 }
-
-#endif // UI_PLATFORM == UI_PLATFORM_IMPL_SDL
