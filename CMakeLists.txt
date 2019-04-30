@@ -1,6 +1,19 @@
 cmake_minimum_required(VERSION 3.13)
 project(galena VERSION 0.0.1)
 
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
+
+include(pmm)
+pmm(VERBOSE VCPKG REVISION master REQUIRES
+	benchmark
+	fmt
+	glm
+	imgui
+	sdl2[vulkan]
+	spdlog
+	stb
+)
+
 # newer cmake versions don't include /W3 in MSVC builds by default (should be in cmake 3.15)
 # we want to set /W4 and not get "Command line warning D9025: overriding '/W3' with '/W4'"
 if (POLICY CMP0092)
@@ -12,7 +25,6 @@ elseif (MSVC)
 endif()
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
