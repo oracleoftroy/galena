@@ -21,7 +21,7 @@ namespace gfx::gl::detail
 		void set_viewport(const glm::ivec2 &p, const glm::ivec2 &size) noexcept override;
 		void set_clear_color(float r, float g, float b, float a) noexcept override;
 		void clear_color() noexcept override;
-		void clear_depth() noexcept;
+		void clear_depth() noexcept override;
 
 		gfx::buffer create_buffer(gfx::buffer_type type, gfx::usage_hint hint, const void *data, size_t size) override;
 		gfx::program create_program(gfx::program_type type, const fs::path &file_path) override;

@@ -103,6 +103,7 @@ class cmp_base
 {
 public:
 	virtual bool operator()(int, int) = 0;
+	virtual ~cmp_base() = default;
 };
 
 class lt : public cmp_base

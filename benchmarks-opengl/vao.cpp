@@ -201,11 +201,11 @@ static void proper_vao(benchmark::State &state)
 	glBindVertexArray(vao);
 
 	glEnableVertexAttribArray(0);
-	glVertexAttribFormat(0, 3, GL_FLOAT, GL_FALSE, offsetof(vertex, vertex::position));
+	glVertexAttribFormat(0, 3, GL_FLOAT, GL_FALSE, offsetof(vertex, position));
 	glVertexAttribBinding(0, 0);
 
 	glEnableVertexAttribArray(1);
-	glVertexAttribFormat(1, 3, GL_FLOAT, GL_FALSE, offsetof(vertex, vertex::color));
+	glVertexAttribFormat(1, 3, GL_FLOAT, GL_FALSE, offsetof(vertex, color));
 	glVertexAttribBinding(1, 0);
 
 	glBindVertexBuffer(0, vb, 0, sizeof(vertex));
@@ -287,13 +287,13 @@ static void proper_vao(benchmark::State &state)
 
 	for (auto _ : state)
 	{
-		auto d = clock.update();
+		[[maybe_unused]]auto d = clock.update();
 		[[maybe_unused]] auto b = data.platform.dispatch_events();
 
 		while (clock.use_time_slice())
 		{
 //			model_vao1 = glm::translate(model_vao1, glm::vec3(-2.0f, -2.0f, 0.0f));
-			model_vao1 = glm::rotate(model_vao1, static_cast<float>(angle * clock.time_slice.count()), rot2);
+			model_vao1 = glm::rotate(model_vao1, static_cast<float>(angle * clock.time_slice.count()), rot);
 
 			model_vao2 = glm::rotate(model_vao2, static_cast<float>(angle * clock.time_slice.count()), rot2);
 //			model_vao2 = glm::translate(model_vao2, glm::vec3(2.0f, 2.0f, 0.0f));
@@ -405,7 +405,7 @@ static void single_vao(benchmark::State &state)
 
 	for (auto _ : state)
 	{
-		auto d = clock.update();
+		[[maybe_unused]] auto d = clock.update();
 		[[maybe_unused]] bool b = data.platform.dispatch_events();
 
 		while (clock.use_time_slice())
@@ -431,12 +431,12 @@ static void single_vao(benchmark::State &state)
 		glBindVertexBuffer(0, vb, 0, sizeof(cube_v[0]));
 
 		glEnableVertexAttribArray(0);
-		glVertexAttribFormat(0, 3, GL_FLOAT, GL_FALSE, offsetof(::vertex, vertex::position));
+		glVertexAttribFormat(0, 3, GL_FLOAT, GL_FALSE, offsetof(::vertex, position));
 		glVertexAttribBinding(0, 0);
 //		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(::vertex), (void *)offsetof(::vertex, vertex::position));
 
 		glEnableVertexAttribArray(1);
-		glVertexAttribFormat(1, 3, GL_FLOAT, GL_FALSE, offsetof(::vertex, vertex::color));
+		glVertexAttribFormat(1, 3, GL_FLOAT, GL_FALSE, offsetof(::vertex, color));
 		glVertexAttribBinding(1, 0);
 //		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(::vertex), (void *)offsetof(::vertex, vertex::color));
 

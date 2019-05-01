@@ -66,7 +66,7 @@ namespace gfx::gl
 
 	uint8_t *image::load_image(const uint8_t *data, int width, int height, int num_channels) noexcept
 	{
-		auto size = width * height * num_channels;
+		auto size = static_cast<size_t>(width * height * num_channels);
 		auto buf = new uint8_t[size];
 
 		std::copy_n(data, size, buf);

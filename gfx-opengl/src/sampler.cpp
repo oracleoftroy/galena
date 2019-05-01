@@ -9,21 +9,21 @@ namespace gfx::gl
 {
 	namespace
 	{
-		static constexpr GLint parameter_names[] =
-		{
-			GL_TEXTURE_WRAP_S,
-			GL_TEXTURE_WRAP_T,
-			GL_TEXTURE_WRAP_R,
+		//static constexpr GLint parameter_names[] =
+		//{
+		//	GL_TEXTURE_WRAP_S,
+		//	GL_TEXTURE_WRAP_T,
+		//	GL_TEXTURE_WRAP_R,
 
-			GL_TEXTURE_MIN_FILTER,
-			GL_TEXTURE_MAG_FILTER,
+		//	GL_TEXTURE_MIN_FILTER,
+		//	GL_TEXTURE_MAG_FILTER,
 
-			GL_TEXTURE_MIN_LOD,
-			GL_TEXTURE_MAX_LOD,
+		//	GL_TEXTURE_MIN_LOD,
+		//	GL_TEXTURE_MAX_LOD,
 
-			GL_TEXTURE_COMPARE_MODE,
-			GL_TEXTURE_COMPARE_FUNC
-		};
+		//	GL_TEXTURE_COMPARE_MODE,
+		//	GL_TEXTURE_COMPARE_FUNC
+		//};
 
 		static constexpr GLint texture_filters[] =
 		{
