@@ -4,11 +4,15 @@
 #include <gfx/buffer.hpp>
 #include <gfx/mesh.hpp>
 #include <gfx/renderer.hpp>
-//#pragma warning (push)
-//#pragma warning (disable: 4127) // conditional expression is constant
+#if defined(_WIN32)
+#pragma warning (push)
+#pragma warning (disable: 4127) // conditional expression is constant
+#endif
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-//#pragma warning (pop)
+#if defined(_WIN32)
+#pragma warning (pop)
+#endif
 
 namespace app
 {
