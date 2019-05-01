@@ -101,7 +101,7 @@ namespace gfx::gl
 			return blend_functions[static_cast<size_t>(function)];
 		}
 
-		static const GLenum to_gl(blend_equation equation) noexcept
+		static constexpr GLenum to_gl(blend_equation equation) noexcept
 		{
 			return equations[static_cast<size_t>(equation)];
 		}
@@ -219,7 +219,7 @@ namespace gfx::gl
 		static void APIENTRY on_gl_debug_message(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message, const void *user_data)
 		{
 			auto *logger = static_cast<core::logger *>(const_cast<void*>(user_data));
-			(*logger)->log(from_severity(severity), "({0} {1}): {2} - {3}", from_source(source), from_type(type), id, std::string_view(message, length));
+			(*logger)->log(from_severity(severity), "({0} {1}): {2} - {3}", from_source(source), from_type(type), id, std::string_view(message, static_cast<size_t>(length)));
 		}
 
 		static void load_opengl(GLADloadproc load_proc) noexcept
@@ -274,7 +274,7 @@ namespace gfx::gl
 
 		int size;
 		glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &size);
-		active_texture_bindings.resize(size);
+		active_texture_bindings.resize(static_cast<size_t>(size));
 
 		set_viewport({0, 0}, context.drawable_size());
 
@@ -377,19 +377,19 @@ namespace gfx::gl
 		program_pipeline::unsafe_unbind();
 	}
 
-	void renderer::use_texture(int texture_unit, texture &texture, sampler &sampler) noexcept
+	void renderer::use_texture(uint32_t texture_unit, texture &texture, sampler &sampler) noexcept
 	{
 		glActiveTexture(GL_TEXTURE0 + texture_unit);
-		active_texture_bindings[texture_unit] = texture.unsafe_bind();
+		active_texture_bindings[static_cast<size_t>(texture_unit)] = texture.unsafe_bind();
 		sampler.unsafe_bind(texture_unit);
 	}
 	
-	void renderer::clear_texture(int texture_unit) noexcept
+	void renderer::clear_texture(uint32_t texture_unit) noexcept
 	{
 		glActiveTexture(GL_TEXTURE0 + texture_unit);
-		glBindTexture(active_texture_bindings[texture_unit], 0);
+		glBindTexture(active_texture_bindings[static_cast<size_t>(texture_unit)], 0);
 		glBindSampler(texture_unit, 0);
-		active_texture_bindings[texture_unit] = 0;
+		active_texture_bindings[static_cast<size_t>(texture_unit)] = 0;
 	}
 
 	void renderer::use_framebuffer(framebuffer_target target, framebuffer &buffer) noexcept

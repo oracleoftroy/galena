@@ -45,7 +45,7 @@ namespace gfx
 		}
 
 		uint32_t index;
-		std::reference_wrapper<const buffer> buffer;
+		std::reference_wrapper<const gfx::buffer> buffer;
 		size_t stride;
 		size_t offset;
 	};

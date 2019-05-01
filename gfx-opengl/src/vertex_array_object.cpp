@@ -9,7 +9,7 @@ namespace gfx::gl
 {
 	namespace
 	{
-		static const GLenum component_types[] = {
+		static constexpr GLenum component_types[] = {
 			GL_BYTE,
 			GL_UNSIGNED_BYTE,
 			GL_SHORT,
@@ -52,7 +52,7 @@ namespace gfx::gl
 	{
 		// "Bindless" version, should use glVertexArrayVertexBuffer once available
 		bind_unsafe();
-		glBindVertexBuffer(index, buffer.buf, offset, static_cast<GLsizei>(stride));
+		glBindVertexBuffer(index, buffer.buf, static_cast<GLintptr>(offset), static_cast<GLsizei>(stride));
 		unbind_unsafe();
 	}
 
@@ -101,14 +101,14 @@ namespace gfx::gl
 	void vertex_array_object::builder::bind_vertex_buffer(uint32_t index, const buffer &buffer, size_t offset, size_t stride) noexcept
 	{
 		// glVertexArrayVertexBuffer would probably be better once gles gets it
-		glBindVertexBuffer(index, buffer.buf, offset, static_cast<GLsizei>(stride));
+		glBindVertexBuffer(index, buffer.buf, static_cast<GLintptr>(offset), static_cast<GLsizei>(stride));
 	}
 
-	void vertex_array_object::builder::bind_attribute(int index, const vertex_attribute &attribute) noexcept
+	void vertex_array_object::builder::bind_attribute(uint32_t index, const vertex_attribute &attribute) noexcept
 	{
 		glEnableVertexAttribArray(index);
 		glVertexAttribFormat(index, attribute.num_components, to_gl(attribute.type), attribute.normalized, static_cast<GLuint>(attribute.offset));
-		glVertexAttribDivisor(index, attribute.divisor);
+		glVertexAttribDivisor(index, static_cast<GLuint>(attribute.divisor));
 		glVertexAttribBinding(index, attribute.binding_index);
 	}
 

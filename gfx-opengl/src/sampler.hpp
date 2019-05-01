@@ -84,7 +84,7 @@ namespace gfx::gl
 		sampler(sampler_resource &&resource);
 
 		friend class renderer;
-		void unsafe_bind(int texture_unit) noexcept;
+		void unsafe_bind(uint32_t texture_unit) noexcept;
 
 	private:
 		sampler_resource resource;

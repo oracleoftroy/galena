@@ -9,7 +9,7 @@ namespace gfx::gl
 {
 	namespace
 	{
-		static const GLenum parameter_names[] =
+		static constexpr GLint parameter_names[] =
 		{
 			GL_TEXTURE_WRAP_S,
 			GL_TEXTURE_WRAP_T,
@@ -25,7 +25,7 @@ namespace gfx::gl
 			GL_TEXTURE_COMPARE_FUNC
 		};
 
-		static const GLenum texture_filters[] =
+		static constexpr GLint texture_filters[] =
 		{
 			GL_NEAREST,
 			GL_LINEAR,
@@ -35,7 +35,7 @@ namespace gfx::gl
 			GL_LINEAR_MIPMAP_LINEAR
 		};
 
-		static const GLenum texture_wrap_modes[] =
+		static constexpr GLint texture_wrap_modes[] =
 		{
 			GL_CLAMP_TO_EDGE,
 			GL_MIRRORED_REPEAT,
@@ -43,13 +43,13 @@ namespace gfx::gl
 			GL_CLAMP_TO_BORDER
 		};
 
-		static const GLenum compare_modes[] =
+		static constexpr GLint compare_modes[] =
 		{
 			GL_NONE,
 			GL_COMPARE_REF_TO_TEXTURE
 		};
 
-		static const GLenum compare_funcs[] =
+		static constexpr GLint compare_funcs[] =
 		{
 			GL_LEQUAL,
 			GL_GEQUAL,
@@ -61,27 +61,27 @@ namespace gfx::gl
 			GL_NEVER
 		};
 
-		static constexpr GLenum to_gl(minify_filter filter) noexcept
+		static constexpr GLint to_gl(minify_filter filter) noexcept
 		{
 			return texture_filters[static_cast<size_t>(filter)];
 		}
 
-		static constexpr GLenum to_gl(magnify_filter filter) noexcept
+		static constexpr GLint to_gl(magnify_filter filter) noexcept
 		{
 			return texture_filters[static_cast<size_t>(filter)];
 		}
 
-		static constexpr GLenum to_gl(texture_wrap_mode wrap_mode) noexcept
+		static constexpr GLint to_gl(texture_wrap_mode wrap_mode) noexcept
 		{
 			return texture_wrap_modes[static_cast<size_t>(wrap_mode)];
 		}
 
-		static constexpr GLenum to_gl(compare_mode mode) noexcept
+		static constexpr GLint to_gl(compare_mode mode) noexcept
 		{
 			return compare_modes[static_cast<size_t>(mode)];
 		}
 
-		static constexpr GLenum to_gl(compare_function function) noexcept
+		static constexpr GLint to_gl(compare_function function) noexcept
 		{
 			return compare_funcs[static_cast<size_t>(function)];
 		}
@@ -138,7 +138,7 @@ namespace gfx::gl
 		glSamplerParameterfv(resource, GL_TEXTURE_BORDER_COLOR, glm::value_ptr(color));
 	}
 
-	void sampler::unsafe_bind(int texture_unit) noexcept
+	void sampler::unsafe_bind(uint32_t texture_unit) noexcept
 	{
 		glBindSampler(texture_unit, resource);
 	}

@@ -1,6 +1,8 @@
 #include <core/log_subsystem.hpp>
 
+#if defined(_WIN32)
 #include <spdlog/sinks/msvc_sink.h>
+#endif
 #include <spdlog/sinks/stdout_color_sinks.h>
 
 namespace core
@@ -27,7 +29,10 @@ namespace core
 			return logger;
 
 		logger = spdlog::stdout_color_mt(name);
+		
+#if defined(_WIN32)
 		logger->sinks().emplace_back(std::make_shared<spdlog::sinks::msvc_sink_mt>());
+#endif
 		return logger;
 	}
 

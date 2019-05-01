@@ -1,5 +1,6 @@
 #include "framebuffer.hpp"
 
+#include <cstddef>
 #include <utility>
 #include <glad/glad.h>
 #include "renderbuffer.hpp"
@@ -8,14 +9,14 @@ namespace gfx::gl
 {
 	namespace
 	{
-		static const GLenum framebuffer_targets[] =
+		static constexpr GLenum framebuffer_targets[] =
 		{
 			GL_FRAMEBUFFER,
 			GL_DRAW_FRAMEBUFFER,
 			GL_READ_FRAMEBUFFER,
 		};
 
-		static const GLenum framebuffer_attachments[] =
+		static constexpr GLenum framebuffer_attachments[] =
 		{
 			GL_DEPTH_ATTACHMENT,
 			GL_STENCIL_ATTACHMENT,
@@ -58,7 +59,7 @@ namespace gfx::gl
 	void framebuffer::attach_color_buffer(framebuffer_target target, const renderbuffer &renderbuffer, int buffer_number) noexcept
 	{
 		unsafe_bind(target);
-		glFramebufferRenderbuffer(to_gl(target), GL_COLOR_ATTACHMENT0 + buffer_number, GL_RENDERBUFFER, renderbuffer.get_renderbuffer());
+		glFramebufferRenderbuffer(to_gl(target), static_cast<GLenum>(GL_COLOR_ATTACHMENT0 + buffer_number), GL_RENDERBUFFER, renderbuffer.get_renderbuffer());
 		unsafe_unbind(target);
 	}
 
@@ -72,7 +73,7 @@ namespace gfx::gl
 	void framebuffer::invalidate_color_buffer(framebuffer_target target, int buffer_number) noexcept
 	{
 		unsafe_bind(target);
-		GLenum gl_attachment = GL_COLOR_ATTACHMENT0 + buffer_number;
+		GLenum gl_attachment = static_cast<GLenum>(GL_COLOR_ATTACHMENT0 + buffer_number);
 		glInvalidateFramebuffer(to_gl(target), 1, &gl_attachment);
 		unsafe_unbind(target);
 	}

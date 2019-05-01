@@ -38,7 +38,7 @@ namespace gfx
 		return core->create_buffer(type, hint, data, size);
 	}
 
-	program renderer::create_program(program_type type, const std::filesystem::path &file_path)
+	program renderer::create_program(program_type type, const fs::path &file_path)
 	{
 		return core->create_program(type, file_path);
 	}

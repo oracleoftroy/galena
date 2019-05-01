@@ -10,12 +10,12 @@
 #include <glad/glad.h>
 #include <ui/opengl_context.hpp>
 
-#pragma warning (push)
-#pragma warning (disable: 4127)
+//#pragma warning (push)
+//#pragma warning (disable: 4127)
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#pragma warning (pop)
+//#pragma warning (pop)
 
 core::logger the_logger = core::register_logger("vao benchmark");
 

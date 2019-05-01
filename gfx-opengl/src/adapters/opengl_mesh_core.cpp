@@ -10,7 +10,7 @@ namespace gfx::gl::detail
 	{
 		gl::vertex_array_object::builder builder;
 
-		int index = 0;
+		uint32_t index = 0;
 		for (auto &desc : descriptions)
 			builder.bind_attribute(index++, gl::vertex_attribute(static_cast<gl::component_type>(desc.type), desc.num_components, desc.index, desc.offset, desc.divisor, desc.normalized));
 
@@ -24,7 +24,7 @@ namespace gfx::gl::detail
 
 	void opengl_mesh_core::set_buffers(const std::initializer_list<buffer_index> &buffers)
 	{
-		int index = 0;
+		uint32_t index = 0;
 		for (auto &buffer : buffers)
 			vao.use_vertex_buffer(index++, static_cast<const opengl_buffer_core&>(*buffer.buffer.get()).get(), buffer.offset, buffer.stride);
 	}
@@ -37,6 +37,6 @@ namespace gfx::gl::detail
 	void opengl_mesh_core::draw_indexed(gl::renderer &renderer, gfx::draw_mode mode, gfx::index_type type, int start, int count) const
 	{
 		renderer.use_vertex_array_object(vao);
-		renderer.draw_indexed(static_cast<gl::draw_mode>(mode), static_cast<gl::index_type>(type), start, count);
+		renderer.draw_indexed(static_cast<gl::draw_mode>(mode), static_cast<gl::index_type>(type), static_cast<size_t>(start), static_cast<size_t>(count));
 	}
 }

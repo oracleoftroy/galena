@@ -7,6 +7,16 @@ add_executable(benchmarks-opengl
 	"../app/src/opengl_magic.cpp"
 )
 
+if (NOT MSVC)
+	set_source_files_properties(../gfx-opengl/vendor/glad/src/glad.c PROPERTIES COMPILE_OPTIONS -Wno-pedantic)
+endif()
+
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+	target_link_libraries(benchmarks-opengl PUBLIC stdc++fs)
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+	target_link_libraries(benchmarks-opengl PUBLIC c++experimental)
+endif()
+
 target_compile_definitions(benchmarks-opengl PRIVATE _CRT_SECURE_NO_WARNINGS)
 target_include_directories(benchmarks-opengl PRIVATE "../gfx-opengl/vendor/glad/include")
 

@@ -44,7 +44,8 @@ namespace ui
 	enum class modifiers;
 
 	using device_id = uint_least32_t;
-
+	using controller_id = int_least32_t;
+	
 	enum class pressed_state
 	{
 		released,
@@ -140,12 +141,12 @@ namespace ui
 	class controller_analog_event : public event
 	{
 	public:
-		controller_analog_event(device_id id, controller_axis axis, float value)
+		controller_analog_event(controller_id id, controller_axis axis, float value)
 			: event(event_type::controller_analog), id(id), axis(axis), value(value)
 		{
 		}
 
-		const device_id id;
+		const controller_id id;
 		const controller_axis axis;
 		const float value;
 	};
@@ -173,12 +174,12 @@ namespace ui
 	class controller_button_event : public event
 	{
 	public:
-		controller_button_event(device_id id, controller_button button, pressed_state state)
+		controller_button_event(controller_id id, controller_button button, pressed_state state)
 			: event(event_type::controller_button), id(id), button(button), state(state)
 		{
 		}
 
-		const device_id id;
+		const controller_id id;
 		const controller_button button;
 		const pressed_state state;
 	};
@@ -239,12 +240,12 @@ namespace ui
 		}
 
 	private:
-		template <typename... Handler>
-		struct event_visitor : Handler...
+		template <typename... Handlers>
+		struct event_visitor : Handlers...
 		{
-			using Handler::operator()...;
+			using Handlers::operator()...;
 
-			event_visitor(Handler... handler) : Handler(std::move(handler))...
+			event_visitor(Handlers... handlers) : Handlers(std::move(handlers))...
 			{
 			}
 		};

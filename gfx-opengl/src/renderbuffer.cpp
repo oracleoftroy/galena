@@ -1,5 +1,6 @@
 #include "renderbuffer.hpp"
 
+#include <cstddef>
 #include <utility>
 #include <glad/glad.h>
 
@@ -7,7 +8,7 @@ namespace gfx::gl
 {
 	namespace
 	{
-		const GLenum renderbuffer_formats[] =
+		constexpr GLenum renderbuffer_formats[] =
 		{
 			GL_RGB8,
 			GL_RGBA8,

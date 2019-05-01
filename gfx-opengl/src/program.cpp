@@ -3,6 +3,7 @@
 #include <fstream>
 #include <optional>
 #include <stdexcept>
+#include <string_view>
 #include <utility>
 #include <vector>
 
@@ -11,11 +12,13 @@
 #include <glad/glad.h>
 #include "log.hpp"
 
+using namespace std::string_view_literals;
+
 namespace gfx::gl
 {
 	namespace
 	{
-		static const GLenum shader_types[] =
+		static constexpr GLenum shader_types[] =
 		{
 			GL_COMPUTE_SHADER,
 			GL_VERTEX_SHADER,
@@ -25,7 +28,7 @@ namespace gfx::gl
 			GL_FRAGMENT_SHADER
 		};
 
-		static const GLenum shader_flags[] =
+		static constexpr GLenum shader_flags[] =
 		{
 			GL_COMPUTE_SHADER_BIT,
 			GL_VERTEX_SHADER_BIT,
@@ -35,14 +38,14 @@ namespace gfx::gl
 			GL_FRAGMENT_SHADER_BIT,
 		};
 
-		static const char *type_strings[]
+		static constexpr std::string_view type_strings[]
 		{
-			"compute",
-			"vertex",
-			"tess_control",
-			"tess_evaluation",
-			"geometry",
-			"fragment"
+			"compute"sv,
+			"vertex"sv,
+			"tess_control"sv,
+			"tess_evaluation"sv,
+			"geometry"sv,
+			"fragment"sv
 		};
 
 		constexpr GLenum to_gl(program_type type) noexcept
@@ -55,7 +58,7 @@ namespace gfx::gl
 			return shader_flags[static_cast<size_t>(type)];
 		}
 
-		constexpr const char *c_str(program_type type) noexcept
+		constexpr const std::string_view str(program_type type) noexcept
 		{
 			return type_strings[static_cast<size_t>(type)];
 		}
@@ -68,7 +71,7 @@ namespace gfx::gl
 		}
 	};
 
-	static std::optional<std::string> read_file(const std::filesystem::path &file_path)
+	static std::optional<std::string> read_file(const fs::path &file_path)
 	{
 		std::ifstream file(file_path, std::ios::binary);
 
@@ -78,23 +81,23 @@ namespace gfx::gl
 		std::string source;
 
 		file.seekg(0, std::ios::end);
-		source.resize(file.tellg());
+		source.resize(static_cast<size_t>(file.tellg()));
 		file.seekg(0, std::ios::beg);
 
-		file.read(source.data(), source.size());
+		file.read(source.data(), static_cast<std::streamsize>(source.size()));
 
 		return source;
 	}
 
-	program program::create(program_type type, const std::filesystem::path &file_path)
+	program program::create(program_type type, const fs::path &file_path)
 	{
-		LOG_INFO("loading {0} program from {1}", c_str(type), file_path.u8string());
+		LOG_INFO("loading {0} program from {1}", str(type), file_path.u8string());
 
 		auto source = read_file(file_path);
 
 		if (!source)
 		{
-			if (!std::filesystem::exists(file_path))
+			if (!fs::exists(file_path))
 			{
 				LOG_ERROR("Error opening file {0} - File does not exist", file_path.u8string());
 				throw program_error(fmt::format("Error opening file {0} - File does not exist", file_path.u8string()));
@@ -112,7 +115,7 @@ namespace gfx::gl
 
 	program program::create(program_type type, const std::string &source)
 	{
-		LOG_INFO("Creating {0} program", c_str(type));
+		LOG_INFO("Creating {0} program", str(type));
 
 		auto resource = program_resource::create(type, source);
 
@@ -124,7 +127,7 @@ namespace gfx::gl
 			GLint log_length = 0;
 			glGetProgramiv(resource, GL_INFO_LOG_LENGTH, &log_length);
 
-			std::vector<GLchar> log(log_length);
+			std::vector<GLchar> log(static_cast<size_t>(log_length));
 			glGetProgramInfoLog(resource, log_length, &log_length, log.data());
 
 			LOG_ERROR("Error creating program: {0}", log.data());

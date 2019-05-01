@@ -3,7 +3,15 @@
 #include <glm/glm.hpp>
 
 #include <cstdint>
+#if __has_include(<filesystem>)
 #include <filesystem>
+namespace fs = std::filesystem;
+#elif __has_include(<experimental/filesystem>)
+#include <experimental/filesystem>
+namespace fs = std::experimental::filesystem;
+#else
+#error "Could not find <filesystem>!"
+#endif
 #include <string>
 #include <core/resource.hpp>
 
@@ -22,7 +30,7 @@ namespace gfx::gl
 	class program
 	{
 	public:
-		static program create(program_type type, const std::filesystem::path &file_path);
+		static program create(program_type type, const fs::path &file_path);
 		static program create(program_type type, const std::string &source);
 		program() = default;
 

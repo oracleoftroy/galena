@@ -114,8 +114,8 @@ namespace gfx::gl
 		void use_program_pipeline(program_pipeline &pipeline) noexcept;
 		void clear_program_pipeline() noexcept;
 
-		void use_texture(int texture_unit, texture &texture, sampler &sampler) noexcept;
-		void clear_texture(int texture_unit) noexcept;
+		void use_texture(uint32_t texture_unit, texture &texture, sampler &sampler) noexcept;
+		void clear_texture(uint32_t texture_unit) noexcept;
 
 		void use_framebuffer(framebuffer_target target, framebuffer &buffer) noexcept;
 		void clear_framebuffer(framebuffer_target target) noexcept;

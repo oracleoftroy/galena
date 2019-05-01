@@ -44,6 +44,19 @@ add_library(gfx-opengl
 	"src/vertex_array_object.hpp"
 )
 
+if (NOT MSVC)
+	set_source_files_properties(vendor/glad/src/glad.c PROPERTIES COMPILE_OPTIONS -Wno-pedantic)
+	# set_source_files_properties(vendor/imgui/imgui_impl_opengl3.cpp PROPERTIES COMPILE_OPTIONS -Wno-conversion -Wno-sign-conversion)
+	set_property(SOURCE vendor/imgui/imgui_impl_opengl3.cpp APPEND PROPERTY COMPILE_OPTIONS -Wno-conversion -Wno-sign-conversion)
+endif()
+
+
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+	target_link_libraries(gfx-opengl PUBLIC stdc++fs)
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+	target_link_libraries(gfx-opengl PUBLIC c++experimental)
+endif()
+
 target_compile_definitions(gfx-opengl PUBLIC IMGUI_IMPL_OPENGL_LOADER_GLAD)
 target_include_directories(gfx-opengl PUBLIC "include")
 target_include_directories(gfx-opengl PRIVATE "vendor/glad/include" "vendor/imgui")

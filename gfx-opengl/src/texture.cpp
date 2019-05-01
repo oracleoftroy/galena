@@ -19,7 +19,7 @@ namespace gfx::gl
 			}
 		};
 
-		static const GLenum texture2d_targets[] =
+		static constexpr GLenum texture2d_targets[] =
 		{
 			GL_TEXTURE_2D,
 			GL_TEXTURE_CUBE_MAP_POSITIVE_X,
@@ -30,14 +30,14 @@ namespace gfx::gl
 			GL_TEXTURE_CUBE_MAP_NEGATIVE_Z
 		};
 
-		static const GLenum texture3d_targets[] =
+		static constexpr GLenum texture3d_targets[] =
 		{
 			GL_TEXTURE_3D,
 			GL_TEXTURE_2D_ARRAY,
 			GL_TEXTURE_CUBE_MAP_ARRAY
 		};
 
-		static const GLenum texture_formats[] =
+		static constexpr GLenum texture_formats[] =
 		{
 			GL_RED,
 			GL_RED_INTEGER,
@@ -55,7 +55,7 @@ namespace gfx::gl
 			GL_ALPHA
 		};
 
-		static const GLenum texture_pixel_formats[] =
+		static constexpr GLenum texture_pixel_formats[] =
 		{
 			GL_UNSIGNED_BYTE,
 			GL_BYTE,
@@ -96,7 +96,7 @@ namespace gfx::gl
 		}
 
 		// TODO: see if we can more aggressibly request RGBA8 or GL_SRGB8_ALPHA8 formats always for rgb* types
-		static GLenum internal_format(texture_format format, pixel_layout layout)
+		static GLint internal_format(texture_format format, pixel_layout layout)
 		{
 			if (format == texture_format::rgb && layout == pixel_layout::uint8)
 				return GL_SRGB8;

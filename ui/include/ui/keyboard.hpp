@@ -576,7 +576,7 @@ namespace ui
 namespace fmt
 {
 	template <>
-	struct fmt::formatter<ui::keys>
+	struct formatter<ui::keys>
 	{
 		template <typename ParseContext>
 		constexpr auto parse(ParseContext &ctx) { return ctx.begin(); }
@@ -589,7 +589,7 @@ namespace fmt
 	};
 
 	template <>
-	struct fmt::formatter<ui::scancodes>
+	struct formatter<ui::scancodes>
 	{
 		template <typename ParseContext>
 		constexpr auto parse(ParseContext &ctx) { return ctx.begin(); }
@@ -602,7 +602,7 @@ namespace fmt
 	};
 
 	template <>
-	struct fmt::formatter<ui::modifiers>
+	struct formatter<ui::modifiers>
 	{
 		template <typename ParseContext>
 		constexpr auto parse(ParseContext &ctx) { return ctx.begin(); }

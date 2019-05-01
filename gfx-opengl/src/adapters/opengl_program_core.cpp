@@ -6,7 +6,7 @@
 
 namespace gfx::gl::detail
 {
-	std::unique_ptr<opengl_program_core> opengl_program_core::create(gfx::program_type type, const std::filesystem::path &file_path)
+	std::unique_ptr<opengl_program_core> opengl_program_core::create(gfx::program_type type, const fs::path &file_path)
 	{
 		// TODO: figure out a way to generate a compiler error if types mismatch
 		// TODO: support more shader types

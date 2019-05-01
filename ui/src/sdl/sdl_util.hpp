@@ -21,7 +21,7 @@ namespace ui::sdl
 		sdl_exception() : std::runtime_error(SDL_GetError()) {}
 	};
 
-	constexpr int to_sdl(window_mode mode) noexcept
+	constexpr Uint32 to_sdl(window_mode mode) noexcept
 	{
 		// the initial state of our window - TODO: are there other flags we want to support?
 		return mode == window_mode::fullscreen ? SDL_WINDOW_FULLSCREEN | SDL_WINDOW_BORDERLESS
@@ -29,7 +29,7 @@ namespace ui::sdl
 			: 0;
 	}
 
-	constexpr int to_sdl(gfx_engine engine) noexcept
+	constexpr Uint32 to_sdl(gfx_engine engine) noexcept
 	{
 		// opengl and vulkan for SDL need a special flag during window creation to load the proper library, whereas directx just needs the hwnd
 		return engine == gfx_engine::vulkan ? SDL_WINDOW_VULKAN
@@ -37,7 +37,7 @@ namespace ui::sdl
 			: 0;
 	}
 
-	constexpr int to_sdl(window_mode flags, gfx_engine engine) noexcept
+	constexpr Uint32 to_sdl(window_mode flags, gfx_engine engine) noexcept
 	{
 		// default flags - always enabling high dpi seems like a good idea to prevent the window manager from trying to scale our app
 		return SDL_WINDOW_ALLOW_HIGHDPI | to_sdl(flags) | to_sdl(engine);

@@ -1,4 +1,4 @@
-#pragma warning(disable: 4996) // disable warnings for std::copy/std::copy_n
+//#pragma warning(disable: 4996) // disable warnings for std::copy/std::copy_n
 
 #include "image.hpp"
 

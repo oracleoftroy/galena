@@ -24,7 +24,7 @@ namespace gfx::gl::detail
 		void clear_depth() noexcept;
 
 		gfx::buffer create_buffer(gfx::buffer_type type, gfx::usage_hint hint, const void *data, size_t size) override;
-		gfx::program create_program(gfx::program_type type, const std::filesystem::path &file_path) override;
+		gfx::program create_program(gfx::program_type type, const fs::path &file_path) override;
 		gfx::pipeline create_pipeline() override;
 		gfx::mesh create_mesh(const std::initializer_list<buffer_description> &descriptions) override;
 		std::unique_ptr<gfx::imgui::imgui_graphics_core> create_imgui_graphics_core() override;
@@ -77,7 +77,7 @@ namespace gfx::gl::detail
 		return gfx::buffer{opengl_buffer_core::create(type, hint, data, size)};
 	}
 
-	gfx::program opengl_renderer_core::create_program(gfx::program_type type, const std::filesystem::path &file_path)
+	gfx::program opengl_renderer_core::create_program(gfx::program_type type, const fs::path &file_path)
 	{
 		return gfx::program{opengl_program_core::create(type, file_path)};
 	}

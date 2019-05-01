@@ -172,7 +172,7 @@ int main(int argc, char* argv[])
 
 		if (show_opengl_settings)
 		{
-			ImGui::SetNextWindowPos(ImVec2(size.x - 2.0f, 2.0f), ImGuiCond_Always, ImVec2(1.0f, 0.0f));
+			ImGui::SetNextWindowPos(ImVec2(static_cast<float>(size.x) - 2.0f, 2.0f), ImGuiCond_Always, ImVec2(1.0f, 0.0f));
 			ImGui::Begin("OpenGL settings", &show_opengl_settings, ImGuiWindowFlags_AlwaysAutoResize);
 
 			if (ImGui::SliderInt("VSync control", &vsync_play, -4, 4))

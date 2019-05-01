@@ -64,7 +64,7 @@ namespace gfx::gl
 
 			void bind_index_buffer(const buffer &buffer) noexcept;
 			void bind_vertex_buffer(uint32_t index, const buffer &buffer, size_t offset, size_t stride) noexcept;
-			void bind_attribute(int index, const vertex_attribute &attribute) noexcept;
+			void bind_attribute(uint32_t index, const vertex_attribute &attribute) noexcept;
 			vertex_array_object create() noexcept;
 
 		private:

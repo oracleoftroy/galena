@@ -38,7 +38,7 @@ namespace core
 	template <typename T, template<typename> typename AquirePolicy, typename AllowImplicitConversion = resource::opts::implicit_conversion<false>>
 	class resource_type : AquirePolicy<T>
 	{
-		using Aquire = typename AquirePolicy<T>;
+		using Aquire = AquirePolicy<T>;
 	public:
 		template <typename ...Args>
 		static resource_type create(Args &&... args) noexcept(noexcept(Aquire::aquire(std::forward<Args>(args)...)))
@@ -61,7 +61,7 @@ namespace core
 		{
 		}
 
-		resource_type &operator=(resource_type &&other) noexcept(std::is_nothrow_assignable_v<T> && noexcept(Aquire::release(value)))
+		resource_type &operator=(resource_type &&other) noexcept(std::is_nothrow_assignable_v<T> && noexcept(std::is_nothrow_destructible_v<resource_type>))
 		{
 			resource_type old(std::move(*this));
 			value = std::exchange(other.value, T());
@@ -115,7 +115,7 @@ namespace core::detail::test
 	{
 	}
 
-	CORE_GENERATE_RESOURCE(my_test_resource, int, create_test_resource, clean_test_resource);
+	CORE_GENERATE_RESOURCE(my_test_resource, int, create_test_resource, clean_test_resource, resource::opts::implicit_conversion<false>);
 
 	static_assert(noexcept(my_test_resource::create(42, "whatever")));
 	static_assert(std::is_nothrow_default_constructible_v<my_test_resource>);

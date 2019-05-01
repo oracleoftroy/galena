@@ -29,6 +29,10 @@ add_library(ui
 	"src/sdl/sdl_window.cpp"
 )
 
+if(NOT MSVC)
+	set_source_files_properties(src/sdl/imgui_impl_sdl.cpp PROPERTIES COMPILE_FLAGS -Wno-conversion)
+endif()
+
 # TODO: UI_PLATFORM should be configured based on configure option
 target_compile_definitions(ui PUBLIC "UI_PLATFORM=1")
 target_include_directories(ui PUBLIC "include")

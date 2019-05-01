@@ -7,7 +7,7 @@ namespace gfx::gl
 {
 	namespace
 	{
-		static const GLenum binding_targets[] =
+		static constexpr GLenum binding_targets[] =
 		{
 			GL_ARRAY_BUFFER,
 			GL_ELEMENT_ARRAY_BUFFER,
@@ -24,7 +24,7 @@ namespace gfx::gl
 			GL_UNIFORM_BUFFER
 		};
 
-		static const GLenum buffer_usages[] =
+		static constexpr GLenum buffer_usages[] =
 		{
 			GL_STREAM_DRAW,
 			GL_STATIC_DRAW,
@@ -55,7 +55,7 @@ namespace gfx::gl
 		auto resource = buffer_resource::create();
 
 		glBindBuffer(to_gl(target), resource);
-		glBufferData(to_gl(target), size, data, to_gl(usage));
+		glBufferData(to_gl(target), static_cast<GLsizeiptr>(size), data, to_gl(usage));
 		glBindBuffer(to_gl(target), 0);
 
 		return buffer(std::move(resource));

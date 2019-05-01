@@ -23,7 +23,7 @@ namespace app
 
 			if (duration >= 5s)
 			{
-				auto fps = frame_count / duration.count();
+				auto fps = static_cast<double>(frame_count) / duration.count();
 				auto average = duration / frame_count;
 				LOG_DEBUG("avg fps: {0} ({1} frames over {2} seconds)", fps, frame_count, duration.count());
 				LOG_DEBUG("frame time: high({0}) low({1}) avg({2})", high.count(), low.count(), average.count());

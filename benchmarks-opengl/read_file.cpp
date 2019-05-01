@@ -2,13 +2,21 @@
 
 #include <cstdio>
 #include <cstring>
+#if __has_include(<filesystemm>)
 #include <filesystem>
+namespace fs = std::filesystem;
+#elif __has_include(<experimental/filesystem>)
+#include <experimental/filesystem>
+namespace fs = std::experimental::filesystem;
+#else
+#error "Could not find <filesystem>!"
+#endif
 #include <fstream>
 #include <iterator>
 #include <sstream>
 #include <string>
 
-std::string fopen_seek(const std::filesystem::path &filepath)
+std::string fopen_seek(const fs::path &filepath)
 {
 	std::string result;
 
@@ -17,7 +25,7 @@ std::string fopen_seek(const std::filesystem::path &filepath)
 		throw false;
 
 	fseek(file, 0, SEEK_END);
-	result.resize(ftell(file));
+	result.resize(static_cast<size_t>(ftell(file)));
 	rewind(file);
 	std::fread(result.data(), 1, result.size(), file);
 	std::fclose(file);
@@ -25,7 +33,7 @@ std::string fopen_seek(const std::filesystem::path &filepath)
 	return result;
 }
 
-std::string fstream_seek(const std::filesystem::path &filepath)
+std::string fstream_seek(const fs::path &filepath)
 {
 	std::string result;
 	std::ifstream file(filepath, std::ios::binary);
@@ -33,28 +41,28 @@ std::string fstream_seek(const std::filesystem::path &filepath)
 		throw false;
 
 	file.seekg(0, std::ios::end);
-	result.resize(file.tellg());
+	result.resize(static_cast<size_t>(file.tellg()));
 	file.seekg(0, std::ios::beg);
 
-	file.read(result.data(), result.size());
+	file.read(result.data(), static_cast<std::streamsize>(result.size()));
 	return result;
 }
 
-std::string fstream_seek_ate(const std::filesystem::path &filepath)
+std::string fstream_seek_ate(const fs::path &filepath)
 {
 	std::string result;
 	std::ifstream file(filepath, std::ios::ate | std::ios::binary);
 	if (!file)
 		throw false;
 
-	result.resize(file.tellg());
+	result.resize(static_cast<size_t>(file.tellg()));
 	file.seekg(0, std::ios::beg);
 
-	file.read(result.data(), result.size());
+	file.read(result.data(), static_cast<std::streamsize>(result.size()));
 	return result;
 }
 
-std::string istream_iterator(const std::filesystem::path &filepath)
+std::string istream_iterator(const fs::path &filepath)
 {
 	std::ifstream file(filepath, std::ios::binary);
 	if (!file)
@@ -63,7 +71,7 @@ std::string istream_iterator(const std::filesystem::path &filepath)
 	return std::string(std::istreambuf_iterator(file), std::istreambuf_iterator<char>());
 }
 
-std::string istream_iterator_reserve_assign(const std::filesystem::path &filepath)
+std::string istream_iterator_reserve_assign(const fs::path &filepath)
 {
 	std::ifstream file(filepath, std::ios::binary);
 	if (!file)
@@ -71,13 +79,13 @@ std::string istream_iterator_reserve_assign(const std::filesystem::path &filepat
 
 	std::string result;
 	file.seekg(0, std::ios::end);
-	result.reserve(file.tellg());
+	result.reserve(static_cast<size_t>(file.tellg()));
 	file.seekg(0, std::ios::beg);
 
 	return result.assign(std::istreambuf_iterator(file), std::istreambuf_iterator<char>());
 }
 
-std::string istream_iterator_reserve_insert(const std::filesystem::path &filepath)
+std::string istream_iterator_reserve_insert(const fs::path &filepath)
 {
 	std::ifstream file(filepath, std::ios::binary);
 	if (!file)
@@ -85,14 +93,14 @@ std::string istream_iterator_reserve_insert(const std::filesystem::path &filepat
 
 	std::string result;
 	file.seekg(0, std::ios::end);
-	result.reserve(file.tellg());
+	result.reserve(static_cast<size_t>(file.tellg()));
 	file.seekg(0, std::ios::beg);
 
 	result.insert(end(result), std::istreambuf_iterator(file), std::istreambuf_iterator<char>());
 	return result;
 }
 
-std::string istream_iterator_reserve_copy(const std::filesystem::path &filepath)
+std::string istream_iterator_reserve_copy(const fs::path &filepath)
 {
 	std::ifstream file(filepath, std::ios::binary);
 	if (!file)
@@ -100,14 +108,14 @@ std::string istream_iterator_reserve_copy(const std::filesystem::path &filepath)
 
 	std::string result;
 	file.seekg(0, std::ios::end);
-	result.reserve(file.tellg());
+	result.reserve(static_cast<size_t>(file.tellg()));
 	file.seekg(0, std::ios::beg);
 
 	std::copy(std::istreambuf_iterator(file), std::istreambuf_iterator<char>(), std::back_inserter(result));
 	return result;
 }
 
-std::string istream_iterator_resize_copy(const std::filesystem::path &filepath)
+std::string istream_iterator_resize_copy(const fs::path &filepath)
 {
 	std::ifstream file(filepath, std::ios::binary);
 	if (!file)
@@ -115,14 +123,14 @@ std::string istream_iterator_resize_copy(const std::filesystem::path &filepath)
 
 	std::string result;
 	file.seekg(0, std::ios::end);
-	result.resize(file.tellg());
+	result.resize(static_cast<size_t>(file.tellg()));
 	file.seekg(0, std::ios::beg);
 
 	std::copy(std::istreambuf_iterator(file), std::istreambuf_iterator<char>(), result.data());
 	return result;
 }
 
-std::string stringstream(const std::filesystem::path &filepath)
+std::string stringstream(const fs::path &filepath)
 {
 	std::ifstream file(filepath, std::ios::binary);
 	if (!file)
