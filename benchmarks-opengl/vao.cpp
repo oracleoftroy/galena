@@ -216,12 +216,6 @@ static void proper_vao(benchmark::State &state)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ib);
 	glBindVertexArray(0);
 
-	// done creating vao, unbind buffers
-	//glBindVertexBuffer(0, 0, 0, sizeof(vertex));
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	// DONE: Create VBO for AOV vbo
-	///////////////////////////////////////////////////////////////
-
 	// Create VBO for VOA vbo
 	GLuint pos_buf, color_buf;
 
@@ -254,13 +248,6 @@ static void proper_vao(benchmark::State &state)
 	glBindVertexBuffer(1, color_buf, 0, sizeof(cube_colors[0]));
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ib);
 	glBindVertexArray(0);
-
-	// done creating vao, unbind buffers
-	//glBindVertexBuffer(0, 0, 0, sizeof(cube_poss[0]));
-	//glBindVertexBuffer(1, 0, 0, sizeof(cube_colors[0]));
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	// DONE: Create VBO for VOA vbo
-	///////////////////////////////////////////////////////////////
 
 	GLuint vertex = compile_shader(GL_VERTEX_SHADER, vertex_shader);
 	GLuint fragment = compile_shader(GL_FRAGMENT_SHADER, fragment_shader);
@@ -296,19 +283,14 @@ static void proper_vao(benchmark::State &state)
 
 		while (clock.use_time_slice())
 		{
-//			model_vao1 = glm::translate(model_vao1, glm::vec3(-2.0f, -2.0f, 0.0f));
 			model_vao1 = glm::rotate(model_vao1, static_cast<float>(angle * clock.time_slice.count()), rot);
-
 			model_vao2 = glm::rotate(model_vao2, static_cast<float>(angle * clock.time_slice.count()), rot2);
-//			model_vao2 = glm::translate(model_vao2, glm::vec3(2.0f, 2.0f, 0.0f));
 		}
 		auto mvp1 = proj_view * model_vao1;
 		auto mvp2 = proj_view * model_vao2;
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		// set up vao
-		// set up shader
 		glBindProgramPipeline(pipeline);
 
 		glProgramUniformMatrix4fv(vertex, 0, 1, GL_FALSE, glm::value_ptr(mvp1));
@@ -393,7 +375,6 @@ static void single_vao(benchmark::State &state)
 	glm::vec3 rot(2.0f, 3.0f, 5.0f);
 	glm::vec3 rot2(10.0f, 3.0f, 5.0f);
 
-	//	auto projection = glm::perspective(90.0f, static_cast<float>(size.x) / size.y, 1.0f, 100.0f);
 	auto projection = glm::perspectiveFov(45.0f, static_cast<float>(size.x), static_cast<float>(size.y), 1.0f, 100.0f);
 	auto camera = glm::translate(glm::identity<glm::mat4>(), glm::vec3(0.0f, 0.0f, -70.0f));
 	auto proj_view = projection * camera;
@@ -414,22 +395,17 @@ static void single_vao(benchmark::State &state)
 
 		while (clock.use_time_slice())
 		{
-			//			model_vao1 = glm::translate(model_vao1, glm::vec3(-2.0f, -2.0f, 0.0f));
 			model_vao1 = glm::rotate(model_vao1, static_cast<float>(angle * clock.time_slice.count()), rot);
-
 			model_vao2 = glm::rotate(model_vao2, static_cast<float>(angle * clock.time_slice.count()), rot2);
-			//			model_vao2 = glm::translate(model_vao2, glm::vec3(2.0f, 2.0f, 0.0f));
 		}
 		auto mvp1 = proj_view * model_vao1;
 		auto mvp2 = proj_view * model_vao2;
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		// set up vao
 		// set up shader
 		glBindProgramPipeline(pipeline);
 
-		////////////
 		glProgramUniformMatrix4fv(vertex, 0, 1, GL_FALSE, glm::value_ptr(mvp1));
 
 		glBindVertexBuffer(0, vb, 0, sizeof(cube_v[0]));
@@ -437,18 +413,14 @@ static void single_vao(benchmark::State &state)
 		glEnableVertexAttribArray(0);
 		glVertexAttribFormat(0, 3, GL_FLOAT, GL_FALSE, offsetof(::vertex, position));
 		glVertexAttribBinding(0, 0);
-//		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(::vertex), (void *)offsetof(::vertex, vertex::position));
 
 		glEnableVertexAttribArray(1);
 		glVertexAttribFormat(1, 3, GL_FLOAT, GL_FALSE, offsetof(::vertex, color));
 		glVertexAttribBinding(1, 0);
-//		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(::vertex), (void *)offsetof(::vertex, vertex::color));
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ib);
 		glDrawElements(GL_TRIANGLES, sizeof(cube_idx) / sizeof(*cube_idx), GL_UNSIGNED_SHORT, nullptr);
-		////////////////
 
-		////////////////////
 		glProgramUniformMatrix4fv(vertex, 0, 1, GL_FALSE, glm::value_ptr(mvp2));
 
 		glEnableVertexAttribArray(0);
@@ -464,7 +436,6 @@ static void single_vao(benchmark::State &state)
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ib);
 		glDrawElements(GL_TRIANGLES, sizeof(cube_idx) / sizeof(*cube_idx), GL_UNSIGNED_SHORT, nullptr);
-		//////////////////
 
 		data.context.present();
 	}
