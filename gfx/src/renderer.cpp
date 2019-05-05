@@ -63,7 +63,7 @@ namespace gfx
 		core->use_pipeline(pipeline);
 	}
 
-	void renderer::draw_indexed_mesh(const mesh &m, draw_mode mode, index_type type, int start, int count)
+	void renderer::draw_indexed_mesh(const mesh &m, draw_mode mode, index_type type, size_t start, size_t count)
 	{
 		core->draw_indexed_mesh(m, mode, type, start, count);
 	}

@@ -42,7 +42,7 @@ namespace gfx
 		virtual void clear_depth() noexcept = 0;
 		virtual void clear_color() noexcept = 0;
 		virtual void use_pipeline(pipeline &pipeline) = 0;
-		virtual void draw_indexed_mesh(const mesh &m, draw_mode mode, index_type type, int start, int count) = 0;
+		virtual void draw_indexed_mesh(const mesh &m, draw_mode mode, index_type type, size_t start, size_t count) = 0;
 	};
 
 	class renderer
@@ -67,7 +67,7 @@ namespace gfx
 		void clear_color() noexcept;
 		void clear_depth() noexcept;
 		void use_pipeline(pipeline &pipeline);
-		void draw_indexed_mesh(const mesh &m, draw_mode mode, index_type type, int start, int count);
+		void draw_indexed_mesh(const mesh &m, draw_mode mode, index_type type, size_t start, size_t count);
 
 	private:
 		std::unique_ptr<renderer_core> core;

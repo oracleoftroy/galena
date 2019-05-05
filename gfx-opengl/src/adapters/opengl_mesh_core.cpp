@@ -34,9 +34,9 @@ namespace gfx::gl::detail
 		vao.use_index_buffer(static_cast<const opengl_buffer_core &>(*buffer).get());
 	}
 
-	void opengl_mesh_core::draw_indexed(gl::renderer &renderer, gfx::draw_mode mode, gfx::index_type type, int start, int count) const
+	void opengl_mesh_core::draw_indexed(gl::renderer &renderer, gfx::draw_mode mode, gfx::index_type type, size_t start, size_t count) const
 	{
 		renderer.use_vertex_array_object(vao);
-		renderer.draw_indexed(static_cast<gl::draw_mode>(mode), static_cast<gl::index_type>(type), static_cast<size_t>(start), static_cast<size_t>(count));
+		renderer.draw_indexed(static_cast<gl::draw_mode>(mode), static_cast<gl::index_type>(type), start, count);
 	}
 }

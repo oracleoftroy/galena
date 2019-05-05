@@ -16,7 +16,7 @@ namespace app
 		void render(gfx::renderer &renderer);
 
 	private:
-		test_app(const glm::vec2 &view_size, gfx::buffer &&positions_buffer, gfx::buffer &&colors_buffer, gfx::buffer &&indices_buffer, gfx::program &&vertex_program, gfx::program &&fragment_program, gfx::pipeline &&pipeline, gfx::mesh &&mesh);
+		test_app(const glm::vec2 &view_size, gfx::buffer &&positions_buffer, gfx::buffer &&colors_buffer, gfx::buffer &&indices_buffer, gfx::program &&vertex_program, gfx::program &&fragment_program, gfx::pipeline &&pipeline, gfx::mesh &&mesh, gfx::buffer &&terrain_buf, gfx::buffer &&terrain_colorsbuf, gfx::buffer &&terrain_idxbuf, gfx::mesh &&terrain_mesh, size_t terrain_idx_count);
 
 		gfx::buffer positions_buffer;
 		gfx::buffer colors_buffer;
@@ -28,5 +28,11 @@ namespace app
 		glm::mat4 proj_view;
 		glm::mat4 model;
 		double accum = 0;
+
+		gfx::buffer terrain_buf;
+		gfx::buffer terrain_colorsbuf;
+		gfx::buffer terrain_idxbuf;
+		gfx::mesh terrain_mesh;
+		size_t terrain_idx_count;
 	};
 }

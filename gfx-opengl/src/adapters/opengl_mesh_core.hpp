@@ -19,7 +19,7 @@ namespace gfx::gl::detail
 		void set_buffers(const std::initializer_list<gfx::buffer_index> &buffers) override;
 		void set_index_buffer(const gfx::buffer &buffer) override;
 
-		void draw_indexed(gl::renderer &renderer, gfx::draw_mode mode, gfx::index_type type, int start, int count) const;
+		void draw_indexed(gl::renderer &renderer, gfx::draw_mode mode, gfx::index_type type, size_t start, size_t count) const;
 
 	private:
 		gl::vertex_array_object vao;

@@ -30,7 +30,7 @@ namespace gfx::gl::detail
 		std::unique_ptr<gfx::imgui::imgui_graphics_core> create_imgui_graphics_core() override;
 
 		void use_pipeline(gfx::pipeline &pipeline) override;
-		void draw_indexed_mesh(const gfx::mesh &m, gfx::draw_mode mode, gfx::index_type type, int start, int count) override;
+		void draw_indexed_mesh(const gfx::mesh &m, gfx::draw_mode mode, gfx::index_type type, size_t start, size_t count) override;
 
 	private:
 		gl::renderer renderer;
@@ -103,7 +103,7 @@ namespace gfx::gl::detail
 		renderer.use_program_pipeline(pipeline_core.get());
 	}
 
-	void opengl_renderer_core::draw_indexed_mesh(const gfx::mesh &m, gfx::draw_mode mode, gfx::index_type type, int start, int count)
+	void opengl_renderer_core::draw_indexed_mesh(const gfx::mesh &m, gfx::draw_mode mode, gfx::index_type type, size_t start, size_t count)
 	{
 		const opengl_mesh_core &mesh = static_cast<const opengl_mesh_core &>(*m);
 		mesh.draw_indexed(renderer, mode, type, start, count);

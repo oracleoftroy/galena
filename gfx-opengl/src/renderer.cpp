@@ -284,7 +284,6 @@ namespace gfx::gl
 
 		enable(feature::face_culling);
 		glFrontFace(GL_CCW);
-
 	}
 
 	void renderer::enable(feature feature) noexcept
