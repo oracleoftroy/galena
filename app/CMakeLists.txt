@@ -1,3 +1,6 @@
+include(CheckIPOSupported)
+check_ipo_supported(RESULT ltosupported OUTPUT error)
+
 add_executable(galena_app
 	"src/main.cpp"
 	"src/frame_metrics.hpp"
@@ -14,7 +17,12 @@ target_link_libraries(galena_app PRIVATE core gfx gfx-opengl ui)
 
 find_package(glm CONFIG REQUIRED)
 find_package(imgui CONFIG REQUIRED)
+
 target_link_libraries(galena_app PRIVATE glm imgui::imgui)
+
+if(ltosupported)
+	set_target_properties(galena_app PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)
+endif()
 
 add_custom_command(
 	TARGET galena_app POST_BUILD
