@@ -42,4 +42,4 @@ find_package(glm CONFIG REQUIRED)
 find_package(imgui CONFIG REQUIRED)
 find_package(SDL2 CONFIG REQUIRED)
 
-target_link_libraries(ui PRIVATE glm imgui::imgui SDL2::SDL2 SDL2::SDL2main)
+target_link_libraries(ui PUBLIC glm PRIVATE imgui::imgui SDL2::SDL2 SDL2::SDL2main)

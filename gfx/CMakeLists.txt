@@ -18,4 +18,4 @@ target_include_directories(gfx PUBLIC "include")
 target_link_libraries(gfx PRIVATE core)
 
 find_package(glm CONFIG REQUIRED)
-target_link_libraries(gfx PRIVATE glm)
+target_link_libraries(gfx PUBLIC glm)

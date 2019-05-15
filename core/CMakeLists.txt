@@ -12,4 +12,4 @@ add_library(core
 target_include_directories(core PUBLIC "include")
 
 find_package(spdlog CONFIG REQUIRED)
-target_link_libraries(core PRIVATE spdlog::spdlog)
+target_link_libraries(core PUBLIC spdlog::spdlog)
