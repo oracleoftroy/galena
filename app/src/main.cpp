@@ -1,15 +1,12 @@
 #include <ui/clock.hpp>
-#include <ui/config_opengl.hpp>
 #include <ui/keyboard.hpp>
 #include <ui/events.hpp>
 #include <ui/opengl_context.hpp>
 #include <ui/platform.hpp>
-#include <ui/window.hpp>
 #include <ui/imgui_system.hpp>
 
 #include <gfx/imgui_graphics.hpp>
 #include <gfx/renderer.hpp>
-#include <gfx/gl/opengl_renderer_core.hpp>
 
 #include <glm/gtc/type_ptr.hpp>
 
@@ -19,6 +16,7 @@
 
 #include <imgui.h>
 
+#include "opengl_backend.hpp"
 #include "test_app.hpp"
 
 using namespace std::chrono_literals;
@@ -120,15 +118,10 @@ int main(int argc, char* argv[])
 	//);
 	platform.attach_event_listener(dispatcher);
 
-	auto window = platform.create_window("Test window", 1280, 720, ui::window_mode::windowed, ui::gfx_engine::opengl);
-	auto window_size = window.size();
-	LOG_TRACE("window reports size of ({0}, {1})", window_size.x, window_size.y);
+	auto backend = app::opengl_backend::create(platform, "Test window", 1280, 720, ui::window_mode::windowed);
 
-	ui::config_opengl config{ui::opengl_profile::es, 3, 2};
-
-	auto opengl_context = window.opengl_create_context(config);
-	auto renderer = gfx::gl::create_opengl_renderer(opengl_context);
-	app::imgui imgui(opengl_context, renderer);
+	auto renderer = backend.create_renderer();
+	auto imgui = backend.create_imgui(renderer);
 
 	// consider removing this or moving the ini file, but for now, disable completely
 	ImGui::GetIO().IniFilename = nullptr;
@@ -139,7 +132,7 @@ int main(int argc, char* argv[])
 	glm::vec4 clear_color(0.384f, 0.761f, 0.984f, 1.0f);
 	renderer.set_clear_color(clear_color.r, clear_color.g, clear_color.b, clear_color.a);
 
-	auto size = opengl_context.drawable_size();
+	auto size = backend.drawable_size();
 
 	bool show_fps_overlay = true;
 	bool show_opengl_settings = true;
@@ -176,7 +169,7 @@ int main(int argc, char* argv[])
 			ImGui::Begin("OpenGL settings", &show_opengl_settings, ImGuiWindowFlags_AlwaysAutoResize);
 
 			if (ImGui::SliderInt("VSync control", &vsync_play, -4, 4))
-				LOG_INFO("Setting vsync: {}", opengl_context.set_swap_interval(vsync_play));
+				LOG_INFO("Setting vsync: {}", backend.get_context().set_swap_interval(vsync_play));
 
 			if (ImGui::ColorEdit3("Clear color", glm::value_ptr(clear_color)))
 				renderer.set_clear_color(clear_color.r, clear_color.g, clear_color.b, clear_color.a);
@@ -186,7 +179,7 @@ int main(int argc, char* argv[])
 
 		imgui.render();
 
-		opengl_context.present();
+		backend.present();
 	}
 
 	LOG_INFO("Exiting...");

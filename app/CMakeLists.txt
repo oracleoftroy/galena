@@ -9,6 +9,8 @@ add_executable(galena_app
 	"src/log.cpp"
 	"src/log.hpp"
 	"src/opengl_magic.cpp"
+	"src/opengl_backend.hpp"
+	"src/opengl_backend.cpp"
 	"src/test_app.cpp"
 	"src/test_app.hpp"
 )
