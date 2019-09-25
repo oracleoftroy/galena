@@ -19,7 +19,10 @@ namespace gfx
 
 namespace app
 {
+	template <typename>
 	class imgui;
+
+	using imgui_opengl = imgui<ui::opengl_context>;
 
 	class opengl_backend final
 	{
@@ -28,7 +31,7 @@ namespace app
 		opengl_backend() noexcept = default;
 
 		gfx::renderer create_renderer() noexcept;
-		imgui create_imgui(gfx::renderer &renderer) noexcept;
+		imgui_opengl create_imgui(gfx::renderer &renderer) noexcept;
 
 		glm::ivec2 drawable_size() const noexcept;
 		ui::opengl_context &get_context() noexcept;

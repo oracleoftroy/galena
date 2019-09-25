@@ -30,7 +30,7 @@ namespace app
 		return gfx::gl::create_opengl_renderer(context);
 	}
 
-	imgui opengl_backend::create_imgui(gfx::renderer &renderer) noexcept
+	imgui_opengl opengl_backend::create_imgui(gfx::renderer &renderer) noexcept
 	{
 		return app::imgui(context, renderer);
 	}

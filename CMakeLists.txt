@@ -57,5 +57,6 @@ add_subdirectory(core)
 add_subdirectory(ui)
 add_subdirectory(gfx)
 add_subdirectory(gfx-opengl)
+add_subdirectory(gfx-vulkan)
 
 add_subdirectory(benchmarks-opengl)

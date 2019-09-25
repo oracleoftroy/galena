@@ -7,6 +7,7 @@ namespace ui
 	class platform;
 	struct config_opengl;
 	class opengl_context;
+	class vulkan_context;
 
 	enum class window_mode
 	{
@@ -33,6 +34,7 @@ namespace ui
 		// on return, the config will have the actual configuration that was created
 		// which should be at least as good as the desired configuration
 		[[nodiscard]] opengl_context opengl_create_context(config_opengl &desired);
+		[[nodiscard]] vulkan_context vulkan_create_context();
 
 	public:
 		window(window &&other) noexcept;

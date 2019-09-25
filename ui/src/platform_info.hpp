@@ -10,5 +10,6 @@
 #define UI_PLATFORM_H "sdl/sdl_platform.hpp"
 //#define UI_WINDOW_H "sdl/sdl_window.hpp"
 #define UI_OPENGL_CONTEXT_H "sdl/sdl_opengl_context.hpp"
+#define UI_VULKAN_CONTEXT_H "sdl/sdl_vulkan_context.hpp"
 #define UI_IMGUI_SYSYEM_H "sdl/sdl_imgui_system.hpp"
 #endif

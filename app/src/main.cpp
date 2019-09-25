@@ -17,6 +17,8 @@
 #include <imgui.h>
 
 #include "opengl_backend.hpp"
+#include "vulkan_backend.hpp"
+
 #include "test_app.hpp"
 
 using namespace std::chrono_literals;

@@ -5,9 +5,10 @@
 
 namespace ui
 {
+	namespace imgui { class imgui_system; }
+
 	using opengl_load_proc = void *(*)(const char *);
 	class window;
-	namespace imgui { class imgui_system; }
 
 	class opengl_context final
 	{

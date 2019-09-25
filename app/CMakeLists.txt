@@ -4,7 +4,6 @@ check_ipo_supported(RESULT ltosupported OUTPUT error)
 add_executable(galena_app
 	"src/main.cpp"
 	"src/frame_metrics.hpp"
-	"src/imgui.cpp"
 	"src/imgui.hpp"
 	"src/log.cpp"
 	"src/log.hpp"
@@ -13,9 +12,11 @@ add_executable(galena_app
 	"src/opengl_backend.cpp"
 	"src/test_app.cpp"
 	"src/test_app.hpp"
+	"src/vulkan_backend.hpp"
+	"src/vulkan_backend.cpp"
 )
 
-target_link_libraries(galena_app PRIVATE core gfx gfx-opengl ui)
+target_link_libraries(galena_app PRIVATE core gfx gfx-opengl gfx-vulkan ui)
 
 find_package(glm CONFIG REQUIRED)
 find_package(imgui CONFIG REQUIRED)

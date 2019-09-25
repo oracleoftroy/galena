@@ -7,6 +7,7 @@
 
 #include "../log.hpp"
 #include "sdl_opengl_context.hpp"
+#include "sdl_vulkan_context.hpp"
 
 namespace ui::imgui
 {
@@ -30,7 +31,19 @@ namespace ui::imgui
 	}
 
 	imgui_system::imgui_system(const opengl_context &gl) noexcept
-		: context(nullptr), window(gl.data->window)
+		: imgui_system(gl.data->window)
+	{
+		ImGui_ImplSDL2_InitForOpenGL(gl.data->window, gl.data->context);
+	}
+
+	imgui_system::imgui_system(const vulkan_context &vk) noexcept
+		: imgui_system(vk.core->window)
+	{
+		ImGui_ImplSDL2_InitForVulkan(vk.core->window);
+	}
+
+	imgui_system::imgui_system(void *window) noexcept
+		: context(nullptr), window(window)
 	{
 		LOG_INFO("Initializing ImGui");
 
@@ -44,7 +57,6 @@ namespace ui::imgui
 		//ImGui::StyleColorsClassic();
 		//ImGui::StyleColorsLight();
 
-		ImGui_ImplSDL2_InitForOpenGL(gl.data->window, gl.data->context);
 		++imgui_wants_events;
 	}
 

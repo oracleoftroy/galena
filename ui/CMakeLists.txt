@@ -6,6 +6,7 @@ add_library(ui
 	"include/ui/keyboard.hpp"
 	"include/ui/opengl_context.hpp"
 	"include/ui/platform.hpp"
+	"include/ui/vulkan_context.hpp"
 	"include/ui/window.hpp"
 	"src/keyboard.cpp"
 	"src/log.cpp"
@@ -13,6 +14,7 @@ add_library(ui
 	"src/opengl_context.cpp"
 	"src/platform.cpp"
 	"src/platform_info.hpp"
+	"src/vulkan_context.cpp"
 	"src/window.cpp"
 
 	# TODO: add configure option for SDL platform
@@ -26,6 +28,8 @@ add_library(ui
 	"src/sdl/sdl_platform.cpp"
 	"src/sdl/sdl_platform.hpp"
 	"src/sdl/sdl_util.hpp"
+	"src/sdl/sdl_vulkan_context.cpp"
+	"src/sdl/sdl_vulkan_context.hpp"
 	"src/sdl/sdl_window.cpp"
 )
 

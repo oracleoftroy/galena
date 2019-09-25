@@ -4,10 +4,12 @@
 #include <SDL2/SDL.h>
 #include <ui/config_opengl.hpp>
 #include <ui/opengl_context.hpp>
+#include <ui/vulkan_context.hpp>
 
 #include "../log.hpp"
 #include "sdl_util.hpp"
 #include "sdl_opengl_context.hpp"
+#include "sdl_vulkan_context.hpp"
 
 #define WINDOW static_cast<SDL_Window*>(handle)
 
@@ -90,6 +92,11 @@ namespace ui
 		}
 
 		return {};
+	}
+
+	vulkan_context window::vulkan_create_context()
+	{
+		return vulkan_context{std::make_unique<vulkan_context::vulkan_context_core>(WINDOW)};
 	}
 
 	namespace

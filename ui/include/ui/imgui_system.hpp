@@ -4,6 +4,7 @@ namespace ui
 {
 	class platform;
 	class opengl_context;
+	class vulkan_context;
 }
 
 struct ImGuiContext;
@@ -15,6 +16,8 @@ namespace ui::imgui
 	{
 	public:
 		explicit imgui_system(const opengl_context &context) noexcept;
+		explicit imgui_system(const vulkan_context &context) noexcept;
+
 		~imgui_system();
 
 		void new_frame() noexcept;
@@ -26,7 +29,9 @@ namespace ui::imgui
 		imgui_system &operator=(const imgui_system &other) noexcept = delete;
 
 	private:
-		ImGuiContext *context;
-		void *window;
+		explicit imgui_system(void *window) noexcept;
+
+		ImGuiContext *context = nullptr;
+		void *window = nullptr;
 	};
 }
