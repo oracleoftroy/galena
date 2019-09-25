@@ -573,44 +573,41 @@ namespace ui
 
 #include <fmt/format.h>
 
-namespace fmt
+template <>
+struct fmt::formatter<ui::keys> : fmt::formatter<std::string_view>
 {
-	template <>
-	struct formatter<ui::keys>
+	template <typename ParseContext>
+	constexpr auto parse(ParseContext &ctx) { return ctx.begin(); }
+
+	template <typename FormatContext>
+	auto format(const ui::keys &value, FormatContext &ctx)
 	{
-		template <typename ParseContext>
-		constexpr auto parse(ParseContext &ctx) { return ctx.begin(); }
+		return fmt::formatter<std::string_view>::format(to_string(value), ctx);
+	}
+};
 
-		template <typename FormatContext>
-		auto format(const ui::keys &value, FormatContext &ctx)
-		{
-			return format_to(ctx.begin(), to_string(value));
-		}
-	};
+template <>
+struct fmt::formatter<ui::scancodes> : fmt::formatter<std::string_view>
+{
+	template <typename ParseContext>
+	constexpr auto parse(ParseContext &ctx) { return ctx.begin(); }
 
-	template <>
-	struct formatter<ui::scancodes>
+	template <typename FormatContext>
+	auto format(const ui::scancodes &value, FormatContext &ctx)
 	{
-		template <typename ParseContext>
-		constexpr auto parse(ParseContext &ctx) { return ctx.begin(); }
+		return fmt::formatter<std::string_view>::format(to_string(value), ctx);
+	}
+};
 
-		template <typename FormatContext>
-		auto format(const ui::scancodes &value, FormatContext &ctx)
-		{
-			return format_to(ctx.begin(), to_string(value));
-		}
-	};
+template <>
+struct fmt::formatter<ui::modifiers> : fmt::formatter<std::string>
+{
+	template <typename ParseContext>
+	constexpr auto parse(ParseContext &ctx) { return ctx.begin(); }
 
-	template <>
-	struct formatter<ui::modifiers>
+	template <typename FormatContext>
+	auto format(const ui::modifiers &value, FormatContext &ctx)
 	{
-		template <typename ParseContext>
-		constexpr auto parse(ParseContext &ctx) { return ctx.begin(); }
-
-		template <typename FormatContext>
-		auto format(const ui::modifiers &value, FormatContext &ctx)
-		{
-			return format_to(ctx.begin(), to_string(value));
-		}
-	};
-}
+		return fmt::formatter<std::string>::format(to_string(value), ctx);
+	}
+};

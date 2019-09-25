@@ -11,5 +11,6 @@ add_library(core
 
 target_include_directories(core PUBLIC "include")
 
+find_package(fmt CONFIG REQUIRED)
 find_package(spdlog CONFIG REQUIRED)
-target_link_libraries(core PUBLIC spdlog::spdlog)
+target_link_libraries(core PUBLIC fmt::fmt fmt::fmt-header-only spdlog::spdlog)

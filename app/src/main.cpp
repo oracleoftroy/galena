@@ -94,10 +94,10 @@ static void fps_overlay(bool *show)
 	ImGui::End();
 }
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
 	LOG_INFO("Initializing...");
-	LOG_DEBUG("args: {0}", fmt::join(argv, argv + argc, " "));
+	LOG_DEBUG("args: {0}", fmt::join(const_cast<const char**>(argv), const_cast<const char**>(argv) + argc, " "));
 
 	auto platform = ui::platform::create();
 
