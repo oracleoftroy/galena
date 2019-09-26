@@ -1,7 +1,18 @@
 #include <ui/window.hpp>
 
 #include <type_traits>
+
+#if defined __clang__
+#	pragma GCC diagnostic push
+#	pragma GCC diagnostic ignored "-Wpragma-pack"
+#endif
+
 #include <SDL2/SDL.h>
+
+#if defined __clang__
+#	pragma GCC diagnostic pop
+#endif
+
 #include <ui/config_opengl.hpp>
 #include <ui/opengl_context.hpp>
 #include <ui/vulkan_context.hpp>

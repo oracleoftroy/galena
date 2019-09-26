@@ -1,6 +1,15 @@
 #include "sdl_vulkan_context.hpp"
 
-#include <SDL2/SDL_Vulkan.h>
+#if defined __clang__
+#	pragma GCC diagnostic push
+#	pragma GCC diagnostic ignored "-Wpragma-pack"
+#endif
+
+#include <SDL2/SDL_vulkan.h>
+
+#if defined __clang__
+#	pragma GCC diagnostic pop
+#endif
 
 #include "../log.hpp"
 #include "sdl_util.hpp"
@@ -39,6 +48,6 @@ namespace ui
 
 	PFN_vkGetInstanceProcAddr vulkan_context::vulkan_context_core::get_load_function() noexcept
 	{
-		return static_cast<PFN_vkGetInstanceProcAddr>(SDL_Vulkan_GetVkGetInstanceProcAddr());
+		return reinterpret_cast<PFN_vkGetInstanceProcAddr>(SDL_Vulkan_GetVkGetInstanceProcAddr());
 	}
 }

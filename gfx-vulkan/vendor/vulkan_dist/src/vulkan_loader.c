@@ -1,13 +1,6 @@
 #include <vulkan/vulkan.h>
 #include <assert.h>
 
-#if defined(_MSC_VER)
-// disable warning: 'void' function returning a value
-// Wrapper functions return whatever their function pointer returns, and the types should always match.
-// MSC warns on void f() { return p_f(); } where p_f() is also returning void
-#pragma warning(disable: 4098)
-#endif
-
 #if VK_HEADER_VERSION != 123
 	#error "Vulkan header version does not match"
 #endif
@@ -29,7 +22,7 @@ static PFN_vkDestroyInstance pfn_vkDestroyInstance;
 VKAPI_ATTR void vkDestroyInstance(VkInstance instance, const VkAllocationCallbacks * pAllocator)
 {
 	assert(pfn_vkDestroyInstance);
-	return pfn_vkDestroyInstance(instance, pAllocator);
+	pfn_vkDestroyInstance(instance, pAllocator);
 }
 
 static PFN_vkEnumeratePhysicalDevices pfn_vkEnumeratePhysicalDevices;
@@ -43,14 +36,14 @@ static PFN_vkGetPhysicalDeviceFeatures pfn_vkGetPhysicalDeviceFeatures;
 VKAPI_ATTR void vkGetPhysicalDeviceFeatures(VkPhysicalDevice physicalDevice, VkPhysicalDeviceFeatures * pFeatures)
 {
 	assert(pfn_vkGetPhysicalDeviceFeatures);
-	return pfn_vkGetPhysicalDeviceFeatures(physicalDevice, pFeatures);
+	pfn_vkGetPhysicalDeviceFeatures(physicalDevice, pFeatures);
 }
 
 static PFN_vkGetPhysicalDeviceFormatProperties pfn_vkGetPhysicalDeviceFormatProperties;
 VKAPI_ATTR void vkGetPhysicalDeviceFormatProperties(VkPhysicalDevice physicalDevice, VkFormat format, VkFormatProperties * pFormatProperties)
 {
 	assert(pfn_vkGetPhysicalDeviceFormatProperties);
-	return pfn_vkGetPhysicalDeviceFormatProperties(physicalDevice, format, pFormatProperties);
+	pfn_vkGetPhysicalDeviceFormatProperties(physicalDevice, format, pFormatProperties);
 }
 
 static PFN_vkGetPhysicalDeviceImageFormatProperties pfn_vkGetPhysicalDeviceImageFormatProperties;
@@ -64,21 +57,21 @@ static PFN_vkGetPhysicalDeviceProperties pfn_vkGetPhysicalDeviceProperties;
 VKAPI_ATTR void vkGetPhysicalDeviceProperties(VkPhysicalDevice physicalDevice, VkPhysicalDeviceProperties * pProperties)
 {
 	assert(pfn_vkGetPhysicalDeviceProperties);
-	return pfn_vkGetPhysicalDeviceProperties(physicalDevice, pProperties);
+	pfn_vkGetPhysicalDeviceProperties(physicalDevice, pProperties);
 }
 
 static PFN_vkGetPhysicalDeviceQueueFamilyProperties pfn_vkGetPhysicalDeviceQueueFamilyProperties;
 VKAPI_ATTR void vkGetPhysicalDeviceQueueFamilyProperties(VkPhysicalDevice physicalDevice, uint32_t * pQueueFamilyPropertyCount, VkQueueFamilyProperties * pQueueFamilyProperties)
 {
 	assert(pfn_vkGetPhysicalDeviceQueueFamilyProperties);
-	return pfn_vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties);
+	pfn_vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties);
 }
 
 static PFN_vkGetPhysicalDeviceMemoryProperties pfn_vkGetPhysicalDeviceMemoryProperties;
 VKAPI_ATTR void vkGetPhysicalDeviceMemoryProperties(VkPhysicalDevice physicalDevice, VkPhysicalDeviceMemoryProperties * pMemoryProperties)
 {
 	assert(pfn_vkGetPhysicalDeviceMemoryProperties);
-	return pfn_vkGetPhysicalDeviceMemoryProperties(physicalDevice, pMemoryProperties);
+	pfn_vkGetPhysicalDeviceMemoryProperties(physicalDevice, pMemoryProperties);
 }
 
 static PFN_vkGetInstanceProcAddr pfn_vkGetInstanceProcAddr;
@@ -108,7 +101,7 @@ static PFN_vkDestroyDevice pfn_vkDestroyDevice;
 VKAPI_ATTR void vkDestroyDevice(VkDevice device, const VkAllocationCallbacks * pAllocator)
 {
 	assert(pfn_vkDestroyDevice);
-	return pfn_vkDestroyDevice(device, pAllocator);
+	pfn_vkDestroyDevice(device, pAllocator);
 }
 
 // Extension discovery commands
@@ -149,7 +142,7 @@ static PFN_vkGetDeviceQueue pfn_vkGetDeviceQueue;
 VKAPI_ATTR void vkGetDeviceQueue(VkDevice device, uint32_t queueFamilyIndex, uint32_t queueIndex, VkQueue * pQueue)
 {
 	assert(pfn_vkGetDeviceQueue);
-	return pfn_vkGetDeviceQueue(device, queueFamilyIndex, queueIndex, pQueue);
+	pfn_vkGetDeviceQueue(device, queueFamilyIndex, queueIndex, pQueue);
 }
 
 static PFN_vkQueueSubmit pfn_vkQueueSubmit;
@@ -186,7 +179,7 @@ static PFN_vkFreeMemory pfn_vkFreeMemory;
 VKAPI_ATTR void vkFreeMemory(VkDevice device, VkDeviceMemory memory, const VkAllocationCallbacks * pAllocator)
 {
 	assert(pfn_vkFreeMemory);
-	return pfn_vkFreeMemory(device, memory, pAllocator);
+	pfn_vkFreeMemory(device, memory, pAllocator);
 }
 
 static PFN_vkMapMemory pfn_vkMapMemory;
@@ -200,7 +193,7 @@ static PFN_vkUnmapMemory pfn_vkUnmapMemory;
 VKAPI_ATTR void vkUnmapMemory(VkDevice device, VkDeviceMemory memory)
 {
 	assert(pfn_vkUnmapMemory);
-	return pfn_vkUnmapMemory(device, memory);
+	pfn_vkUnmapMemory(device, memory);
 }
 
 static PFN_vkFlushMappedMemoryRanges pfn_vkFlushMappedMemoryRanges;
@@ -221,7 +214,7 @@ static PFN_vkGetDeviceMemoryCommitment pfn_vkGetDeviceMemoryCommitment;
 VKAPI_ATTR void vkGetDeviceMemoryCommitment(VkDevice device, VkDeviceMemory memory, VkDeviceSize * pCommittedMemoryInBytes)
 {
 	assert(pfn_vkGetDeviceMemoryCommitment);
-	return pfn_vkGetDeviceMemoryCommitment(device, memory, pCommittedMemoryInBytes);
+	pfn_vkGetDeviceMemoryCommitment(device, memory, pCommittedMemoryInBytes);
 }
 
 // Memory management API commands
@@ -244,14 +237,14 @@ static PFN_vkGetBufferMemoryRequirements pfn_vkGetBufferMemoryRequirements;
 VKAPI_ATTR void vkGetBufferMemoryRequirements(VkDevice device, VkBuffer buffer, VkMemoryRequirements * pMemoryRequirements)
 {
 	assert(pfn_vkGetBufferMemoryRequirements);
-	return pfn_vkGetBufferMemoryRequirements(device, buffer, pMemoryRequirements);
+	pfn_vkGetBufferMemoryRequirements(device, buffer, pMemoryRequirements);
 }
 
 static PFN_vkGetImageMemoryRequirements pfn_vkGetImageMemoryRequirements;
 VKAPI_ATTR void vkGetImageMemoryRequirements(VkDevice device, VkImage image, VkMemoryRequirements * pMemoryRequirements)
 {
 	assert(pfn_vkGetImageMemoryRequirements);
-	return pfn_vkGetImageMemoryRequirements(device, image, pMemoryRequirements);
+	pfn_vkGetImageMemoryRequirements(device, image, pMemoryRequirements);
 }
 
 // Sparse resource memory management API commands
@@ -260,14 +253,14 @@ static PFN_vkGetImageSparseMemoryRequirements pfn_vkGetImageSparseMemoryRequirem
 VKAPI_ATTR void vkGetImageSparseMemoryRequirements(VkDevice device, VkImage image, uint32_t * pSparseMemoryRequirementCount, VkSparseImageMemoryRequirements * pSparseMemoryRequirements)
 {
 	assert(pfn_vkGetImageSparseMemoryRequirements);
-	return pfn_vkGetImageSparseMemoryRequirements(device, image, pSparseMemoryRequirementCount, pSparseMemoryRequirements);
+	pfn_vkGetImageSparseMemoryRequirements(device, image, pSparseMemoryRequirementCount, pSparseMemoryRequirements);
 }
 
 static PFN_vkGetPhysicalDeviceSparseImageFormatProperties pfn_vkGetPhysicalDeviceSparseImageFormatProperties;
 VKAPI_ATTR void vkGetPhysicalDeviceSparseImageFormatProperties(VkPhysicalDevice physicalDevice, VkFormat format, VkImageType type, VkSampleCountFlagBits samples, VkImageUsageFlags usage, VkImageTiling tiling, uint32_t * pPropertyCount, VkSparseImageFormatProperties * pProperties)
 {
 	assert(pfn_vkGetPhysicalDeviceSparseImageFormatProperties);
-	return pfn_vkGetPhysicalDeviceSparseImageFormatProperties(physicalDevice, format, type, samples, usage, tiling, pPropertyCount, pProperties);
+	pfn_vkGetPhysicalDeviceSparseImageFormatProperties(physicalDevice, format, type, samples, usage, tiling, pPropertyCount, pProperties);
 }
 
 static PFN_vkQueueBindSparse pfn_vkQueueBindSparse;
@@ -290,7 +283,7 @@ static PFN_vkDestroyFence pfn_vkDestroyFence;
 VKAPI_ATTR void vkDestroyFence(VkDevice device, VkFence fence, const VkAllocationCallbacks * pAllocator)
 {
 	assert(pfn_vkDestroyFence);
-	return pfn_vkDestroyFence(device, fence, pAllocator);
+	pfn_vkDestroyFence(device, fence, pAllocator);
 }
 
 static PFN_vkResetFences pfn_vkResetFences;
@@ -327,7 +320,7 @@ static PFN_vkDestroySemaphore pfn_vkDestroySemaphore;
 VKAPI_ATTR void vkDestroySemaphore(VkDevice device, VkSemaphore semaphore, const VkAllocationCallbacks * pAllocator)
 {
 	assert(pfn_vkDestroySemaphore);
-	return pfn_vkDestroySemaphore(device, semaphore, pAllocator);
+	pfn_vkDestroySemaphore(device, semaphore, pAllocator);
 }
 
 // Event commands
@@ -343,7 +336,7 @@ static PFN_vkDestroyEvent pfn_vkDestroyEvent;
 VKAPI_ATTR void vkDestroyEvent(VkDevice device, VkEvent event, const VkAllocationCallbacks * pAllocator)
 {
 	assert(pfn_vkDestroyEvent);
-	return pfn_vkDestroyEvent(device, event, pAllocator);
+	pfn_vkDestroyEvent(device, event, pAllocator);
 }
 
 static PFN_vkGetEventStatus pfn_vkGetEventStatus;
@@ -380,7 +373,7 @@ static PFN_vkDestroyQueryPool pfn_vkDestroyQueryPool;
 VKAPI_ATTR void vkDestroyQueryPool(VkDevice device, VkQueryPool queryPool, const VkAllocationCallbacks * pAllocator)
 {
 	assert(pfn_vkDestroyQueryPool);
-	return pfn_vkDestroyQueryPool(device, queryPool, pAllocator);
+	pfn_vkDestroyQueryPool(device, queryPool, pAllocator);
 }
 
 static PFN_vkGetQueryPoolResults pfn_vkGetQueryPoolResults;
@@ -403,7 +396,7 @@ static PFN_vkDestroyBuffer pfn_vkDestroyBuffer;
 VKAPI_ATTR void vkDestroyBuffer(VkDevice device, VkBuffer buffer, const VkAllocationCallbacks * pAllocator)
 {
 	assert(pfn_vkDestroyBuffer);
-	return pfn_vkDestroyBuffer(device, buffer, pAllocator);
+	pfn_vkDestroyBuffer(device, buffer, pAllocator);
 }
 
 // Buffer view commands
@@ -419,7 +412,7 @@ static PFN_vkDestroyBufferView pfn_vkDestroyBufferView;
 VKAPI_ATTR void vkDestroyBufferView(VkDevice device, VkBufferView bufferView, const VkAllocationCallbacks * pAllocator)
 {
 	assert(pfn_vkDestroyBufferView);
-	return pfn_vkDestroyBufferView(device, bufferView, pAllocator);
+	pfn_vkDestroyBufferView(device, bufferView, pAllocator);
 }
 
 // Image commands
@@ -435,14 +428,14 @@ static PFN_vkDestroyImage pfn_vkDestroyImage;
 VKAPI_ATTR void vkDestroyImage(VkDevice device, VkImage image, const VkAllocationCallbacks * pAllocator)
 {
 	assert(pfn_vkDestroyImage);
-	return pfn_vkDestroyImage(device, image, pAllocator);
+	pfn_vkDestroyImage(device, image, pAllocator);
 }
 
 static PFN_vkGetImageSubresourceLayout pfn_vkGetImageSubresourceLayout;
 VKAPI_ATTR void vkGetImageSubresourceLayout(VkDevice device, VkImage image, const VkImageSubresource * pSubresource, VkSubresourceLayout * pLayout)
 {
 	assert(pfn_vkGetImageSubresourceLayout);
-	return pfn_vkGetImageSubresourceLayout(device, image, pSubresource, pLayout);
+	pfn_vkGetImageSubresourceLayout(device, image, pSubresource, pLayout);
 }
 
 // Image view commands
@@ -458,7 +451,7 @@ static PFN_vkDestroyImageView pfn_vkDestroyImageView;
 VKAPI_ATTR void vkDestroyImageView(VkDevice device, VkImageView imageView, const VkAllocationCallbacks * pAllocator)
 {
 	assert(pfn_vkDestroyImageView);
-	return pfn_vkDestroyImageView(device, imageView, pAllocator);
+	pfn_vkDestroyImageView(device, imageView, pAllocator);
 }
 
 // Shader commands
@@ -474,7 +467,7 @@ static PFN_vkDestroyShaderModule pfn_vkDestroyShaderModule;
 VKAPI_ATTR void vkDestroyShaderModule(VkDevice device, VkShaderModule shaderModule, const VkAllocationCallbacks * pAllocator)
 {
 	assert(pfn_vkDestroyShaderModule);
-	return pfn_vkDestroyShaderModule(device, shaderModule, pAllocator);
+	pfn_vkDestroyShaderModule(device, shaderModule, pAllocator);
 }
 
 // Pipeline Cache commands
@@ -490,7 +483,7 @@ static PFN_vkDestroyPipelineCache pfn_vkDestroyPipelineCache;
 VKAPI_ATTR void vkDestroyPipelineCache(VkDevice device, VkPipelineCache pipelineCache, const VkAllocationCallbacks * pAllocator)
 {
 	assert(pfn_vkDestroyPipelineCache);
-	return pfn_vkDestroyPipelineCache(device, pipelineCache, pAllocator);
+	pfn_vkDestroyPipelineCache(device, pipelineCache, pAllocator);
 }
 
 static PFN_vkGetPipelineCacheData pfn_vkGetPipelineCacheData;
@@ -527,7 +520,7 @@ static PFN_vkDestroyPipeline pfn_vkDestroyPipeline;
 VKAPI_ATTR void vkDestroyPipeline(VkDevice device, VkPipeline pipeline, const VkAllocationCallbacks * pAllocator)
 {
 	assert(pfn_vkDestroyPipeline);
-	return pfn_vkDestroyPipeline(device, pipeline, pAllocator);
+	pfn_vkDestroyPipeline(device, pipeline, pAllocator);
 }
 
 // Pipeline layout commands
@@ -543,7 +536,7 @@ static PFN_vkDestroyPipelineLayout pfn_vkDestroyPipelineLayout;
 VKAPI_ATTR void vkDestroyPipelineLayout(VkDevice device, VkPipelineLayout pipelineLayout, const VkAllocationCallbacks * pAllocator)
 {
 	assert(pfn_vkDestroyPipelineLayout);
-	return pfn_vkDestroyPipelineLayout(device, pipelineLayout, pAllocator);
+	pfn_vkDestroyPipelineLayout(device, pipelineLayout, pAllocator);
 }
 
 // Sampler commands
@@ -559,7 +552,7 @@ static PFN_vkDestroySampler pfn_vkDestroySampler;
 VKAPI_ATTR void vkDestroySampler(VkDevice device, VkSampler sampler, const VkAllocationCallbacks * pAllocator)
 {
 	assert(pfn_vkDestroySampler);
-	return pfn_vkDestroySampler(device, sampler, pAllocator);
+	pfn_vkDestroySampler(device, sampler, pAllocator);
 }
 
 // Descriptor set commands
@@ -575,7 +568,7 @@ static PFN_vkDestroyDescriptorSetLayout pfn_vkDestroyDescriptorSetLayout;
 VKAPI_ATTR void vkDestroyDescriptorSetLayout(VkDevice device, VkDescriptorSetLayout descriptorSetLayout, const VkAllocationCallbacks * pAllocator)
 {
 	assert(pfn_vkDestroyDescriptorSetLayout);
-	return pfn_vkDestroyDescriptorSetLayout(device, descriptorSetLayout, pAllocator);
+	pfn_vkDestroyDescriptorSetLayout(device, descriptorSetLayout, pAllocator);
 }
 
 static PFN_vkCreateDescriptorPool pfn_vkCreateDescriptorPool;
@@ -589,7 +582,7 @@ static PFN_vkDestroyDescriptorPool pfn_vkDestroyDescriptorPool;
 VKAPI_ATTR void vkDestroyDescriptorPool(VkDevice device, VkDescriptorPool descriptorPool, const VkAllocationCallbacks * pAllocator)
 {
 	assert(pfn_vkDestroyDescriptorPool);
-	return pfn_vkDestroyDescriptorPool(device, descriptorPool, pAllocator);
+	pfn_vkDestroyDescriptorPool(device, descriptorPool, pAllocator);
 }
 
 static PFN_vkResetDescriptorPool pfn_vkResetDescriptorPool;
@@ -617,7 +610,7 @@ static PFN_vkUpdateDescriptorSets pfn_vkUpdateDescriptorSets;
 VKAPI_ATTR void vkUpdateDescriptorSets(VkDevice device, uint32_t descriptorWriteCount, const VkWriteDescriptorSet * pDescriptorWrites, uint32_t descriptorCopyCount, const VkCopyDescriptorSet * pDescriptorCopies)
 {
 	assert(pfn_vkUpdateDescriptorSets);
-	return pfn_vkUpdateDescriptorSets(device, descriptorWriteCount, pDescriptorWrites, descriptorCopyCount, pDescriptorCopies);
+	pfn_vkUpdateDescriptorSets(device, descriptorWriteCount, pDescriptorWrites, descriptorCopyCount, pDescriptorCopies);
 }
 
 // Pass commands
@@ -633,7 +626,7 @@ static PFN_vkDestroyFramebuffer pfn_vkDestroyFramebuffer;
 VKAPI_ATTR void vkDestroyFramebuffer(VkDevice device, VkFramebuffer framebuffer, const VkAllocationCallbacks * pAllocator)
 {
 	assert(pfn_vkDestroyFramebuffer);
-	return pfn_vkDestroyFramebuffer(device, framebuffer, pAllocator);
+	pfn_vkDestroyFramebuffer(device, framebuffer, pAllocator);
 }
 
 static PFN_vkCreateRenderPass pfn_vkCreateRenderPass;
@@ -647,14 +640,14 @@ static PFN_vkDestroyRenderPass pfn_vkDestroyRenderPass;
 VKAPI_ATTR void vkDestroyRenderPass(VkDevice device, VkRenderPass renderPass, const VkAllocationCallbacks * pAllocator)
 {
 	assert(pfn_vkDestroyRenderPass);
-	return pfn_vkDestroyRenderPass(device, renderPass, pAllocator);
+	pfn_vkDestroyRenderPass(device, renderPass, pAllocator);
 }
 
 static PFN_vkGetRenderAreaGranularity pfn_vkGetRenderAreaGranularity;
 VKAPI_ATTR void vkGetRenderAreaGranularity(VkDevice device, VkRenderPass renderPass, VkExtent2D * pGranularity)
 {
 	assert(pfn_vkGetRenderAreaGranularity);
-	return pfn_vkGetRenderAreaGranularity(device, renderPass, pGranularity);
+	pfn_vkGetRenderAreaGranularity(device, renderPass, pGranularity);
 }
 
 // Command pool commands
@@ -670,7 +663,7 @@ static PFN_vkDestroyCommandPool pfn_vkDestroyCommandPool;
 VKAPI_ATTR void vkDestroyCommandPool(VkDevice device, VkCommandPool commandPool, const VkAllocationCallbacks * pAllocator)
 {
 	assert(pfn_vkDestroyCommandPool);
-	return pfn_vkDestroyCommandPool(device, commandPool, pAllocator);
+	pfn_vkDestroyCommandPool(device, commandPool, pAllocator);
 }
 
 static PFN_vkResetCommandPool pfn_vkResetCommandPool;
@@ -693,7 +686,7 @@ static PFN_vkFreeCommandBuffers pfn_vkFreeCommandBuffers;
 VKAPI_ATTR void vkFreeCommandBuffers(VkDevice device, VkCommandPool commandPool, uint32_t commandBufferCount, const VkCommandBuffer * pCommandBuffers)
 {
 	assert(pfn_vkFreeCommandBuffers);
-	return pfn_vkFreeCommandBuffers(device, commandPool, commandBufferCount, pCommandBuffers);
+	pfn_vkFreeCommandBuffers(device, commandPool, commandBufferCount, pCommandBuffers);
 }
 
 static PFN_vkBeginCommandBuffer pfn_vkBeginCommandBuffer;
@@ -723,175 +716,175 @@ static PFN_vkCmdBindPipeline pfn_vkCmdBindPipeline;
 VKAPI_ATTR void vkCmdBindPipeline(VkCommandBuffer commandBuffer, VkPipelineBindPoint pipelineBindPoint, VkPipeline pipeline)
 {
 	assert(pfn_vkCmdBindPipeline);
-	return pfn_vkCmdBindPipeline(commandBuffer, pipelineBindPoint, pipeline);
+	pfn_vkCmdBindPipeline(commandBuffer, pipelineBindPoint, pipeline);
 }
 
 static PFN_vkCmdSetViewport pfn_vkCmdSetViewport;
 VKAPI_ATTR void vkCmdSetViewport(VkCommandBuffer commandBuffer, uint32_t firstViewport, uint32_t viewportCount, const VkViewport * pViewports)
 {
 	assert(pfn_vkCmdSetViewport);
-	return pfn_vkCmdSetViewport(commandBuffer, firstViewport, viewportCount, pViewports);
+	pfn_vkCmdSetViewport(commandBuffer, firstViewport, viewportCount, pViewports);
 }
 
 static PFN_vkCmdSetScissor pfn_vkCmdSetScissor;
 VKAPI_ATTR void vkCmdSetScissor(VkCommandBuffer commandBuffer, uint32_t firstScissor, uint32_t scissorCount, const VkRect2D * pScissors)
 {
 	assert(pfn_vkCmdSetScissor);
-	return pfn_vkCmdSetScissor(commandBuffer, firstScissor, scissorCount, pScissors);
+	pfn_vkCmdSetScissor(commandBuffer, firstScissor, scissorCount, pScissors);
 }
 
 static PFN_vkCmdSetLineWidth pfn_vkCmdSetLineWidth;
 VKAPI_ATTR void vkCmdSetLineWidth(VkCommandBuffer commandBuffer, float lineWidth)
 {
 	assert(pfn_vkCmdSetLineWidth);
-	return pfn_vkCmdSetLineWidth(commandBuffer, lineWidth);
+	pfn_vkCmdSetLineWidth(commandBuffer, lineWidth);
 }
 
 static PFN_vkCmdSetDepthBias pfn_vkCmdSetDepthBias;
 VKAPI_ATTR void vkCmdSetDepthBias(VkCommandBuffer commandBuffer, float depthBiasConstantFactor, float depthBiasClamp, float depthBiasSlopeFactor)
 {
 	assert(pfn_vkCmdSetDepthBias);
-	return pfn_vkCmdSetDepthBias(commandBuffer, depthBiasConstantFactor, depthBiasClamp, depthBiasSlopeFactor);
+	pfn_vkCmdSetDepthBias(commandBuffer, depthBiasConstantFactor, depthBiasClamp, depthBiasSlopeFactor);
 }
 
 static PFN_vkCmdSetBlendConstants pfn_vkCmdSetBlendConstants;
 VKAPI_ATTR void vkCmdSetBlendConstants(VkCommandBuffer commandBuffer, const float blendConstants [4])
 {
 	assert(pfn_vkCmdSetBlendConstants);
-	return pfn_vkCmdSetBlendConstants(commandBuffer, blendConstants);
+	pfn_vkCmdSetBlendConstants(commandBuffer, blendConstants);
 }
 
 static PFN_vkCmdSetDepthBounds pfn_vkCmdSetDepthBounds;
 VKAPI_ATTR void vkCmdSetDepthBounds(VkCommandBuffer commandBuffer, float minDepthBounds, float maxDepthBounds)
 {
 	assert(pfn_vkCmdSetDepthBounds);
-	return pfn_vkCmdSetDepthBounds(commandBuffer, minDepthBounds, maxDepthBounds);
+	pfn_vkCmdSetDepthBounds(commandBuffer, minDepthBounds, maxDepthBounds);
 }
 
 static PFN_vkCmdSetStencilCompareMask pfn_vkCmdSetStencilCompareMask;
 VKAPI_ATTR void vkCmdSetStencilCompareMask(VkCommandBuffer commandBuffer, VkStencilFaceFlags faceMask, uint32_t compareMask)
 {
 	assert(pfn_vkCmdSetStencilCompareMask);
-	return pfn_vkCmdSetStencilCompareMask(commandBuffer, faceMask, compareMask);
+	pfn_vkCmdSetStencilCompareMask(commandBuffer, faceMask, compareMask);
 }
 
 static PFN_vkCmdSetStencilWriteMask pfn_vkCmdSetStencilWriteMask;
 VKAPI_ATTR void vkCmdSetStencilWriteMask(VkCommandBuffer commandBuffer, VkStencilFaceFlags faceMask, uint32_t writeMask)
 {
 	assert(pfn_vkCmdSetStencilWriteMask);
-	return pfn_vkCmdSetStencilWriteMask(commandBuffer, faceMask, writeMask);
+	pfn_vkCmdSetStencilWriteMask(commandBuffer, faceMask, writeMask);
 }
 
 static PFN_vkCmdSetStencilReference pfn_vkCmdSetStencilReference;
 VKAPI_ATTR void vkCmdSetStencilReference(VkCommandBuffer commandBuffer, VkStencilFaceFlags faceMask, uint32_t reference)
 {
 	assert(pfn_vkCmdSetStencilReference);
-	return pfn_vkCmdSetStencilReference(commandBuffer, faceMask, reference);
+	pfn_vkCmdSetStencilReference(commandBuffer, faceMask, reference);
 }
 
 static PFN_vkCmdBindDescriptorSets pfn_vkCmdBindDescriptorSets;
 VKAPI_ATTR void vkCmdBindDescriptorSets(VkCommandBuffer commandBuffer, VkPipelineBindPoint pipelineBindPoint, VkPipelineLayout layout, uint32_t firstSet, uint32_t descriptorSetCount, const VkDescriptorSet * pDescriptorSets, uint32_t dynamicOffsetCount, const uint32_t * pDynamicOffsets)
 {
 	assert(pfn_vkCmdBindDescriptorSets);
-	return pfn_vkCmdBindDescriptorSets(commandBuffer, pipelineBindPoint, layout, firstSet, descriptorSetCount, pDescriptorSets, dynamicOffsetCount, pDynamicOffsets);
+	pfn_vkCmdBindDescriptorSets(commandBuffer, pipelineBindPoint, layout, firstSet, descriptorSetCount, pDescriptorSets, dynamicOffsetCount, pDynamicOffsets);
 }
 
 static PFN_vkCmdBindIndexBuffer pfn_vkCmdBindIndexBuffer;
 VKAPI_ATTR void vkCmdBindIndexBuffer(VkCommandBuffer commandBuffer, VkBuffer buffer, VkDeviceSize offset, VkIndexType indexType)
 {
 	assert(pfn_vkCmdBindIndexBuffer);
-	return pfn_vkCmdBindIndexBuffer(commandBuffer, buffer, offset, indexType);
+	pfn_vkCmdBindIndexBuffer(commandBuffer, buffer, offset, indexType);
 }
 
 static PFN_vkCmdBindVertexBuffers pfn_vkCmdBindVertexBuffers;
 VKAPI_ATTR void vkCmdBindVertexBuffers(VkCommandBuffer commandBuffer, uint32_t firstBinding, uint32_t bindingCount, const VkBuffer * pBuffers, const VkDeviceSize * pOffsets)
 {
 	assert(pfn_vkCmdBindVertexBuffers);
-	return pfn_vkCmdBindVertexBuffers(commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets);
+	pfn_vkCmdBindVertexBuffers(commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets);
 }
 
 static PFN_vkCmdDraw pfn_vkCmdDraw;
 VKAPI_ATTR void vkCmdDraw(VkCommandBuffer commandBuffer, uint32_t vertexCount, uint32_t instanceCount, uint32_t firstVertex, uint32_t firstInstance)
 {
 	assert(pfn_vkCmdDraw);
-	return pfn_vkCmdDraw(commandBuffer, vertexCount, instanceCount, firstVertex, firstInstance);
+	pfn_vkCmdDraw(commandBuffer, vertexCount, instanceCount, firstVertex, firstInstance);
 }
 
 static PFN_vkCmdDrawIndexed pfn_vkCmdDrawIndexed;
 VKAPI_ATTR void vkCmdDrawIndexed(VkCommandBuffer commandBuffer, uint32_t indexCount, uint32_t instanceCount, uint32_t firstIndex, int32_t vertexOffset, uint32_t firstInstance)
 {
 	assert(pfn_vkCmdDrawIndexed);
-	return pfn_vkCmdDrawIndexed(commandBuffer, indexCount, instanceCount, firstIndex, vertexOffset, firstInstance);
+	pfn_vkCmdDrawIndexed(commandBuffer, indexCount, instanceCount, firstIndex, vertexOffset, firstInstance);
 }
 
 static PFN_vkCmdDrawIndirect pfn_vkCmdDrawIndirect;
 VKAPI_ATTR void vkCmdDrawIndirect(VkCommandBuffer commandBuffer, VkBuffer buffer, VkDeviceSize offset, uint32_t drawCount, uint32_t stride)
 {
 	assert(pfn_vkCmdDrawIndirect);
-	return pfn_vkCmdDrawIndirect(commandBuffer, buffer, offset, drawCount, stride);
+	pfn_vkCmdDrawIndirect(commandBuffer, buffer, offset, drawCount, stride);
 }
 
 static PFN_vkCmdDrawIndexedIndirect pfn_vkCmdDrawIndexedIndirect;
 VKAPI_ATTR void vkCmdDrawIndexedIndirect(VkCommandBuffer commandBuffer, VkBuffer buffer, VkDeviceSize offset, uint32_t drawCount, uint32_t stride)
 {
 	assert(pfn_vkCmdDrawIndexedIndirect);
-	return pfn_vkCmdDrawIndexedIndirect(commandBuffer, buffer, offset, drawCount, stride);
+	pfn_vkCmdDrawIndexedIndirect(commandBuffer, buffer, offset, drawCount, stride);
 }
 
 static PFN_vkCmdDispatch pfn_vkCmdDispatch;
 VKAPI_ATTR void vkCmdDispatch(VkCommandBuffer commandBuffer, uint32_t groupCountX, uint32_t groupCountY, uint32_t groupCountZ)
 {
 	assert(pfn_vkCmdDispatch);
-	return pfn_vkCmdDispatch(commandBuffer, groupCountX, groupCountY, groupCountZ);
+	pfn_vkCmdDispatch(commandBuffer, groupCountX, groupCountY, groupCountZ);
 }
 
 static PFN_vkCmdDispatchIndirect pfn_vkCmdDispatchIndirect;
 VKAPI_ATTR void vkCmdDispatchIndirect(VkCommandBuffer commandBuffer, VkBuffer buffer, VkDeviceSize offset)
 {
 	assert(pfn_vkCmdDispatchIndirect);
-	return pfn_vkCmdDispatchIndirect(commandBuffer, buffer, offset);
+	pfn_vkCmdDispatchIndirect(commandBuffer, buffer, offset);
 }
 
 static PFN_vkCmdCopyBuffer pfn_vkCmdCopyBuffer;
 VKAPI_ATTR void vkCmdCopyBuffer(VkCommandBuffer commandBuffer, VkBuffer srcBuffer, VkBuffer dstBuffer, uint32_t regionCount, const VkBufferCopy * pRegions)
 {
 	assert(pfn_vkCmdCopyBuffer);
-	return pfn_vkCmdCopyBuffer(commandBuffer, srcBuffer, dstBuffer, regionCount, pRegions);
+	pfn_vkCmdCopyBuffer(commandBuffer, srcBuffer, dstBuffer, regionCount, pRegions);
 }
 
 static PFN_vkCmdCopyImage pfn_vkCmdCopyImage;
 VKAPI_ATTR void vkCmdCopyImage(VkCommandBuffer commandBuffer, VkImage srcImage, VkImageLayout srcImageLayout, VkImage dstImage, VkImageLayout dstImageLayout, uint32_t regionCount, const VkImageCopy * pRegions)
 {
 	assert(pfn_vkCmdCopyImage);
-	return pfn_vkCmdCopyImage(commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions);
+	pfn_vkCmdCopyImage(commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions);
 }
 
 static PFN_vkCmdBlitImage pfn_vkCmdBlitImage;
 VKAPI_ATTR void vkCmdBlitImage(VkCommandBuffer commandBuffer, VkImage srcImage, VkImageLayout srcImageLayout, VkImage dstImage, VkImageLayout dstImageLayout, uint32_t regionCount, const VkImageBlit * pRegions, VkFilter filter)
 {
 	assert(pfn_vkCmdBlitImage);
-	return pfn_vkCmdBlitImage(commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions, filter);
+	pfn_vkCmdBlitImage(commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions, filter);
 }
 
 static PFN_vkCmdCopyBufferToImage pfn_vkCmdCopyBufferToImage;
 VKAPI_ATTR void vkCmdCopyBufferToImage(VkCommandBuffer commandBuffer, VkBuffer srcBuffer, VkImage dstImage, VkImageLayout dstImageLayout, uint32_t regionCount, const VkBufferImageCopy * pRegions)
 {
 	assert(pfn_vkCmdCopyBufferToImage);
-	return pfn_vkCmdCopyBufferToImage(commandBuffer, srcBuffer, dstImage, dstImageLayout, regionCount, pRegions);
+	pfn_vkCmdCopyBufferToImage(commandBuffer, srcBuffer, dstImage, dstImageLayout, regionCount, pRegions);
 }
 
 static PFN_vkCmdCopyImageToBuffer pfn_vkCmdCopyImageToBuffer;
 VKAPI_ATTR void vkCmdCopyImageToBuffer(VkCommandBuffer commandBuffer, VkImage srcImage, VkImageLayout srcImageLayout, VkBuffer dstBuffer, uint32_t regionCount, const VkBufferImageCopy * pRegions)
 {
 	assert(pfn_vkCmdCopyImageToBuffer);
-	return pfn_vkCmdCopyImageToBuffer(commandBuffer, srcImage, srcImageLayout, dstBuffer, regionCount, pRegions);
+	pfn_vkCmdCopyImageToBuffer(commandBuffer, srcImage, srcImageLayout, dstBuffer, regionCount, pRegions);
 }
 
 static PFN_vkCmdUpdateBuffer pfn_vkCmdUpdateBuffer;
 VKAPI_ATTR void vkCmdUpdateBuffer(VkCommandBuffer commandBuffer, VkBuffer dstBuffer, VkDeviceSize dstOffset, VkDeviceSize dataSize, const void * pData)
 {
 	assert(pfn_vkCmdUpdateBuffer);
-	return pfn_vkCmdUpdateBuffer(commandBuffer, dstBuffer, dstOffset, dataSize, pData);
+	pfn_vkCmdUpdateBuffer(commandBuffer, dstBuffer, dstOffset, dataSize, pData);
 }
 
 // transfer support is only available when VK_KHR_maintenance1 is enabled, as documented in valid usage language in the specification
@@ -899,133 +892,133 @@ static PFN_vkCmdFillBuffer pfn_vkCmdFillBuffer;
 VKAPI_ATTR void vkCmdFillBuffer(VkCommandBuffer commandBuffer, VkBuffer dstBuffer, VkDeviceSize dstOffset, VkDeviceSize size, uint32_t data)
 {
 	assert(pfn_vkCmdFillBuffer);
-	return pfn_vkCmdFillBuffer(commandBuffer, dstBuffer, dstOffset, size, data);
+	pfn_vkCmdFillBuffer(commandBuffer, dstBuffer, dstOffset, size, data);
 }
 
 static PFN_vkCmdClearColorImage pfn_vkCmdClearColorImage;
 VKAPI_ATTR void vkCmdClearColorImage(VkCommandBuffer commandBuffer, VkImage image, VkImageLayout imageLayout, const VkClearColorValue * pColor, uint32_t rangeCount, const VkImageSubresourceRange * pRanges)
 {
 	assert(pfn_vkCmdClearColorImage);
-	return pfn_vkCmdClearColorImage(commandBuffer, image, imageLayout, pColor, rangeCount, pRanges);
+	pfn_vkCmdClearColorImage(commandBuffer, image, imageLayout, pColor, rangeCount, pRanges);
 }
 
 static PFN_vkCmdClearDepthStencilImage pfn_vkCmdClearDepthStencilImage;
 VKAPI_ATTR void vkCmdClearDepthStencilImage(VkCommandBuffer commandBuffer, VkImage image, VkImageLayout imageLayout, const VkClearDepthStencilValue * pDepthStencil, uint32_t rangeCount, const VkImageSubresourceRange * pRanges)
 {
 	assert(pfn_vkCmdClearDepthStencilImage);
-	return pfn_vkCmdClearDepthStencilImage(commandBuffer, image, imageLayout, pDepthStencil, rangeCount, pRanges);
+	pfn_vkCmdClearDepthStencilImage(commandBuffer, image, imageLayout, pDepthStencil, rangeCount, pRanges);
 }
 
 static PFN_vkCmdClearAttachments pfn_vkCmdClearAttachments;
 VKAPI_ATTR void vkCmdClearAttachments(VkCommandBuffer commandBuffer, uint32_t attachmentCount, const VkClearAttachment * pAttachments, uint32_t rectCount, const VkClearRect * pRects)
 {
 	assert(pfn_vkCmdClearAttachments);
-	return pfn_vkCmdClearAttachments(commandBuffer, attachmentCount, pAttachments, rectCount, pRects);
+	pfn_vkCmdClearAttachments(commandBuffer, attachmentCount, pAttachments, rectCount, pRects);
 }
 
 static PFN_vkCmdResolveImage pfn_vkCmdResolveImage;
 VKAPI_ATTR void vkCmdResolveImage(VkCommandBuffer commandBuffer, VkImage srcImage, VkImageLayout srcImageLayout, VkImage dstImage, VkImageLayout dstImageLayout, uint32_t regionCount, const VkImageResolve * pRegions)
 {
 	assert(pfn_vkCmdResolveImage);
-	return pfn_vkCmdResolveImage(commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions);
+	pfn_vkCmdResolveImage(commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions);
 }
 
 static PFN_vkCmdSetEvent pfn_vkCmdSetEvent;
 VKAPI_ATTR void vkCmdSetEvent(VkCommandBuffer commandBuffer, VkEvent event, VkPipelineStageFlags stageMask)
 {
 	assert(pfn_vkCmdSetEvent);
-	return pfn_vkCmdSetEvent(commandBuffer, event, stageMask);
+	pfn_vkCmdSetEvent(commandBuffer, event, stageMask);
 }
 
 static PFN_vkCmdResetEvent pfn_vkCmdResetEvent;
 VKAPI_ATTR void vkCmdResetEvent(VkCommandBuffer commandBuffer, VkEvent event, VkPipelineStageFlags stageMask)
 {
 	assert(pfn_vkCmdResetEvent);
-	return pfn_vkCmdResetEvent(commandBuffer, event, stageMask);
+	pfn_vkCmdResetEvent(commandBuffer, event, stageMask);
 }
 
 static PFN_vkCmdWaitEvents pfn_vkCmdWaitEvents;
 VKAPI_ATTR void vkCmdWaitEvents(VkCommandBuffer commandBuffer, uint32_t eventCount, const VkEvent * pEvents, VkPipelineStageFlags srcStageMask, VkPipelineStageFlags dstStageMask, uint32_t memoryBarrierCount, const VkMemoryBarrier * pMemoryBarriers, uint32_t bufferMemoryBarrierCount, const VkBufferMemoryBarrier * pBufferMemoryBarriers, uint32_t imageMemoryBarrierCount, const VkImageMemoryBarrier * pImageMemoryBarriers)
 {
 	assert(pfn_vkCmdWaitEvents);
-	return pfn_vkCmdWaitEvents(commandBuffer, eventCount, pEvents, srcStageMask, dstStageMask, memoryBarrierCount, pMemoryBarriers, bufferMemoryBarrierCount, pBufferMemoryBarriers, imageMemoryBarrierCount, pImageMemoryBarriers);
+	pfn_vkCmdWaitEvents(commandBuffer, eventCount, pEvents, srcStageMask, dstStageMask, memoryBarrierCount, pMemoryBarriers, bufferMemoryBarrierCount, pBufferMemoryBarriers, imageMemoryBarrierCount, pImageMemoryBarriers);
 }
 
 static PFN_vkCmdPipelineBarrier pfn_vkCmdPipelineBarrier;
 VKAPI_ATTR void vkCmdPipelineBarrier(VkCommandBuffer commandBuffer, VkPipelineStageFlags srcStageMask, VkPipelineStageFlags dstStageMask, VkDependencyFlags dependencyFlags, uint32_t memoryBarrierCount, const VkMemoryBarrier * pMemoryBarriers, uint32_t bufferMemoryBarrierCount, const VkBufferMemoryBarrier * pBufferMemoryBarriers, uint32_t imageMemoryBarrierCount, const VkImageMemoryBarrier * pImageMemoryBarriers)
 {
 	assert(pfn_vkCmdPipelineBarrier);
-	return pfn_vkCmdPipelineBarrier(commandBuffer, srcStageMask, dstStageMask, dependencyFlags, memoryBarrierCount, pMemoryBarriers, bufferMemoryBarrierCount, pBufferMemoryBarriers, imageMemoryBarrierCount, pImageMemoryBarriers);
+	pfn_vkCmdPipelineBarrier(commandBuffer, srcStageMask, dstStageMask, dependencyFlags, memoryBarrierCount, pMemoryBarriers, bufferMemoryBarrierCount, pBufferMemoryBarriers, imageMemoryBarrierCount, pImageMemoryBarriers);
 }
 
 static PFN_vkCmdBeginQuery pfn_vkCmdBeginQuery;
 VKAPI_ATTR void vkCmdBeginQuery(VkCommandBuffer commandBuffer, VkQueryPool queryPool, uint32_t query, VkQueryControlFlags flags)
 {
 	assert(pfn_vkCmdBeginQuery);
-	return pfn_vkCmdBeginQuery(commandBuffer, queryPool, query, flags);
+	pfn_vkCmdBeginQuery(commandBuffer, queryPool, query, flags);
 }
 
 static PFN_vkCmdEndQuery pfn_vkCmdEndQuery;
 VKAPI_ATTR void vkCmdEndQuery(VkCommandBuffer commandBuffer, VkQueryPool queryPool, uint32_t query)
 {
 	assert(pfn_vkCmdEndQuery);
-	return pfn_vkCmdEndQuery(commandBuffer, queryPool, query);
+	pfn_vkCmdEndQuery(commandBuffer, queryPool, query);
 }
 
 static PFN_vkCmdResetQueryPool pfn_vkCmdResetQueryPool;
 VKAPI_ATTR void vkCmdResetQueryPool(VkCommandBuffer commandBuffer, VkQueryPool queryPool, uint32_t firstQuery, uint32_t queryCount)
 {
 	assert(pfn_vkCmdResetQueryPool);
-	return pfn_vkCmdResetQueryPool(commandBuffer, queryPool, firstQuery, queryCount);
+	pfn_vkCmdResetQueryPool(commandBuffer, queryPool, firstQuery, queryCount);
 }
 
 static PFN_vkCmdWriteTimestamp pfn_vkCmdWriteTimestamp;
 VKAPI_ATTR void vkCmdWriteTimestamp(VkCommandBuffer commandBuffer, VkPipelineStageFlagBits pipelineStage, VkQueryPool queryPool, uint32_t query)
 {
 	assert(pfn_vkCmdWriteTimestamp);
-	return pfn_vkCmdWriteTimestamp(commandBuffer, pipelineStage, queryPool, query);
+	pfn_vkCmdWriteTimestamp(commandBuffer, pipelineStage, queryPool, query);
 }
 
 static PFN_vkCmdCopyQueryPoolResults pfn_vkCmdCopyQueryPoolResults;
 VKAPI_ATTR void vkCmdCopyQueryPoolResults(VkCommandBuffer commandBuffer, VkQueryPool queryPool, uint32_t firstQuery, uint32_t queryCount, VkBuffer dstBuffer, VkDeviceSize dstOffset, VkDeviceSize stride, VkQueryResultFlags flags)
 {
 	assert(pfn_vkCmdCopyQueryPoolResults);
-	return pfn_vkCmdCopyQueryPoolResults(commandBuffer, queryPool, firstQuery, queryCount, dstBuffer, dstOffset, stride, flags);
+	pfn_vkCmdCopyQueryPoolResults(commandBuffer, queryPool, firstQuery, queryCount, dstBuffer, dstOffset, stride, flags);
 }
 
 static PFN_vkCmdPushConstants pfn_vkCmdPushConstants;
 VKAPI_ATTR void vkCmdPushConstants(VkCommandBuffer commandBuffer, VkPipelineLayout layout, VkShaderStageFlags stageFlags, uint32_t offset, uint32_t size, const void * pValues)
 {
 	assert(pfn_vkCmdPushConstants);
-	return pfn_vkCmdPushConstants(commandBuffer, layout, stageFlags, offset, size, pValues);
+	pfn_vkCmdPushConstants(commandBuffer, layout, stageFlags, offset, size, pValues);
 }
 
 static PFN_vkCmdBeginRenderPass pfn_vkCmdBeginRenderPass;
 VKAPI_ATTR void vkCmdBeginRenderPass(VkCommandBuffer commandBuffer, const VkRenderPassBeginInfo * pRenderPassBegin, VkSubpassContents contents)
 {
 	assert(pfn_vkCmdBeginRenderPass);
-	return pfn_vkCmdBeginRenderPass(commandBuffer, pRenderPassBegin, contents);
+	pfn_vkCmdBeginRenderPass(commandBuffer, pRenderPassBegin, contents);
 }
 
 static PFN_vkCmdNextSubpass pfn_vkCmdNextSubpass;
 VKAPI_ATTR void vkCmdNextSubpass(VkCommandBuffer commandBuffer, VkSubpassContents contents)
 {
 	assert(pfn_vkCmdNextSubpass);
-	return pfn_vkCmdNextSubpass(commandBuffer, contents);
+	pfn_vkCmdNextSubpass(commandBuffer, contents);
 }
 
 static PFN_vkCmdEndRenderPass pfn_vkCmdEndRenderPass;
 VKAPI_ATTR void vkCmdEndRenderPass(VkCommandBuffer commandBuffer)
 {
 	assert(pfn_vkCmdEndRenderPass);
-	return pfn_vkCmdEndRenderPass(commandBuffer);
+	pfn_vkCmdEndRenderPass(commandBuffer);
 }
 
 static PFN_vkCmdExecuteCommands pfn_vkCmdExecuteCommands;
 VKAPI_ATTR void vkCmdExecuteCommands(VkCommandBuffer commandBuffer, uint32_t commandBufferCount, const VkCommandBuffer * pCommandBuffers)
 {
 	assert(pfn_vkCmdExecuteCommands);
-	return pfn_vkCmdExecuteCommands(commandBuffer, commandBufferCount, pCommandBuffers);
+	pfn_vkCmdExecuteCommands(commandBuffer, commandBufferCount, pCommandBuffers);
 }
 
 #endif // defined(VK_VERSION_1_0)
@@ -1065,21 +1058,21 @@ static PFN_vkGetDeviceGroupPeerMemoryFeatures pfn_vkGetDeviceGroupPeerMemoryFeat
 VKAPI_ATTR void vkGetDeviceGroupPeerMemoryFeatures(VkDevice device, uint32_t heapIndex, uint32_t localDeviceIndex, uint32_t remoteDeviceIndex, VkPeerMemoryFeatureFlags * pPeerMemoryFeatures)
 {
 	assert(pfn_vkGetDeviceGroupPeerMemoryFeatures);
-	return pfn_vkGetDeviceGroupPeerMemoryFeatures(device, heapIndex, localDeviceIndex, remoteDeviceIndex, pPeerMemoryFeatures);
+	pfn_vkGetDeviceGroupPeerMemoryFeatures(device, heapIndex, localDeviceIndex, remoteDeviceIndex, pPeerMemoryFeatures);
 }
 
 static PFN_vkCmdSetDeviceMask pfn_vkCmdSetDeviceMask;
 VKAPI_ATTR void vkCmdSetDeviceMask(VkCommandBuffer commandBuffer, uint32_t deviceMask)
 {
 	assert(pfn_vkCmdSetDeviceMask);
-	return pfn_vkCmdSetDeviceMask(commandBuffer, deviceMask);
+	pfn_vkCmdSetDeviceMask(commandBuffer, deviceMask);
 }
 
 static PFN_vkCmdDispatchBase pfn_vkCmdDispatchBase;
 VKAPI_ATTR void vkCmdDispatchBase(VkCommandBuffer commandBuffer, uint32_t baseGroupX, uint32_t baseGroupY, uint32_t baseGroupZ, uint32_t groupCountX, uint32_t groupCountY, uint32_t groupCountZ)
 {
 	assert(pfn_vkCmdDispatchBase);
-	return pfn_vkCmdDispatchBase(commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ);
+	pfn_vkCmdDispatchBase(commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ);
 }
 
 // Promoted from VK_KHR_device_group_creation
@@ -1097,21 +1090,21 @@ static PFN_vkGetImageMemoryRequirements2 pfn_vkGetImageMemoryRequirements2;
 VKAPI_ATTR void vkGetImageMemoryRequirements2(VkDevice device, const VkImageMemoryRequirementsInfo2 * pInfo, VkMemoryRequirements2 * pMemoryRequirements)
 {
 	assert(pfn_vkGetImageMemoryRequirements2);
-	return pfn_vkGetImageMemoryRequirements2(device, pInfo, pMemoryRequirements);
+	pfn_vkGetImageMemoryRequirements2(device, pInfo, pMemoryRequirements);
 }
 
 static PFN_vkGetBufferMemoryRequirements2 pfn_vkGetBufferMemoryRequirements2;
 VKAPI_ATTR void vkGetBufferMemoryRequirements2(VkDevice device, const VkBufferMemoryRequirementsInfo2 * pInfo, VkMemoryRequirements2 * pMemoryRequirements)
 {
 	assert(pfn_vkGetBufferMemoryRequirements2);
-	return pfn_vkGetBufferMemoryRequirements2(device, pInfo, pMemoryRequirements);
+	pfn_vkGetBufferMemoryRequirements2(device, pInfo, pMemoryRequirements);
 }
 
 static PFN_vkGetImageSparseMemoryRequirements2 pfn_vkGetImageSparseMemoryRequirements2;
 VKAPI_ATTR void vkGetImageSparseMemoryRequirements2(VkDevice device, const VkImageSparseMemoryRequirementsInfo2 * pInfo, uint32_t * pSparseMemoryRequirementCount, VkSparseImageMemoryRequirements2 * pSparseMemoryRequirements)
 {
 	assert(pfn_vkGetImageSparseMemoryRequirements2);
-	return pfn_vkGetImageSparseMemoryRequirements2(device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements);
+	pfn_vkGetImageSparseMemoryRequirements2(device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements);
 }
 
 // Promoted from VK_KHR_get_physical_device_properties2
@@ -1120,21 +1113,21 @@ static PFN_vkGetPhysicalDeviceFeatures2 pfn_vkGetPhysicalDeviceFeatures2;
 VKAPI_ATTR void vkGetPhysicalDeviceFeatures2(VkPhysicalDevice physicalDevice, VkPhysicalDeviceFeatures2 * pFeatures)
 {
 	assert(pfn_vkGetPhysicalDeviceFeatures2);
-	return pfn_vkGetPhysicalDeviceFeatures2(physicalDevice, pFeatures);
+	pfn_vkGetPhysicalDeviceFeatures2(physicalDevice, pFeatures);
 }
 
 static PFN_vkGetPhysicalDeviceProperties2 pfn_vkGetPhysicalDeviceProperties2;
 VKAPI_ATTR void vkGetPhysicalDeviceProperties2(VkPhysicalDevice physicalDevice, VkPhysicalDeviceProperties2 * pProperties)
 {
 	assert(pfn_vkGetPhysicalDeviceProperties2);
-	return pfn_vkGetPhysicalDeviceProperties2(physicalDevice, pProperties);
+	pfn_vkGetPhysicalDeviceProperties2(physicalDevice, pProperties);
 }
 
 static PFN_vkGetPhysicalDeviceFormatProperties2 pfn_vkGetPhysicalDeviceFormatProperties2;
 VKAPI_ATTR void vkGetPhysicalDeviceFormatProperties2(VkPhysicalDevice physicalDevice, VkFormat format, VkFormatProperties2 * pFormatProperties)
 {
 	assert(pfn_vkGetPhysicalDeviceFormatProperties2);
-	return pfn_vkGetPhysicalDeviceFormatProperties2(physicalDevice, format, pFormatProperties);
+	pfn_vkGetPhysicalDeviceFormatProperties2(physicalDevice, format, pFormatProperties);
 }
 
 static PFN_vkGetPhysicalDeviceImageFormatProperties2 pfn_vkGetPhysicalDeviceImageFormatProperties2;
@@ -1148,21 +1141,21 @@ static PFN_vkGetPhysicalDeviceQueueFamilyProperties2 pfn_vkGetPhysicalDeviceQueu
 VKAPI_ATTR void vkGetPhysicalDeviceQueueFamilyProperties2(VkPhysicalDevice physicalDevice, uint32_t * pQueueFamilyPropertyCount, VkQueueFamilyProperties2 * pQueueFamilyProperties)
 {
 	assert(pfn_vkGetPhysicalDeviceQueueFamilyProperties2);
-	return pfn_vkGetPhysicalDeviceQueueFamilyProperties2(physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties);
+	pfn_vkGetPhysicalDeviceQueueFamilyProperties2(physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties);
 }
 
 static PFN_vkGetPhysicalDeviceMemoryProperties2 pfn_vkGetPhysicalDeviceMemoryProperties2;
 VKAPI_ATTR void vkGetPhysicalDeviceMemoryProperties2(VkPhysicalDevice physicalDevice, VkPhysicalDeviceMemoryProperties2 * pMemoryProperties)
 {
 	assert(pfn_vkGetPhysicalDeviceMemoryProperties2);
-	return pfn_vkGetPhysicalDeviceMemoryProperties2(physicalDevice, pMemoryProperties);
+	pfn_vkGetPhysicalDeviceMemoryProperties2(physicalDevice, pMemoryProperties);
 }
 
 static PFN_vkGetPhysicalDeviceSparseImageFormatProperties2 pfn_vkGetPhysicalDeviceSparseImageFormatProperties2;
 VKAPI_ATTR void vkGetPhysicalDeviceSparseImageFormatProperties2(VkPhysicalDevice physicalDevice, const VkPhysicalDeviceSparseImageFormatInfo2 * pFormatInfo, uint32_t * pPropertyCount, VkSparseImageFormatProperties2 * pProperties)
 {
 	assert(pfn_vkGetPhysicalDeviceSparseImageFormatProperties2);
-	return pfn_vkGetPhysicalDeviceSparseImageFormatProperties2(physicalDevice, pFormatInfo, pPropertyCount, pProperties);
+	pfn_vkGetPhysicalDeviceSparseImageFormatProperties2(physicalDevice, pFormatInfo, pPropertyCount, pProperties);
 }
 
 // Promoted from VK_KHR_maintenance1
@@ -1171,7 +1164,7 @@ static PFN_vkTrimCommandPool pfn_vkTrimCommandPool;
 VKAPI_ATTR void vkTrimCommandPool(VkDevice device, VkCommandPool commandPool, VkCommandPoolTrimFlags flags)
 {
 	assert(pfn_vkTrimCommandPool);
-	return pfn_vkTrimCommandPool(device, commandPool, flags);
+	pfn_vkTrimCommandPool(device, commandPool, flags);
 }
 
 // Originally based on VK_KHR_protected_memory (extension 146), which was never published; thus the mystifying large value= numbers below. These are not aliased since they weren't actually promoted from an extension.
@@ -1180,7 +1173,7 @@ static PFN_vkGetDeviceQueue2 pfn_vkGetDeviceQueue2;
 VKAPI_ATTR void vkGetDeviceQueue2(VkDevice device, const VkDeviceQueueInfo2 * pQueueInfo, VkQueue * pQueue)
 {
 	assert(pfn_vkGetDeviceQueue2);
-	return pfn_vkGetDeviceQueue2(device, pQueueInfo, pQueue);
+	pfn_vkGetDeviceQueue2(device, pQueueInfo, pQueue);
 }
 
 // Promoted from VK_KHR_sampler_ycbcr_conversion
@@ -1196,7 +1189,7 @@ static PFN_vkDestroySamplerYcbcrConversion pfn_vkDestroySamplerYcbcrConversion;
 VKAPI_ATTR void vkDestroySamplerYcbcrConversion(VkDevice device, VkSamplerYcbcrConversion ycbcrConversion, const VkAllocationCallbacks * pAllocator)
 {
 	assert(pfn_vkDestroySamplerYcbcrConversion);
-	return pfn_vkDestroySamplerYcbcrConversion(device, ycbcrConversion, pAllocator);
+	pfn_vkDestroySamplerYcbcrConversion(device, ycbcrConversion, pAllocator);
 }
 
 // Promoted from VK_KHR_descriptor_update_template
@@ -1212,14 +1205,14 @@ static PFN_vkDestroyDescriptorUpdateTemplate pfn_vkDestroyDescriptorUpdateTempla
 VKAPI_ATTR void vkDestroyDescriptorUpdateTemplate(VkDevice device, VkDescriptorUpdateTemplate descriptorUpdateTemplate, const VkAllocationCallbacks * pAllocator)
 {
 	assert(pfn_vkDestroyDescriptorUpdateTemplate);
-	return pfn_vkDestroyDescriptorUpdateTemplate(device, descriptorUpdateTemplate, pAllocator);
+	pfn_vkDestroyDescriptorUpdateTemplate(device, descriptorUpdateTemplate, pAllocator);
 }
 
 static PFN_vkUpdateDescriptorSetWithTemplate pfn_vkUpdateDescriptorSetWithTemplate;
 VKAPI_ATTR void vkUpdateDescriptorSetWithTemplate(VkDevice device, VkDescriptorSet descriptorSet, VkDescriptorUpdateTemplate descriptorUpdateTemplate, const void * pData)
 {
 	assert(pfn_vkUpdateDescriptorSetWithTemplate);
-	return pfn_vkUpdateDescriptorSetWithTemplate(device, descriptorSet, descriptorUpdateTemplate, pData);
+	pfn_vkUpdateDescriptorSetWithTemplate(device, descriptorSet, descriptorUpdateTemplate, pData);
 }
 
 // Promoted from VK_KHR_external_memory_capabilities
@@ -1228,7 +1221,7 @@ static PFN_vkGetPhysicalDeviceExternalBufferProperties pfn_vkGetPhysicalDeviceEx
 VKAPI_ATTR void vkGetPhysicalDeviceExternalBufferProperties(VkPhysicalDevice physicalDevice, const VkPhysicalDeviceExternalBufferInfo * pExternalBufferInfo, VkExternalBufferProperties * pExternalBufferProperties)
 {
 	assert(pfn_vkGetPhysicalDeviceExternalBufferProperties);
-	return pfn_vkGetPhysicalDeviceExternalBufferProperties(physicalDevice, pExternalBufferInfo, pExternalBufferProperties);
+	pfn_vkGetPhysicalDeviceExternalBufferProperties(physicalDevice, pExternalBufferInfo, pExternalBufferProperties);
 }
 
 // Promoted from VK_KHR_external_fence_capabilities
@@ -1237,7 +1230,7 @@ static PFN_vkGetPhysicalDeviceExternalFenceProperties pfn_vkGetPhysicalDeviceExt
 VKAPI_ATTR void vkGetPhysicalDeviceExternalFenceProperties(VkPhysicalDevice physicalDevice, const VkPhysicalDeviceExternalFenceInfo * pExternalFenceInfo, VkExternalFenceProperties * pExternalFenceProperties)
 {
 	assert(pfn_vkGetPhysicalDeviceExternalFenceProperties);
-	return pfn_vkGetPhysicalDeviceExternalFenceProperties(physicalDevice, pExternalFenceInfo, pExternalFenceProperties);
+	pfn_vkGetPhysicalDeviceExternalFenceProperties(physicalDevice, pExternalFenceInfo, pExternalFenceProperties);
 }
 
 // Promoted from VK_KHR_external_semaphore_capabilities
@@ -1246,7 +1239,7 @@ static PFN_vkGetPhysicalDeviceExternalSemaphoreProperties pfn_vkGetPhysicalDevic
 VKAPI_ATTR void vkGetPhysicalDeviceExternalSemaphoreProperties(VkPhysicalDevice physicalDevice, const VkPhysicalDeviceExternalSemaphoreInfo * pExternalSemaphoreInfo, VkExternalSemaphoreProperties * pExternalSemaphoreProperties)
 {
 	assert(pfn_vkGetPhysicalDeviceExternalSemaphoreProperties);
-	return pfn_vkGetPhysicalDeviceExternalSemaphoreProperties(physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties);
+	pfn_vkGetPhysicalDeviceExternalSemaphoreProperties(physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties);
 }
 
 // Promoted from VK_KHR_maintenance3
@@ -1255,7 +1248,7 @@ static PFN_vkGetDescriptorSetLayoutSupport pfn_vkGetDescriptorSetLayoutSupport;
 VKAPI_ATTR void vkGetDescriptorSetLayoutSupport(VkDevice device, const VkDescriptorSetLayoutCreateInfo * pCreateInfo, VkDescriptorSetLayoutSupport * pSupport)
 {
 	assert(pfn_vkGetDescriptorSetLayoutSupport);
-	return pfn_vkGetDescriptorSetLayoutSupport(device, pCreateInfo, pSupport);
+	pfn_vkGetDescriptorSetLayoutSupport(device, pCreateInfo, pSupport);
 }
 
 #endif // defined(VK_VERSION_1_1)
@@ -1266,7 +1259,7 @@ static PFN_vkDestroySurfaceKHR pfn_vkDestroySurfaceKHR;
 VKAPI_ATTR void vkDestroySurfaceKHR(VkInstance instance, VkSurfaceKHR surface, const VkAllocationCallbacks * pAllocator)
 {
 	assert(pfn_vkDestroySurfaceKHR);
-	return pfn_vkDestroySurfaceKHR(instance, surface, pAllocator);
+	pfn_vkDestroySurfaceKHR(instance, surface, pAllocator);
 }
 
 static PFN_vkGetPhysicalDeviceSurfaceSupportKHR pfn_vkGetPhysicalDeviceSurfaceSupportKHR;
@@ -1312,7 +1305,7 @@ static PFN_vkDestroySwapchainKHR pfn_vkDestroySwapchainKHR;
 VKAPI_ATTR void vkDestroySwapchainKHR(VkDevice device, VkSwapchainKHR swapchain, const VkAllocationCallbacks * pAllocator)
 {
 	assert(pfn_vkDestroySwapchainKHR);
-	return pfn_vkDestroySwapchainKHR(device, swapchain, pAllocator);
+	pfn_vkDestroySwapchainKHR(device, swapchain, pAllocator);
 }
 
 static PFN_vkGetSwapchainImagesKHR pfn_vkGetSwapchainImagesKHR;
@@ -1530,14 +1523,14 @@ static PFN_vkDestroyDebugReportCallbackEXT pfn_vkDestroyDebugReportCallbackEXT;
 VKAPI_ATTR void vkDestroyDebugReportCallbackEXT(VkInstance instance, VkDebugReportCallbackEXT callback, const VkAllocationCallbacks * pAllocator)
 {
 	assert(pfn_vkDestroyDebugReportCallbackEXT);
-	return pfn_vkDestroyDebugReportCallbackEXT(instance, callback, pAllocator);
+	pfn_vkDestroyDebugReportCallbackEXT(instance, callback, pAllocator);
 }
 
 static PFN_vkDebugReportMessageEXT pfn_vkDebugReportMessageEXT;
 VKAPI_ATTR void vkDebugReportMessageEXT(VkInstance instance, VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objectType, uint64_t object, size_t location, int32_t messageCode, const char * pLayerPrefix, const char * pMessage)
 {
 	assert(pfn_vkDebugReportMessageEXT);
-	return pfn_vkDebugReportMessageEXT(instance, flags, objectType, object, location, messageCode, pLayerPrefix, pMessage);
+	pfn_vkDebugReportMessageEXT(instance, flags, objectType, object, location, messageCode, pLayerPrefix, pMessage);
 }
 
 #endif // defined(VK_EXT_debug_report)
@@ -1562,21 +1555,21 @@ static PFN_vkCmdDebugMarkerBeginEXT pfn_vkCmdDebugMarkerBeginEXT;
 VKAPI_ATTR void vkCmdDebugMarkerBeginEXT(VkCommandBuffer commandBuffer, const VkDebugMarkerMarkerInfoEXT * pMarkerInfo)
 {
 	assert(pfn_vkCmdDebugMarkerBeginEXT);
-	return pfn_vkCmdDebugMarkerBeginEXT(commandBuffer, pMarkerInfo);
+	pfn_vkCmdDebugMarkerBeginEXT(commandBuffer, pMarkerInfo);
 }
 
 static PFN_vkCmdDebugMarkerEndEXT pfn_vkCmdDebugMarkerEndEXT;
 VKAPI_ATTR void vkCmdDebugMarkerEndEXT(VkCommandBuffer commandBuffer)
 {
 	assert(pfn_vkCmdDebugMarkerEndEXT);
-	return pfn_vkCmdDebugMarkerEndEXT(commandBuffer);
+	pfn_vkCmdDebugMarkerEndEXT(commandBuffer);
 }
 
 static PFN_vkCmdDebugMarkerInsertEXT pfn_vkCmdDebugMarkerInsertEXT;
 VKAPI_ATTR void vkCmdDebugMarkerInsertEXT(VkCommandBuffer commandBuffer, const VkDebugMarkerMarkerInfoEXT * pMarkerInfo)
 {
 	assert(pfn_vkCmdDebugMarkerInsertEXT);
-	return pfn_vkCmdDebugMarkerInsertEXT(commandBuffer, pMarkerInfo);
+	pfn_vkCmdDebugMarkerInsertEXT(commandBuffer, pMarkerInfo);
 }
 
 #endif // defined(VK_EXT_debug_marker)
@@ -1587,42 +1580,42 @@ static PFN_vkCmdBindTransformFeedbackBuffersEXT pfn_vkCmdBindTransformFeedbackBu
 VKAPI_ATTR void vkCmdBindTransformFeedbackBuffersEXT(VkCommandBuffer commandBuffer, uint32_t firstBinding, uint32_t bindingCount, const VkBuffer * pBuffers, const VkDeviceSize * pOffsets, const VkDeviceSize * pSizes)
 {
 	assert(pfn_vkCmdBindTransformFeedbackBuffersEXT);
-	return pfn_vkCmdBindTransformFeedbackBuffersEXT(commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets, pSizes);
+	pfn_vkCmdBindTransformFeedbackBuffersEXT(commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets, pSizes);
 }
 
 static PFN_vkCmdBeginTransformFeedbackEXT pfn_vkCmdBeginTransformFeedbackEXT;
 VKAPI_ATTR void vkCmdBeginTransformFeedbackEXT(VkCommandBuffer commandBuffer, uint32_t firstCounterBuffer, uint32_t counterBufferCount, const VkBuffer * pCounterBuffers, const VkDeviceSize * pCounterBufferOffsets)
 {
 	assert(pfn_vkCmdBeginTransformFeedbackEXT);
-	return pfn_vkCmdBeginTransformFeedbackEXT(commandBuffer, firstCounterBuffer, counterBufferCount, pCounterBuffers, pCounterBufferOffsets);
+	pfn_vkCmdBeginTransformFeedbackEXT(commandBuffer, firstCounterBuffer, counterBufferCount, pCounterBuffers, pCounterBufferOffsets);
 }
 
 static PFN_vkCmdEndTransformFeedbackEXT pfn_vkCmdEndTransformFeedbackEXT;
 VKAPI_ATTR void vkCmdEndTransformFeedbackEXT(VkCommandBuffer commandBuffer, uint32_t firstCounterBuffer, uint32_t counterBufferCount, const VkBuffer * pCounterBuffers, const VkDeviceSize * pCounterBufferOffsets)
 {
 	assert(pfn_vkCmdEndTransformFeedbackEXT);
-	return pfn_vkCmdEndTransformFeedbackEXT(commandBuffer, firstCounterBuffer, counterBufferCount, pCounterBuffers, pCounterBufferOffsets);
+	pfn_vkCmdEndTransformFeedbackEXT(commandBuffer, firstCounterBuffer, counterBufferCount, pCounterBuffers, pCounterBufferOffsets);
 }
 
 static PFN_vkCmdBeginQueryIndexedEXT pfn_vkCmdBeginQueryIndexedEXT;
 VKAPI_ATTR void vkCmdBeginQueryIndexedEXT(VkCommandBuffer commandBuffer, VkQueryPool queryPool, uint32_t query, VkQueryControlFlags flags, uint32_t index)
 {
 	assert(pfn_vkCmdBeginQueryIndexedEXT);
-	return pfn_vkCmdBeginQueryIndexedEXT(commandBuffer, queryPool, query, flags, index);
+	pfn_vkCmdBeginQueryIndexedEXT(commandBuffer, queryPool, query, flags, index);
 }
 
 static PFN_vkCmdEndQueryIndexedEXT pfn_vkCmdEndQueryIndexedEXT;
 VKAPI_ATTR void vkCmdEndQueryIndexedEXT(VkCommandBuffer commandBuffer, VkQueryPool queryPool, uint32_t query, uint32_t index)
 {
 	assert(pfn_vkCmdEndQueryIndexedEXT);
-	return pfn_vkCmdEndQueryIndexedEXT(commandBuffer, queryPool, query, index);
+	pfn_vkCmdEndQueryIndexedEXT(commandBuffer, queryPool, query, index);
 }
 
 static PFN_vkCmdDrawIndirectByteCountEXT pfn_vkCmdDrawIndirectByteCountEXT;
 VKAPI_ATTR void vkCmdDrawIndirectByteCountEXT(VkCommandBuffer commandBuffer, uint32_t instanceCount, uint32_t firstInstance, VkBuffer counterBuffer, VkDeviceSize counterBufferOffset, uint32_t counterOffset, uint32_t vertexStride)
 {
 	assert(pfn_vkCmdDrawIndirectByteCountEXT);
-	return pfn_vkCmdDrawIndirectByteCountEXT(commandBuffer, instanceCount, firstInstance, counterBuffer, counterBufferOffset, counterOffset, vertexStride);
+	pfn_vkCmdDrawIndirectByteCountEXT(commandBuffer, instanceCount, firstInstance, counterBuffer, counterBufferOffset, counterOffset, vertexStride);
 }
 
 #endif // defined(VK_EXT_transform_feedback)
@@ -1644,14 +1637,14 @@ static PFN_vkCmdDrawIndirectCountAMD pfn_vkCmdDrawIndirectCountAMD;
 VKAPI_ATTR void vkCmdDrawIndirectCountAMD(VkCommandBuffer commandBuffer, VkBuffer buffer, VkDeviceSize offset, VkBuffer countBuffer, VkDeviceSize countBufferOffset, uint32_t maxDrawCount, uint32_t stride)
 {
 	assert(pfn_vkCmdDrawIndirectCountAMD);
-	return pfn_vkCmdDrawIndirectCountAMD(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
+	pfn_vkCmdDrawIndirectCountAMD(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
 }
 
 static PFN_vkCmdDrawIndexedIndirectCountAMD pfn_vkCmdDrawIndexedIndirectCountAMD;
 VKAPI_ATTR void vkCmdDrawIndexedIndirectCountAMD(VkCommandBuffer commandBuffer, VkBuffer buffer, VkDeviceSize offset, VkBuffer countBuffer, VkDeviceSize countBufferOffset, uint32_t maxDrawCount, uint32_t stride)
 {
 	assert(pfn_vkCmdDrawIndexedIndirectCountAMD);
-	return pfn_vkCmdDrawIndexedIndirectCountAMD(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
+	pfn_vkCmdDrawIndexedIndirectCountAMD(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
 }
 
 #endif // defined(VK_AMD_draw_indirect_count)
@@ -1706,21 +1699,21 @@ static PFN_vkGetPhysicalDeviceFeatures2KHR pfn_vkGetPhysicalDeviceFeatures2KHR;
 VKAPI_ATTR void vkGetPhysicalDeviceFeatures2KHR(VkPhysicalDevice physicalDevice, VkPhysicalDeviceFeatures2 * pFeatures)
 {
 	assert(pfn_vkGetPhysicalDeviceFeatures2KHR);
-	return pfn_vkGetPhysicalDeviceFeatures2KHR(physicalDevice, pFeatures);
+	pfn_vkGetPhysicalDeviceFeatures2KHR(physicalDevice, pFeatures);
 }
 
 static PFN_vkGetPhysicalDeviceProperties2KHR pfn_vkGetPhysicalDeviceProperties2KHR;
 VKAPI_ATTR void vkGetPhysicalDeviceProperties2KHR(VkPhysicalDevice physicalDevice, VkPhysicalDeviceProperties2 * pProperties)
 {
 	assert(pfn_vkGetPhysicalDeviceProperties2KHR);
-	return pfn_vkGetPhysicalDeviceProperties2KHR(physicalDevice, pProperties);
+	pfn_vkGetPhysicalDeviceProperties2KHR(physicalDevice, pProperties);
 }
 
 static PFN_vkGetPhysicalDeviceFormatProperties2KHR pfn_vkGetPhysicalDeviceFormatProperties2KHR;
 VKAPI_ATTR void vkGetPhysicalDeviceFormatProperties2KHR(VkPhysicalDevice physicalDevice, VkFormat format, VkFormatProperties2 * pFormatProperties)
 {
 	assert(pfn_vkGetPhysicalDeviceFormatProperties2KHR);
-	return pfn_vkGetPhysicalDeviceFormatProperties2KHR(physicalDevice, format, pFormatProperties);
+	pfn_vkGetPhysicalDeviceFormatProperties2KHR(physicalDevice, format, pFormatProperties);
 }
 
 static PFN_vkGetPhysicalDeviceImageFormatProperties2KHR pfn_vkGetPhysicalDeviceImageFormatProperties2KHR;
@@ -1734,21 +1727,21 @@ static PFN_vkGetPhysicalDeviceQueueFamilyProperties2KHR pfn_vkGetPhysicalDeviceQ
 VKAPI_ATTR void vkGetPhysicalDeviceQueueFamilyProperties2KHR(VkPhysicalDevice physicalDevice, uint32_t * pQueueFamilyPropertyCount, VkQueueFamilyProperties2 * pQueueFamilyProperties)
 {
 	assert(pfn_vkGetPhysicalDeviceQueueFamilyProperties2KHR);
-	return pfn_vkGetPhysicalDeviceQueueFamilyProperties2KHR(physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties);
+	pfn_vkGetPhysicalDeviceQueueFamilyProperties2KHR(physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties);
 }
 
 static PFN_vkGetPhysicalDeviceMemoryProperties2KHR pfn_vkGetPhysicalDeviceMemoryProperties2KHR;
 VKAPI_ATTR void vkGetPhysicalDeviceMemoryProperties2KHR(VkPhysicalDevice physicalDevice, VkPhysicalDeviceMemoryProperties2 * pMemoryProperties)
 {
 	assert(pfn_vkGetPhysicalDeviceMemoryProperties2KHR);
-	return pfn_vkGetPhysicalDeviceMemoryProperties2KHR(physicalDevice, pMemoryProperties);
+	pfn_vkGetPhysicalDeviceMemoryProperties2KHR(physicalDevice, pMemoryProperties);
 }
 
 static PFN_vkGetPhysicalDeviceSparseImageFormatProperties2KHR pfn_vkGetPhysicalDeviceSparseImageFormatProperties2KHR;
 VKAPI_ATTR void vkGetPhysicalDeviceSparseImageFormatProperties2KHR(VkPhysicalDevice physicalDevice, const VkPhysicalDeviceSparseImageFormatInfo2 * pFormatInfo, uint32_t * pPropertyCount, VkSparseImageFormatProperties2 * pProperties)
 {
 	assert(pfn_vkGetPhysicalDeviceSparseImageFormatProperties2KHR);
-	return pfn_vkGetPhysicalDeviceSparseImageFormatProperties2KHR(physicalDevice, pFormatInfo, pPropertyCount, pProperties);
+	pfn_vkGetPhysicalDeviceSparseImageFormatProperties2KHR(physicalDevice, pFormatInfo, pPropertyCount, pProperties);
 }
 
 #endif // defined(VK_KHR_get_physical_device_properties2)
@@ -1759,21 +1752,21 @@ static PFN_vkGetDeviceGroupPeerMemoryFeaturesKHR pfn_vkGetDeviceGroupPeerMemoryF
 VKAPI_ATTR void vkGetDeviceGroupPeerMemoryFeaturesKHR(VkDevice device, uint32_t heapIndex, uint32_t localDeviceIndex, uint32_t remoteDeviceIndex, VkPeerMemoryFeatureFlags * pPeerMemoryFeatures)
 {
 	assert(pfn_vkGetDeviceGroupPeerMemoryFeaturesKHR);
-	return pfn_vkGetDeviceGroupPeerMemoryFeaturesKHR(device, heapIndex, localDeviceIndex, remoteDeviceIndex, pPeerMemoryFeatures);
+	pfn_vkGetDeviceGroupPeerMemoryFeaturesKHR(device, heapIndex, localDeviceIndex, remoteDeviceIndex, pPeerMemoryFeatures);
 }
 
 static PFN_vkCmdSetDeviceMaskKHR pfn_vkCmdSetDeviceMaskKHR;
 VKAPI_ATTR void vkCmdSetDeviceMaskKHR(VkCommandBuffer commandBuffer, uint32_t deviceMask)
 {
 	assert(pfn_vkCmdSetDeviceMaskKHR);
-	return pfn_vkCmdSetDeviceMaskKHR(commandBuffer, deviceMask);
+	pfn_vkCmdSetDeviceMaskKHR(commandBuffer, deviceMask);
 }
 
 static PFN_vkCmdDispatchBaseKHR pfn_vkCmdDispatchBaseKHR;
 VKAPI_ATTR void vkCmdDispatchBaseKHR(VkCommandBuffer commandBuffer, uint32_t baseGroupX, uint32_t baseGroupY, uint32_t baseGroupZ, uint32_t groupCountX, uint32_t groupCountY, uint32_t groupCountZ)
 {
 	assert(pfn_vkCmdDispatchBaseKHR);
-	return pfn_vkCmdDispatchBaseKHR(commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ);
+	pfn_vkCmdDispatchBaseKHR(commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ);
 }
 
 #if defined(VK_KHR_surface)
@@ -1831,7 +1824,7 @@ static PFN_vkTrimCommandPoolKHR pfn_vkTrimCommandPoolKHR;
 VKAPI_ATTR void vkTrimCommandPoolKHR(VkDevice device, VkCommandPool commandPool, VkCommandPoolTrimFlags flags)
 {
 	assert(pfn_vkTrimCommandPoolKHR);
-	return pfn_vkTrimCommandPoolKHR(device, commandPool, flags);
+	pfn_vkTrimCommandPoolKHR(device, commandPool, flags);
 }
 
 #endif // defined(VK_KHR_maintenance1)
@@ -1853,7 +1846,7 @@ static PFN_vkGetPhysicalDeviceExternalBufferPropertiesKHR pfn_vkGetPhysicalDevic
 VKAPI_ATTR void vkGetPhysicalDeviceExternalBufferPropertiesKHR(VkPhysicalDevice physicalDevice, const VkPhysicalDeviceExternalBufferInfo * pExternalBufferInfo, VkExternalBufferProperties * pExternalBufferProperties)
 {
 	assert(pfn_vkGetPhysicalDeviceExternalBufferPropertiesKHR);
-	return pfn_vkGetPhysicalDeviceExternalBufferPropertiesKHR(physicalDevice, pExternalBufferInfo, pExternalBufferProperties);
+	pfn_vkGetPhysicalDeviceExternalBufferPropertiesKHR(physicalDevice, pExternalBufferInfo, pExternalBufferProperties);
 }
 
 #endif // defined(VK_KHR_external_memory_capabilities)
@@ -1900,7 +1893,7 @@ static PFN_vkGetPhysicalDeviceExternalSemaphorePropertiesKHR pfn_vkGetPhysicalDe
 VKAPI_ATTR void vkGetPhysicalDeviceExternalSemaphorePropertiesKHR(VkPhysicalDevice physicalDevice, const VkPhysicalDeviceExternalSemaphoreInfo * pExternalSemaphoreInfo, VkExternalSemaphoreProperties * pExternalSemaphoreProperties)
 {
 	assert(pfn_vkGetPhysicalDeviceExternalSemaphorePropertiesKHR);
-	return pfn_vkGetPhysicalDeviceExternalSemaphorePropertiesKHR(physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties);
+	pfn_vkGetPhysicalDeviceExternalSemaphorePropertiesKHR(physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties);
 }
 
 #endif // defined(VK_KHR_external_semaphore_capabilities)
@@ -1947,7 +1940,7 @@ static PFN_vkCmdPushDescriptorSetKHR pfn_vkCmdPushDescriptorSetKHR;
 VKAPI_ATTR void vkCmdPushDescriptorSetKHR(VkCommandBuffer commandBuffer, VkPipelineBindPoint pipelineBindPoint, VkPipelineLayout layout, uint32_t set, uint32_t descriptorWriteCount, const VkWriteDescriptorSet * pDescriptorWrites)
 {
 	assert(pfn_vkCmdPushDescriptorSetKHR);
-	return pfn_vkCmdPushDescriptorSetKHR(commandBuffer, pipelineBindPoint, layout, set, descriptorWriteCount, pDescriptorWrites);
+	pfn_vkCmdPushDescriptorSetKHR(commandBuffer, pipelineBindPoint, layout, set, descriptorWriteCount, pDescriptorWrites);
 }
 
 #endif // defined(VK_KHR_push_descriptor)
@@ -1958,14 +1951,14 @@ static PFN_vkCmdBeginConditionalRenderingEXT pfn_vkCmdBeginConditionalRenderingE
 VKAPI_ATTR void vkCmdBeginConditionalRenderingEXT(VkCommandBuffer commandBuffer, const VkConditionalRenderingBeginInfoEXT * pConditionalRenderingBegin)
 {
 	assert(pfn_vkCmdBeginConditionalRenderingEXT);
-	return pfn_vkCmdBeginConditionalRenderingEXT(commandBuffer, pConditionalRenderingBegin);
+	pfn_vkCmdBeginConditionalRenderingEXT(commandBuffer, pConditionalRenderingBegin);
 }
 
 static PFN_vkCmdEndConditionalRenderingEXT pfn_vkCmdEndConditionalRenderingEXT;
 VKAPI_ATTR void vkCmdEndConditionalRenderingEXT(VkCommandBuffer commandBuffer)
 {
 	assert(pfn_vkCmdEndConditionalRenderingEXT);
-	return pfn_vkCmdEndConditionalRenderingEXT(commandBuffer);
+	pfn_vkCmdEndConditionalRenderingEXT(commandBuffer);
 }
 
 #endif // defined(VK_EXT_conditional_rendering)
@@ -1983,14 +1976,14 @@ static PFN_vkDestroyDescriptorUpdateTemplateKHR pfn_vkDestroyDescriptorUpdateTem
 VKAPI_ATTR void vkDestroyDescriptorUpdateTemplateKHR(VkDevice device, VkDescriptorUpdateTemplate descriptorUpdateTemplate, const VkAllocationCallbacks * pAllocator)
 {
 	assert(pfn_vkDestroyDescriptorUpdateTemplateKHR);
-	return pfn_vkDestroyDescriptorUpdateTemplateKHR(device, descriptorUpdateTemplate, pAllocator);
+	pfn_vkDestroyDescriptorUpdateTemplateKHR(device, descriptorUpdateTemplate, pAllocator);
 }
 
 static PFN_vkUpdateDescriptorSetWithTemplateKHR pfn_vkUpdateDescriptorSetWithTemplateKHR;
 VKAPI_ATTR void vkUpdateDescriptorSetWithTemplateKHR(VkDevice device, VkDescriptorSet descriptorSet, VkDescriptorUpdateTemplate descriptorUpdateTemplate, const void * pData)
 {
 	assert(pfn_vkUpdateDescriptorSetWithTemplateKHR);
-	return pfn_vkUpdateDescriptorSetWithTemplateKHR(device, descriptorSet, descriptorUpdateTemplate, pData);
+	pfn_vkUpdateDescriptorSetWithTemplateKHR(device, descriptorSet, descriptorUpdateTemplate, pData);
 }
 
 #if defined(VK_KHR_push_descriptor)
@@ -1999,7 +1992,7 @@ static PFN_vkCmdPushDescriptorSetWithTemplateKHR pfn_vkCmdPushDescriptorSetWithT
 VKAPI_ATTR void vkCmdPushDescriptorSetWithTemplateKHR(VkCommandBuffer commandBuffer, VkDescriptorUpdateTemplate descriptorUpdateTemplate, VkPipelineLayout layout, uint32_t set, const void * pData)
 {
 	assert(pfn_vkCmdPushDescriptorSetWithTemplateKHR);
-	return pfn_vkCmdPushDescriptorSetWithTemplateKHR(commandBuffer, descriptorUpdateTemplate, layout, set, pData);
+	pfn_vkCmdPushDescriptorSetWithTemplateKHR(commandBuffer, descriptorUpdateTemplate, layout, set, pData);
 }
 
 #endif // defined(VK_KHR_push_descriptor)
@@ -2012,14 +2005,14 @@ static PFN_vkCmdProcessCommandsNVX pfn_vkCmdProcessCommandsNVX;
 VKAPI_ATTR void vkCmdProcessCommandsNVX(VkCommandBuffer commandBuffer, const VkCmdProcessCommandsInfoNVX * pProcessCommandsInfo)
 {
 	assert(pfn_vkCmdProcessCommandsNVX);
-	return pfn_vkCmdProcessCommandsNVX(commandBuffer, pProcessCommandsInfo);
+	pfn_vkCmdProcessCommandsNVX(commandBuffer, pProcessCommandsInfo);
 }
 
 static PFN_vkCmdReserveSpaceForCommandsNVX pfn_vkCmdReserveSpaceForCommandsNVX;
 VKAPI_ATTR void vkCmdReserveSpaceForCommandsNVX(VkCommandBuffer commandBuffer, const VkCmdReserveSpaceForCommandsInfoNVX * pReserveSpaceInfo)
 {
 	assert(pfn_vkCmdReserveSpaceForCommandsNVX);
-	return pfn_vkCmdReserveSpaceForCommandsNVX(commandBuffer, pReserveSpaceInfo);
+	pfn_vkCmdReserveSpaceForCommandsNVX(commandBuffer, pReserveSpaceInfo);
 }
 
 static PFN_vkCreateIndirectCommandsLayoutNVX pfn_vkCreateIndirectCommandsLayoutNVX;
@@ -2033,7 +2026,7 @@ static PFN_vkDestroyIndirectCommandsLayoutNVX pfn_vkDestroyIndirectCommandsLayou
 VKAPI_ATTR void vkDestroyIndirectCommandsLayoutNVX(VkDevice device, VkIndirectCommandsLayoutNVX indirectCommandsLayout, const VkAllocationCallbacks * pAllocator)
 {
 	assert(pfn_vkDestroyIndirectCommandsLayoutNVX);
-	return pfn_vkDestroyIndirectCommandsLayoutNVX(device, indirectCommandsLayout, pAllocator);
+	pfn_vkDestroyIndirectCommandsLayoutNVX(device, indirectCommandsLayout, pAllocator);
 }
 
 static PFN_vkCreateObjectTableNVX pfn_vkCreateObjectTableNVX;
@@ -2047,7 +2040,7 @@ static PFN_vkDestroyObjectTableNVX pfn_vkDestroyObjectTableNVX;
 VKAPI_ATTR void vkDestroyObjectTableNVX(VkDevice device, VkObjectTableNVX objectTable, const VkAllocationCallbacks * pAllocator)
 {
 	assert(pfn_vkDestroyObjectTableNVX);
-	return pfn_vkDestroyObjectTableNVX(device, objectTable, pAllocator);
+	pfn_vkDestroyObjectTableNVX(device, objectTable, pAllocator);
 }
 
 static PFN_vkRegisterObjectsNVX pfn_vkRegisterObjectsNVX;
@@ -2068,7 +2061,7 @@ static PFN_vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX pfn_vkGetPhysicalDe
 VKAPI_ATTR void vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX(VkPhysicalDevice physicalDevice, VkDeviceGeneratedCommandsFeaturesNVX * pFeatures, VkDeviceGeneratedCommandsLimitsNVX * pLimits)
 {
 	assert(pfn_vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX);
-	return pfn_vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX(physicalDevice, pFeatures, pLimits);
+	pfn_vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX(physicalDevice, pFeatures, pLimits);
 }
 
 #endif // defined(VK_NVX_device_generated_commands)
@@ -2079,7 +2072,7 @@ static PFN_vkCmdSetViewportWScalingNV pfn_vkCmdSetViewportWScalingNV;
 VKAPI_ATTR void vkCmdSetViewportWScalingNV(VkCommandBuffer commandBuffer, uint32_t firstViewport, uint32_t viewportCount, const VkViewportWScalingNV * pViewportWScalings)
 {
 	assert(pfn_vkCmdSetViewportWScalingNV);
-	return pfn_vkCmdSetViewportWScalingNV(commandBuffer, firstViewport, viewportCount, pViewportWScalings);
+	pfn_vkCmdSetViewportWScalingNV(commandBuffer, firstViewport, viewportCount, pViewportWScalings);
 }
 
 #endif // defined(VK_NV_clip_space_w_scaling)
@@ -2180,7 +2173,7 @@ static PFN_vkCmdSetDiscardRectangleEXT pfn_vkCmdSetDiscardRectangleEXT;
 VKAPI_ATTR void vkCmdSetDiscardRectangleEXT(VkCommandBuffer commandBuffer, uint32_t firstDiscardRectangle, uint32_t discardRectangleCount, const VkRect2D * pDiscardRectangles)
 {
 	assert(pfn_vkCmdSetDiscardRectangleEXT);
-	return pfn_vkCmdSetDiscardRectangleEXT(commandBuffer, firstDiscardRectangle, discardRectangleCount, pDiscardRectangles);
+	pfn_vkCmdSetDiscardRectangleEXT(commandBuffer, firstDiscardRectangle, discardRectangleCount, pDiscardRectangles);
 }
 
 #endif // defined(VK_EXT_discard_rectangles)
@@ -2191,7 +2184,7 @@ static PFN_vkSetHdrMetadataEXT pfn_vkSetHdrMetadataEXT;
 VKAPI_ATTR void vkSetHdrMetadataEXT(VkDevice device, uint32_t swapchainCount, const VkSwapchainKHR * pSwapchains, const VkHdrMetadataEXT * pMetadata)
 {
 	assert(pfn_vkSetHdrMetadataEXT);
-	return pfn_vkSetHdrMetadataEXT(device, swapchainCount, pSwapchains, pMetadata);
+	pfn_vkSetHdrMetadataEXT(device, swapchainCount, pSwapchains, pMetadata);
 }
 
 #endif // defined(VK_EXT_hdr_metadata)
@@ -2209,21 +2202,21 @@ static PFN_vkCmdBeginRenderPass2KHR pfn_vkCmdBeginRenderPass2KHR;
 VKAPI_ATTR void vkCmdBeginRenderPass2KHR(VkCommandBuffer commandBuffer, const VkRenderPassBeginInfo * pRenderPassBegin, const VkSubpassBeginInfoKHR * pSubpassBeginInfo)
 {
 	assert(pfn_vkCmdBeginRenderPass2KHR);
-	return pfn_vkCmdBeginRenderPass2KHR(commandBuffer, pRenderPassBegin, pSubpassBeginInfo);
+	pfn_vkCmdBeginRenderPass2KHR(commandBuffer, pRenderPassBegin, pSubpassBeginInfo);
 }
 
 static PFN_vkCmdNextSubpass2KHR pfn_vkCmdNextSubpass2KHR;
 VKAPI_ATTR void vkCmdNextSubpass2KHR(VkCommandBuffer commandBuffer, const VkSubpassBeginInfoKHR * pSubpassBeginInfo, const VkSubpassEndInfoKHR * pSubpassEndInfo)
 {
 	assert(pfn_vkCmdNextSubpass2KHR);
-	return pfn_vkCmdNextSubpass2KHR(commandBuffer, pSubpassBeginInfo, pSubpassEndInfo);
+	pfn_vkCmdNextSubpass2KHR(commandBuffer, pSubpassBeginInfo, pSubpassEndInfo);
 }
 
 static PFN_vkCmdEndRenderPass2KHR pfn_vkCmdEndRenderPass2KHR;
 VKAPI_ATTR void vkCmdEndRenderPass2KHR(VkCommandBuffer commandBuffer, const VkSubpassEndInfoKHR * pSubpassEndInfo)
 {
 	assert(pfn_vkCmdEndRenderPass2KHR);
-	return pfn_vkCmdEndRenderPass2KHR(commandBuffer, pSubpassEndInfo);
+	pfn_vkCmdEndRenderPass2KHR(commandBuffer, pSubpassEndInfo);
 }
 
 #endif // defined(VK_KHR_create_renderpass2)
@@ -2245,7 +2238,7 @@ static PFN_vkGetPhysicalDeviceExternalFencePropertiesKHR pfn_vkGetPhysicalDevice
 VKAPI_ATTR void vkGetPhysicalDeviceExternalFencePropertiesKHR(VkPhysicalDevice physicalDevice, const VkPhysicalDeviceExternalFenceInfo * pExternalFenceInfo, VkExternalFenceProperties * pExternalFenceProperties)
 {
 	assert(pfn_vkGetPhysicalDeviceExternalFencePropertiesKHR);
-	return pfn_vkGetPhysicalDeviceExternalFencePropertiesKHR(physicalDevice, pExternalFenceInfo, pExternalFenceProperties);
+	pfn_vkGetPhysicalDeviceExternalFencePropertiesKHR(physicalDevice, pExternalFenceInfo, pExternalFenceProperties);
 }
 
 #endif // defined(VK_KHR_external_fence_capabilities)
@@ -2378,42 +2371,42 @@ static PFN_vkQueueBeginDebugUtilsLabelEXT pfn_vkQueueBeginDebugUtilsLabelEXT;
 VKAPI_ATTR void vkQueueBeginDebugUtilsLabelEXT(VkQueue queue, const VkDebugUtilsLabelEXT * pLabelInfo)
 {
 	assert(pfn_vkQueueBeginDebugUtilsLabelEXT);
-	return pfn_vkQueueBeginDebugUtilsLabelEXT(queue, pLabelInfo);
+	pfn_vkQueueBeginDebugUtilsLabelEXT(queue, pLabelInfo);
 }
 
 static PFN_vkQueueEndDebugUtilsLabelEXT pfn_vkQueueEndDebugUtilsLabelEXT;
 VKAPI_ATTR void vkQueueEndDebugUtilsLabelEXT(VkQueue queue)
 {
 	assert(pfn_vkQueueEndDebugUtilsLabelEXT);
-	return pfn_vkQueueEndDebugUtilsLabelEXT(queue);
+	pfn_vkQueueEndDebugUtilsLabelEXT(queue);
 }
 
 static PFN_vkQueueInsertDebugUtilsLabelEXT pfn_vkQueueInsertDebugUtilsLabelEXT;
 VKAPI_ATTR void vkQueueInsertDebugUtilsLabelEXT(VkQueue queue, const VkDebugUtilsLabelEXT * pLabelInfo)
 {
 	assert(pfn_vkQueueInsertDebugUtilsLabelEXT);
-	return pfn_vkQueueInsertDebugUtilsLabelEXT(queue, pLabelInfo);
+	pfn_vkQueueInsertDebugUtilsLabelEXT(queue, pLabelInfo);
 }
 
 static PFN_vkCmdBeginDebugUtilsLabelEXT pfn_vkCmdBeginDebugUtilsLabelEXT;
 VKAPI_ATTR void vkCmdBeginDebugUtilsLabelEXT(VkCommandBuffer commandBuffer, const VkDebugUtilsLabelEXT * pLabelInfo)
 {
 	assert(pfn_vkCmdBeginDebugUtilsLabelEXT);
-	return pfn_vkCmdBeginDebugUtilsLabelEXT(commandBuffer, pLabelInfo);
+	pfn_vkCmdBeginDebugUtilsLabelEXT(commandBuffer, pLabelInfo);
 }
 
 static PFN_vkCmdEndDebugUtilsLabelEXT pfn_vkCmdEndDebugUtilsLabelEXT;
 VKAPI_ATTR void vkCmdEndDebugUtilsLabelEXT(VkCommandBuffer commandBuffer)
 {
 	assert(pfn_vkCmdEndDebugUtilsLabelEXT);
-	return pfn_vkCmdEndDebugUtilsLabelEXT(commandBuffer);
+	pfn_vkCmdEndDebugUtilsLabelEXT(commandBuffer);
 }
 
 static PFN_vkCmdInsertDebugUtilsLabelEXT pfn_vkCmdInsertDebugUtilsLabelEXT;
 VKAPI_ATTR void vkCmdInsertDebugUtilsLabelEXT(VkCommandBuffer commandBuffer, const VkDebugUtilsLabelEXT * pLabelInfo)
 {
 	assert(pfn_vkCmdInsertDebugUtilsLabelEXT);
-	return pfn_vkCmdInsertDebugUtilsLabelEXT(commandBuffer, pLabelInfo);
+	pfn_vkCmdInsertDebugUtilsLabelEXT(commandBuffer, pLabelInfo);
 }
 
 static PFN_vkCreateDebugUtilsMessengerEXT pfn_vkCreateDebugUtilsMessengerEXT;
@@ -2427,14 +2420,14 @@ static PFN_vkDestroyDebugUtilsMessengerEXT pfn_vkDestroyDebugUtilsMessengerEXT;
 VKAPI_ATTR void vkDestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMessengerEXT messenger, const VkAllocationCallbacks * pAllocator)
 {
 	assert(pfn_vkDestroyDebugUtilsMessengerEXT);
-	return pfn_vkDestroyDebugUtilsMessengerEXT(instance, messenger, pAllocator);
+	pfn_vkDestroyDebugUtilsMessengerEXT(instance, messenger, pAllocator);
 }
 
 static PFN_vkSubmitDebugUtilsMessageEXT pfn_vkSubmitDebugUtilsMessageEXT;
 VKAPI_ATTR void vkSubmitDebugUtilsMessageEXT(VkInstance instance, VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageTypes, const VkDebugUtilsMessengerCallbackDataEXT * pCallbackData)
 {
 	assert(pfn_vkSubmitDebugUtilsMessageEXT);
-	return pfn_vkSubmitDebugUtilsMessageEXT(instance, messageSeverity, messageTypes, pCallbackData);
+	pfn_vkSubmitDebugUtilsMessageEXT(instance, messageSeverity, messageTypes, pCallbackData);
 }
 
 #endif // defined(VK_EXT_debug_utils)
@@ -2463,14 +2456,14 @@ static PFN_vkCmdSetSampleLocationsEXT pfn_vkCmdSetSampleLocationsEXT;
 VKAPI_ATTR void vkCmdSetSampleLocationsEXT(VkCommandBuffer commandBuffer, const VkSampleLocationsInfoEXT * pSampleLocationsInfo)
 {
 	assert(pfn_vkCmdSetSampleLocationsEXT);
-	return pfn_vkCmdSetSampleLocationsEXT(commandBuffer, pSampleLocationsInfo);
+	pfn_vkCmdSetSampleLocationsEXT(commandBuffer, pSampleLocationsInfo);
 }
 
 static PFN_vkGetPhysicalDeviceMultisamplePropertiesEXT pfn_vkGetPhysicalDeviceMultisamplePropertiesEXT;
 VKAPI_ATTR void vkGetPhysicalDeviceMultisamplePropertiesEXT(VkPhysicalDevice physicalDevice, VkSampleCountFlagBits samples, VkMultisamplePropertiesEXT * pMultisampleProperties)
 {
 	assert(pfn_vkGetPhysicalDeviceMultisamplePropertiesEXT);
-	return pfn_vkGetPhysicalDeviceMultisamplePropertiesEXT(physicalDevice, samples, pMultisampleProperties);
+	pfn_vkGetPhysicalDeviceMultisamplePropertiesEXT(physicalDevice, samples, pMultisampleProperties);
 }
 
 #endif // defined(VK_EXT_sample_locations)
@@ -2481,21 +2474,21 @@ static PFN_vkGetImageMemoryRequirements2KHR pfn_vkGetImageMemoryRequirements2KHR
 VKAPI_ATTR void vkGetImageMemoryRequirements2KHR(VkDevice device, const VkImageMemoryRequirementsInfo2 * pInfo, VkMemoryRequirements2 * pMemoryRequirements)
 {
 	assert(pfn_vkGetImageMemoryRequirements2KHR);
-	return pfn_vkGetImageMemoryRequirements2KHR(device, pInfo, pMemoryRequirements);
+	pfn_vkGetImageMemoryRequirements2KHR(device, pInfo, pMemoryRequirements);
 }
 
 static PFN_vkGetBufferMemoryRequirements2KHR pfn_vkGetBufferMemoryRequirements2KHR;
 VKAPI_ATTR void vkGetBufferMemoryRequirements2KHR(VkDevice device, const VkBufferMemoryRequirementsInfo2 * pInfo, VkMemoryRequirements2 * pMemoryRequirements)
 {
 	assert(pfn_vkGetBufferMemoryRequirements2KHR);
-	return pfn_vkGetBufferMemoryRequirements2KHR(device, pInfo, pMemoryRequirements);
+	pfn_vkGetBufferMemoryRequirements2KHR(device, pInfo, pMemoryRequirements);
 }
 
 static PFN_vkGetImageSparseMemoryRequirements2KHR pfn_vkGetImageSparseMemoryRequirements2KHR;
 VKAPI_ATTR void vkGetImageSparseMemoryRequirements2KHR(VkDevice device, const VkImageSparseMemoryRequirementsInfo2 * pInfo, uint32_t * pSparseMemoryRequirementCount, VkSparseImageMemoryRequirements2 * pSparseMemoryRequirements)
 {
 	assert(pfn_vkGetImageSparseMemoryRequirements2KHR);
-	return pfn_vkGetImageSparseMemoryRequirements2KHR(device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements);
+	pfn_vkGetImageSparseMemoryRequirements2KHR(device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements);
 }
 
 #endif // defined(VK_KHR_get_memory_requirements2)
@@ -2513,7 +2506,7 @@ static PFN_vkDestroySamplerYcbcrConversionKHR pfn_vkDestroySamplerYcbcrConversio
 VKAPI_ATTR void vkDestroySamplerYcbcrConversionKHR(VkDevice device, VkSamplerYcbcrConversion ycbcrConversion, const VkAllocationCallbacks * pAllocator)
 {
 	assert(pfn_vkDestroySamplerYcbcrConversionKHR);
-	return pfn_vkDestroySamplerYcbcrConversionKHR(device, ycbcrConversion, pAllocator);
+	pfn_vkDestroySamplerYcbcrConversionKHR(device, ycbcrConversion, pAllocator);
 }
 
 #endif // defined(VK_KHR_sampler_ycbcr_conversion)
@@ -2560,7 +2553,7 @@ static PFN_vkDestroyValidationCacheEXT pfn_vkDestroyValidationCacheEXT;
 VKAPI_ATTR void vkDestroyValidationCacheEXT(VkDevice device, VkValidationCacheEXT validationCache, const VkAllocationCallbacks * pAllocator)
 {
 	assert(pfn_vkDestroyValidationCacheEXT);
-	return pfn_vkDestroyValidationCacheEXT(device, validationCache, pAllocator);
+	pfn_vkDestroyValidationCacheEXT(device, validationCache, pAllocator);
 }
 
 static PFN_vkMergeValidationCachesEXT pfn_vkMergeValidationCachesEXT;
@@ -2585,21 +2578,21 @@ static PFN_vkCmdBindShadingRateImageNV pfn_vkCmdBindShadingRateImageNV;
 VKAPI_ATTR void vkCmdBindShadingRateImageNV(VkCommandBuffer commandBuffer, VkImageView imageView, VkImageLayout imageLayout)
 {
 	assert(pfn_vkCmdBindShadingRateImageNV);
-	return pfn_vkCmdBindShadingRateImageNV(commandBuffer, imageView, imageLayout);
+	pfn_vkCmdBindShadingRateImageNV(commandBuffer, imageView, imageLayout);
 }
 
 static PFN_vkCmdSetViewportShadingRatePaletteNV pfn_vkCmdSetViewportShadingRatePaletteNV;
 VKAPI_ATTR void vkCmdSetViewportShadingRatePaletteNV(VkCommandBuffer commandBuffer, uint32_t firstViewport, uint32_t viewportCount, const VkShadingRatePaletteNV * pShadingRatePalettes)
 {
 	assert(pfn_vkCmdSetViewportShadingRatePaletteNV);
-	return pfn_vkCmdSetViewportShadingRatePaletteNV(commandBuffer, firstViewport, viewportCount, pShadingRatePalettes);
+	pfn_vkCmdSetViewportShadingRatePaletteNV(commandBuffer, firstViewport, viewportCount, pShadingRatePalettes);
 }
 
 static PFN_vkCmdSetCoarseSampleOrderNV pfn_vkCmdSetCoarseSampleOrderNV;
 VKAPI_ATTR void vkCmdSetCoarseSampleOrderNV(VkCommandBuffer commandBuffer, VkCoarseSampleOrderTypeNV sampleOrderType, uint32_t customSampleOrderCount, const VkCoarseSampleOrderCustomNV * pCustomSampleOrders)
 {
 	assert(pfn_vkCmdSetCoarseSampleOrderNV);
-	return pfn_vkCmdSetCoarseSampleOrderNV(commandBuffer, sampleOrderType, customSampleOrderCount, pCustomSampleOrders);
+	pfn_vkCmdSetCoarseSampleOrderNV(commandBuffer, sampleOrderType, customSampleOrderCount, pCustomSampleOrders);
 }
 
 #endif // defined(VK_NV_shading_rate_image)
@@ -2617,14 +2610,14 @@ static PFN_vkDestroyAccelerationStructureNV pfn_vkDestroyAccelerationStructureNV
 VKAPI_ATTR void vkDestroyAccelerationStructureNV(VkDevice device, VkAccelerationStructureNV accelerationStructure, const VkAllocationCallbacks * pAllocator)
 {
 	assert(pfn_vkDestroyAccelerationStructureNV);
-	return pfn_vkDestroyAccelerationStructureNV(device, accelerationStructure, pAllocator);
+	pfn_vkDestroyAccelerationStructureNV(device, accelerationStructure, pAllocator);
 }
 
 static PFN_vkGetAccelerationStructureMemoryRequirementsNV pfn_vkGetAccelerationStructureMemoryRequirementsNV;
 VKAPI_ATTR void vkGetAccelerationStructureMemoryRequirementsNV(VkDevice device, const VkAccelerationStructureMemoryRequirementsInfoNV * pInfo, VkMemoryRequirements2KHR * pMemoryRequirements)
 {
 	assert(pfn_vkGetAccelerationStructureMemoryRequirementsNV);
-	return pfn_vkGetAccelerationStructureMemoryRequirementsNV(device, pInfo, pMemoryRequirements);
+	pfn_vkGetAccelerationStructureMemoryRequirementsNV(device, pInfo, pMemoryRequirements);
 }
 
 static PFN_vkBindAccelerationStructureMemoryNV pfn_vkBindAccelerationStructureMemoryNV;
@@ -2638,21 +2631,21 @@ static PFN_vkCmdBuildAccelerationStructureNV pfn_vkCmdBuildAccelerationStructure
 VKAPI_ATTR void vkCmdBuildAccelerationStructureNV(VkCommandBuffer commandBuffer, const VkAccelerationStructureInfoNV * pInfo, VkBuffer instanceData, VkDeviceSize instanceOffset, VkBool32 update, VkAccelerationStructureNV dst, VkAccelerationStructureNV src, VkBuffer scratch, VkDeviceSize scratchOffset)
 {
 	assert(pfn_vkCmdBuildAccelerationStructureNV);
-	return pfn_vkCmdBuildAccelerationStructureNV(commandBuffer, pInfo, instanceData, instanceOffset, update, dst, src, scratch, scratchOffset);
+	pfn_vkCmdBuildAccelerationStructureNV(commandBuffer, pInfo, instanceData, instanceOffset, update, dst, src, scratch, scratchOffset);
 }
 
 static PFN_vkCmdCopyAccelerationStructureNV pfn_vkCmdCopyAccelerationStructureNV;
 VKAPI_ATTR void vkCmdCopyAccelerationStructureNV(VkCommandBuffer commandBuffer, VkAccelerationStructureNV dst, VkAccelerationStructureNV src, VkCopyAccelerationStructureModeNV mode)
 {
 	assert(pfn_vkCmdCopyAccelerationStructureNV);
-	return pfn_vkCmdCopyAccelerationStructureNV(commandBuffer, dst, src, mode);
+	pfn_vkCmdCopyAccelerationStructureNV(commandBuffer, dst, src, mode);
 }
 
 static PFN_vkCmdTraceRaysNV pfn_vkCmdTraceRaysNV;
 VKAPI_ATTR void vkCmdTraceRaysNV(VkCommandBuffer commandBuffer, VkBuffer raygenShaderBindingTableBuffer, VkDeviceSize raygenShaderBindingOffset, VkBuffer missShaderBindingTableBuffer, VkDeviceSize missShaderBindingOffset, VkDeviceSize missShaderBindingStride, VkBuffer hitShaderBindingTableBuffer, VkDeviceSize hitShaderBindingOffset, VkDeviceSize hitShaderBindingStride, VkBuffer callableShaderBindingTableBuffer, VkDeviceSize callableShaderBindingOffset, VkDeviceSize callableShaderBindingStride, uint32_t width, uint32_t height, uint32_t depth)
 {
 	assert(pfn_vkCmdTraceRaysNV);
-	return pfn_vkCmdTraceRaysNV(commandBuffer, raygenShaderBindingTableBuffer, raygenShaderBindingOffset, missShaderBindingTableBuffer, missShaderBindingOffset, missShaderBindingStride, hitShaderBindingTableBuffer, hitShaderBindingOffset, hitShaderBindingStride, callableShaderBindingTableBuffer, callableShaderBindingOffset, callableShaderBindingStride, width, height, depth);
+	pfn_vkCmdTraceRaysNV(commandBuffer, raygenShaderBindingTableBuffer, raygenShaderBindingOffset, missShaderBindingTableBuffer, missShaderBindingOffset, missShaderBindingStride, hitShaderBindingTableBuffer, hitShaderBindingOffset, hitShaderBindingStride, callableShaderBindingTableBuffer, callableShaderBindingOffset, callableShaderBindingStride, width, height, depth);
 }
 
 static PFN_vkCreateRayTracingPipelinesNV pfn_vkCreateRayTracingPipelinesNV;
@@ -2680,7 +2673,7 @@ static PFN_vkCmdWriteAccelerationStructuresPropertiesNV pfn_vkCmdWriteAccelerati
 VKAPI_ATTR void vkCmdWriteAccelerationStructuresPropertiesNV(VkCommandBuffer commandBuffer, uint32_t accelerationStructureCount, const VkAccelerationStructureNV * pAccelerationStructures, VkQueryType queryType, VkQueryPool queryPool, uint32_t firstQuery)
 {
 	assert(pfn_vkCmdWriteAccelerationStructuresPropertiesNV);
-	return pfn_vkCmdWriteAccelerationStructuresPropertiesNV(commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery);
+	pfn_vkCmdWriteAccelerationStructuresPropertiesNV(commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery);
 }
 
 static PFN_vkCompileDeferredNV pfn_vkCompileDeferredNV;
@@ -2698,7 +2691,7 @@ static PFN_vkGetDescriptorSetLayoutSupportKHR pfn_vkGetDescriptorSetLayoutSuppor
 VKAPI_ATTR void vkGetDescriptorSetLayoutSupportKHR(VkDevice device, const VkDescriptorSetLayoutCreateInfo * pCreateInfo, VkDescriptorSetLayoutSupport * pSupport)
 {
 	assert(pfn_vkGetDescriptorSetLayoutSupportKHR);
-	return pfn_vkGetDescriptorSetLayoutSupportKHR(device, pCreateInfo, pSupport);
+	pfn_vkGetDescriptorSetLayoutSupportKHR(device, pCreateInfo, pSupport);
 }
 
 #endif // defined(VK_KHR_maintenance3)
@@ -2709,14 +2702,14 @@ static PFN_vkCmdDrawIndirectCountKHR pfn_vkCmdDrawIndirectCountKHR;
 VKAPI_ATTR void vkCmdDrawIndirectCountKHR(VkCommandBuffer commandBuffer, VkBuffer buffer, VkDeviceSize offset, VkBuffer countBuffer, VkDeviceSize countBufferOffset, uint32_t maxDrawCount, uint32_t stride)
 {
 	assert(pfn_vkCmdDrawIndirectCountKHR);
-	return pfn_vkCmdDrawIndirectCountKHR(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
+	pfn_vkCmdDrawIndirectCountKHR(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
 }
 
 static PFN_vkCmdDrawIndexedIndirectCountKHR pfn_vkCmdDrawIndexedIndirectCountKHR;
 VKAPI_ATTR void vkCmdDrawIndexedIndirectCountKHR(VkCommandBuffer commandBuffer, VkBuffer buffer, VkDeviceSize offset, VkBuffer countBuffer, VkDeviceSize countBufferOffset, uint32_t maxDrawCount, uint32_t stride)
 {
 	assert(pfn_vkCmdDrawIndexedIndirectCountKHR);
-	return pfn_vkCmdDrawIndexedIndirectCountKHR(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
+	pfn_vkCmdDrawIndexedIndirectCountKHR(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
 }
 
 #endif // defined(VK_KHR_draw_indirect_count)
@@ -2738,7 +2731,7 @@ static PFN_vkCmdWriteBufferMarkerAMD pfn_vkCmdWriteBufferMarkerAMD;
 VKAPI_ATTR void vkCmdWriteBufferMarkerAMD(VkCommandBuffer commandBuffer, VkPipelineStageFlagBits pipelineStage, VkBuffer dstBuffer, VkDeviceSize dstOffset, uint32_t marker)
 {
 	assert(pfn_vkCmdWriteBufferMarkerAMD);
-	return pfn_vkCmdWriteBufferMarkerAMD(commandBuffer, pipelineStage, dstBuffer, dstOffset, marker);
+	pfn_vkCmdWriteBufferMarkerAMD(commandBuffer, pipelineStage, dstBuffer, dstOffset, marker);
 }
 
 #endif // defined(VK_AMD_buffer_marker)
@@ -2767,21 +2760,21 @@ static PFN_vkCmdDrawMeshTasksNV pfn_vkCmdDrawMeshTasksNV;
 VKAPI_ATTR void vkCmdDrawMeshTasksNV(VkCommandBuffer commandBuffer, uint32_t taskCount, uint32_t firstTask)
 {
 	assert(pfn_vkCmdDrawMeshTasksNV);
-	return pfn_vkCmdDrawMeshTasksNV(commandBuffer, taskCount, firstTask);
+	pfn_vkCmdDrawMeshTasksNV(commandBuffer, taskCount, firstTask);
 }
 
 static PFN_vkCmdDrawMeshTasksIndirectNV pfn_vkCmdDrawMeshTasksIndirectNV;
 VKAPI_ATTR void vkCmdDrawMeshTasksIndirectNV(VkCommandBuffer commandBuffer, VkBuffer buffer, VkDeviceSize offset, uint32_t drawCount, uint32_t stride)
 {
 	assert(pfn_vkCmdDrawMeshTasksIndirectNV);
-	return pfn_vkCmdDrawMeshTasksIndirectNV(commandBuffer, buffer, offset, drawCount, stride);
+	pfn_vkCmdDrawMeshTasksIndirectNV(commandBuffer, buffer, offset, drawCount, stride);
 }
 
 static PFN_vkCmdDrawMeshTasksIndirectCountNV pfn_vkCmdDrawMeshTasksIndirectCountNV;
 VKAPI_ATTR void vkCmdDrawMeshTasksIndirectCountNV(VkCommandBuffer commandBuffer, VkBuffer buffer, VkDeviceSize offset, VkBuffer countBuffer, VkDeviceSize countBufferOffset, uint32_t maxDrawCount, uint32_t stride)
 {
 	assert(pfn_vkCmdDrawMeshTasksIndirectCountNV);
-	return pfn_vkCmdDrawMeshTasksIndirectCountNV(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
+	pfn_vkCmdDrawMeshTasksIndirectCountNV(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
 }
 
 #endif // defined(VK_NV_mesh_shader)
@@ -2792,7 +2785,7 @@ static PFN_vkCmdSetExclusiveScissorNV pfn_vkCmdSetExclusiveScissorNV;
 VKAPI_ATTR void vkCmdSetExclusiveScissorNV(VkCommandBuffer commandBuffer, uint32_t firstExclusiveScissor, uint32_t exclusiveScissorCount, const VkRect2D * pExclusiveScissors)
 {
 	assert(pfn_vkCmdSetExclusiveScissorNV);
-	return pfn_vkCmdSetExclusiveScissorNV(commandBuffer, firstExclusiveScissor, exclusiveScissorCount, pExclusiveScissors);
+	pfn_vkCmdSetExclusiveScissorNV(commandBuffer, firstExclusiveScissor, exclusiveScissorCount, pExclusiveScissors);
 }
 
 #endif // defined(VK_NV_scissor_exclusive)
@@ -2803,14 +2796,14 @@ static PFN_vkCmdSetCheckpointNV pfn_vkCmdSetCheckpointNV;
 VKAPI_ATTR void vkCmdSetCheckpointNV(VkCommandBuffer commandBuffer, const void * pCheckpointMarker)
 {
 	assert(pfn_vkCmdSetCheckpointNV);
-	return pfn_vkCmdSetCheckpointNV(commandBuffer, pCheckpointMarker);
+	pfn_vkCmdSetCheckpointNV(commandBuffer, pCheckpointMarker);
 }
 
 static PFN_vkGetQueueCheckpointDataNV pfn_vkGetQueueCheckpointDataNV;
 VKAPI_ATTR void vkGetQueueCheckpointDataNV(VkQueue queue, uint32_t * pCheckpointDataCount, VkCheckpointDataNV * pCheckpointData)
 {
 	assert(pfn_vkGetQueueCheckpointDataNV);
-	return pfn_vkGetQueueCheckpointDataNV(queue, pCheckpointDataCount, pCheckpointData);
+	pfn_vkGetQueueCheckpointDataNV(queue, pCheckpointDataCount, pCheckpointData);
 }
 
 #endif // defined(VK_NV_device_diagnostic_checkpoints)
@@ -2828,7 +2821,7 @@ static PFN_vkUninitializePerformanceApiINTEL pfn_vkUninitializePerformanceApiINT
 VKAPI_ATTR void vkUninitializePerformanceApiINTEL(VkDevice device)
 {
 	assert(pfn_vkUninitializePerformanceApiINTEL);
-	return pfn_vkUninitializePerformanceApiINTEL(device);
+	pfn_vkUninitializePerformanceApiINTEL(device);
 }
 
 static PFN_vkCmdSetPerformanceMarkerINTEL pfn_vkCmdSetPerformanceMarkerINTEL;
@@ -2888,7 +2881,7 @@ static PFN_vkSetLocalDimmingAMD pfn_vkSetLocalDimmingAMD;
 VKAPI_ATTR void vkSetLocalDimmingAMD(VkDevice device, VkSwapchainKHR swapChain, VkBool32 localDimmingEnable)
 {
 	assert(pfn_vkSetLocalDimmingAMD);
-	return pfn_vkSetLocalDimmingAMD(device, swapChain, localDimmingEnable);
+	pfn_vkSetLocalDimmingAMD(device, swapChain, localDimmingEnable);
 }
 
 #endif // defined(VK_AMD_display_native_hdr)
@@ -3001,7 +2994,7 @@ static PFN_vkCmdSetLineStippleEXT pfn_vkCmdSetLineStippleEXT;
 VKAPI_ATTR void vkCmdSetLineStippleEXT(VkCommandBuffer commandBuffer, uint32_t lineStippleFactor, uint16_t lineStipplePattern)
 {
 	assert(pfn_vkCmdSetLineStippleEXT);
-	return pfn_vkCmdSetLineStippleEXT(commandBuffer, lineStippleFactor, lineStipplePattern);
+	pfn_vkCmdSetLineStippleEXT(commandBuffer, lineStippleFactor, lineStipplePattern);
 }
 
 #endif // defined(VK_EXT_line_rasterization)
@@ -3012,7 +3005,7 @@ static PFN_vkResetQueryPoolEXT pfn_vkResetQueryPoolEXT;
 VKAPI_ATTR void vkResetQueryPoolEXT(VkDevice device, VkQueryPool queryPool, uint32_t firstQuery, uint32_t queryCount)
 {
 	assert(pfn_vkResetQueryPoolEXT);
-	return pfn_vkResetQueryPoolEXT(device, queryPool, firstQuery, queryCount);
+	pfn_vkResetQueryPoolEXT(device, queryPool, firstQuery, queryCount);
 }
 
 #endif // defined(VK_EXT_host_query_reset)

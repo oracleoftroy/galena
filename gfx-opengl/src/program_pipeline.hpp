@@ -8,6 +8,7 @@
 namespace gfx::gl
 {
 	class program;
+	class renderer;
 
 	class program_pipeline final
 	{

@@ -33,8 +33,13 @@ add_library(ui
 	"src/sdl/sdl_window.cpp"
 )
 
-if(NOT MSVC)
-	set_source_files_properties(src/sdl/imgui_impl_sdl.cpp PROPERTIES COMPILE_FLAGS -Wno-conversion)
+
+if (${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang" OR ${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU")
+	set_property(SOURCE "src/sdl/imgui_impl_sdl.cpp" APPEND PROPERTY COMPILE_OPTIONS "-Wno-conversion;-Wno-implicit-float-conversion")
+endif()
+
+if (${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang")
+	set_property(SOURCE "src/sdl/imgui_impl_sdl.cpp" APPEND PROPERTY COMPILE_OPTIONS "-Wno-pragma-pack")
 endif()
 
 # TODO: UI_PLATFORM should be configured based on configure option

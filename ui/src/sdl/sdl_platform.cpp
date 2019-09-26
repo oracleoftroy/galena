@@ -1,8 +1,18 @@
-#include <ui/platform.hpp>
+#include "sdl_platform.hpp"
 
 #include <string_view>
 #include <utility>
+
+#if defined __clang__
+#	pragma GCC diagnostic push
+#	pragma GCC diagnostic ignored "-Wpragma-pack"
+#endif
+
 #include <SDL2/SDL.h>
+
+#if defined __clang__
+#	pragma GCC diagnostic pop
+#endif
 
 #include <ui/events.hpp>
 #include <ui/window.hpp>
@@ -10,7 +20,6 @@
 #include "../log.hpp"
 #include "sdl_util.hpp"
 #include "sdl_dispatch_events.hpp"
-#include "sdl_platform.hpp"
 
 using namespace std::string_view_literals;
 

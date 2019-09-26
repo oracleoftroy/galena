@@ -32,10 +32,10 @@ namespace app
 
 		std::vector<glm::vec3> points;
 		std::vector<uint16_t> indices;
-		points.reserve(count.x * count.y);
+		points.reserve(static_cast<size_t>(count.x * count.y));
 
 		// overestimate: each point is drawn twice, except for the top and bottom row, plus we will draw one degenerate triangle per row
-		indices.reserve(count.x * count.y * 2 + count.y * 2);
+		indices.reserve(static_cast<size_t>(count.x * count.y * 2 + count.y * 2));
 
 		auto index = [&count](int x, int y) { return static_cast<uint16_t>(y * count.x + x); };
 
@@ -55,11 +55,11 @@ namespace app
 
 				for (int octave = 0; octave < 16; ++octave)
 				{
-					float scale = pow(2.0f, octave);
+					float scale = powf(2.0f, static_cast<float>(octave));
 					noise += 1.0f / scale * glm::simplex(sample * scale);
 				}
 
-				points.emplace_back(start.x + x * spacing.x, start.y + y * spacing.y, noise * 3.0f);
+				points.emplace_back(start.x + static_cast<float>(x) * spacing.x, start.y + static_cast<float>(y) * spacing.y, noise * 3.0f);
 
 				// skip the last row of indexes
 				if (y < (count.y - 1))
@@ -151,7 +151,7 @@ namespace app
 
 		auto [min, max] = std::minmax_element(begin(terrain_pos), end(terrain_pos), [](const auto & v1, const auto & v2) { return v1.z < v2.z; });
 
-		std::transform(begin(terrain_pos), end(terrain_pos), begin(terrain_colors), [min, max]([[maybe_unused]]const glm::vec3 & pos)
+		std::transform(begin(terrain_pos), end(terrain_pos), begin(terrain_colors), [min = min, max = max]([[maybe_unused]]const glm::vec3 & pos)
 			{
 				auto brownish = glm::vec3{0.353f, 0.174f, 0.088f};
 				auto snow = glm::vec3{1.0f, 1.0f, 1.0f};

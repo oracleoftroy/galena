@@ -3,7 +3,17 @@
 #include <utility>
 #include <imgui.h>
 #include "imgui_impl_sdl.h"
+
+#if defined __clang__
+#	pragma GCC diagnostic push
+#	pragma GCC diagnostic ignored "-Wpragma-pack"
+#endif
+
 #include <SDL2/SDL_events.h>
+
+#if defined __clang__
+#	pragma GCC diagnostic pop
+#endif
 
 #include "../log.hpp"
 #include "sdl_opengl_context.hpp"

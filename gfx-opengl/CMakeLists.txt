@@ -46,16 +46,7 @@ add_library(gfx-opengl
 
 if (NOT MSVC)
 	set_source_files_properties(vendor/glad/src/glad.c PROPERTIES COMPILE_OPTIONS -Wno-pedantic)
-	# set_source_files_properties(vendor/imgui/imgui_impl_opengl3.cpp PROPERTIES COMPILE_OPTIONS -Wno-conversion -Wno-sign-conversion)
 	set_property(SOURCE vendor/imgui/imgui_impl_opengl3.cpp APPEND PROPERTY COMPILE_OPTIONS -Wno-conversion -Wno-sign-conversion)
-endif()
-
-
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-	target_link_libraries(gfx-opengl PUBLIC stdc++fs)
-elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-	#target_link_libraries(gfx-opengl PUBLIC c++experimental)
-	target_link_libraries(gfx-opengl PUBLIC stdc++fs)
 endif()
 
 target_compile_definitions(gfx-opengl PRIVATE IMGUI_IMPL_OPENGL_LOADER_GLAD)
@@ -67,3 +58,7 @@ find_package(glm CONFIG REQUIRED)
 find_package(imgui CONFIG REQUIRED)
 
 target_link_libraries(gfx-opengl PUBLIC glm PRIVATE imgui::imgui)
+
+find_package(Filesystem REQUIRED COMPONENTS Final Experimental)
+target_link_libraries(gfx-opengl PRIVATE std::filesystem)
+

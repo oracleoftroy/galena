@@ -1,7 +1,17 @@
 #pragma once
 
 #include <stdexcept>
+#if defined __clang__
+#	pragma GCC diagnostic push
+#	pragma GCC diagnostic ignored "-Wpragma-pack"
+#endif
+
 #include <SDL2/SDL.h>
+
+#if defined __clang__
+#	pragma GCC diagnostic pop
+#endif
+
 #include <ui/platform.hpp>
 #include <ui/window.hpp>
 

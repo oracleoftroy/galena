@@ -3,6 +3,17 @@
 #include "../log.hpp"
 #include "sdl_util.hpp"
 
+#if defined __clang__
+#	pragma GCC diagnostic push
+#	pragma GCC diagnostic ignored "-Wpragma-pack"
+#endif
+
+#include <SDL2/SDL.h>
+
+#if defined __clang__
+#	pragma GCC diagnostic pop
+#endif
+
 namespace ui
 {
 	opengl_context::opengl_context_data::opengl_context_data(SDL_Window *window, SDL_GLContext context) noexcept
