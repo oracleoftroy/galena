@@ -3,3 +3,4 @@
 .vscode
 *.user
 CMakeSettings.json
+out
